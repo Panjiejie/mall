@@ -1,21 +1,23 @@
 <template>
     <div>
-        <!-- <headers></headers> -->
        <div id="banner">
            <div id="banner-nav">navbar</div>
            <div id="banner-swiper">swiper</div>
        </div>
-       <!-- <footers></footers> -->
+       <brandingbusiness></brandingbusiness>
+       <service></service>
     </div> 
 </template>
 <script>
 // import headers from '../common/headers'
 // import footers from '../common/footers'
+import brandingbusiness from './brandingbusiness'
+import service from './service'
 export default {
     name:"index",
     components:{
-        // headers,
-        // footers
+        brandingbusiness,
+        service
     },
     data(){
         return{
