@@ -173,7 +173,7 @@ export default {
     width: 225px;
     height: 50px;
     background: #ff2040;
-    margin-top: 11px;
+    margin-top: 5px;
 }
 </style>
 
