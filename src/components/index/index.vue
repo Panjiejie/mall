@@ -6,6 +6,7 @@
        </div>
        <brandingbusiness></brandingbusiness>
        <service></service>
+       <seckill></seckill>
     </div> 
 </template>
 <script>
@@ -13,11 +14,13 @@
 // import footers from '../common/footers'
 import brandingbusiness from './brandingbusiness'
 import service from './service'
+import seckill from './seckill'
 export default {
     name:"index",
     components:{
         brandingbusiness,
-        service
+        service,
+        seckill
     },
     data(){
         return{

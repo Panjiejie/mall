@@ -3,7 +3,7 @@
         <div class="title">
             <span class="line"></span>
             <span class="maintitle">品牌商</span>
-            <span class="subhead">品牌直达，剔除溢价</span>
+            <span class="subhead">品牌直达 剔除溢价</span>
             <a class="morebrand" href="/haitao">更多品牌商> </a>
         </div>
         <div class="brands">
