@@ -68,6 +68,7 @@ export default {
     height: 36px;
     background-color: #272424;
     /* background-color: #fff; */
+    /* box-shadow: 0 4px 4px #999; */
   }
   .main{
     width: 1200px;
@@ -145,6 +146,8 @@ export default {
     height: 100px;
     background: #FFFFFF;
     text-align: left;
+    box-shadow: 0 4px 4px #f2f2f2;
+    margin-bottom: 4px;
   }
   #nav{
     width: 1200px;
