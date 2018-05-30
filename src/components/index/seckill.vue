@@ -143,6 +143,7 @@ export default {
     float: left;
     list-style: none;
     padding: 3px 3px 0;
+    position: relative;
 }
 .seckill-right li img{
     display: block;
@@ -173,7 +174,10 @@ export default {
     width: 225px;
     height: 50px;
     background: #ff2040;
-    margin-top: 5px;
+    /* margin-top: 5px; */
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 </style>
 
