@@ -67,7 +67,7 @@ export default {
 .content{
     width: 1200px;
     height: 383px;
-    margin:45px auto 0;  
+    margin:45px auto 35px;  
     /* background: rgba(244,91,8,.2) */
 }
 .title{

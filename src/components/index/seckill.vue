@@ -156,7 +156,7 @@ export default {
     padding: 3px 3px 0;
     position: relative;
     border: 1px solid #f6f6f6;
-    border-top:2px solid rosybrown;
+    border-top:3px solid rosybrown;
 }
 .seckill-right li img{
     display: block;

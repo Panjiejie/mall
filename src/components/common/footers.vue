@@ -234,4 +234,9 @@ export default {
   .bbottom div{
     color: #828181;
   }
+  .footers:before{
+    display: block;
+    content: "";
+    clear: both;
+  }
 </style>

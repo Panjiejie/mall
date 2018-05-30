@@ -3,7 +3,7 @@
     <div id="header">
       <div class="main">
         <ul>
-          <li><span class="ver-line"></span><router-link to="/">请先登录</router-link></li>
+          <li><span class="ver-line"></span><router-link to="/goodsdetail">请先登录</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">我的订单</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">帮助中心</router-link></li>

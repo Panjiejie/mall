@@ -5,6 +5,8 @@ import goodsguide from '../components/goodsguide/goodsguide.vue'
 import haitao from '../components/haitao/haitao.vue'
 import newretail from '../components/newretail/newretail.vue'
 import index from '../components/index/index.vue'
+import goodsdetail from '../components/pages/goodsdetail.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +43,11 @@ export default new Router({
           path:'/newretail',
           name:'newretail',
           component:newretail
+        },
+        {//
+          path:'/goodsdetail',
+          name:'goodsdetail',
+          component:goodsdetail
         }
   
     
