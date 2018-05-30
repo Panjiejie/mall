@@ -7,6 +7,7 @@
        <brandingbusiness></brandingbusiness>
        <service></service>
        <seckill></seckill>
+       <newgoods></newgoods>
     </div> 
 </template>
 <script>
@@ -15,12 +16,14 @@
 import brandingbusiness from './brandingbusiness'
 import service from './service'
 import seckill from './seckill'
+import newgoods from './newgoods'
 export default {
     name:"index",
     components:{
         brandingbusiness,
         service,
-        seckill
+        seckill,
+        newgoods
     },
     data(){
         return{
