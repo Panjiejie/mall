@@ -3,7 +3,6 @@
     <headers></headers>
     <router-view></router-view>
     <footers></footers>
-    <!-- <index></index> -->
   </div>
 </template>
 
