@@ -34,9 +34,34 @@
                         </ul>
                     </div>
                 </div>
+                <div class="gray"></div>
+                <!-- 图文详情左下 -->
+                <div class="bcbody">
+                    <div class="bcbody-content">
+                        <ul>
+                            <li v-for="i in 5" :key="i.key"></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <!-- 图文详情右侧 -->
-            <div class="bcright"></div>
+            <div class="bcright">
+                <div class="bcright-header">
+                    24小时热销榜
+                </div>
+                <div class="bcright-body">
+                    <ul>
+                        <li v-for="item in rightlist" :key="item.key">
+                            <img :src="item.src" style="width:200px;height:200px;" alt="">
+                        <h5>{{item.name}}</h5>
+                        <h6>{{item.subtitle}}</h6>
+                        <div>
+                            <span class="price"><span class="mlogo">¥</span> {{item.price}}</span>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -44,6 +69,7 @@
 <script>
 // import headers from '../common/headers'
 // import footers from '../common/footers'
+import imgurl from '../../assets/common/wechat.png'
 export default {
     name:'goodsdetail',
     data(){
@@ -57,7 +83,17 @@ export default {
                 {title:"适用场景","content":"休闲"},
                 {title:"适用场景","content":"休闲"},
                 {title:"适用场景","content":"休闲"},
-            ]
+            ],
+            rightlist:[
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+            ],
         }
     }
 }
@@ -102,7 +138,6 @@ export default {
     margin:40px 40px 0 0 ;
     float: left;
     background: #fff;
-    border: 1px solid #ddd;
     border-top: none;
 }
 .bcright{
@@ -112,8 +147,9 @@ export default {
 }
 .bcmain-header{
     width: 900px;
-    height: 300px;
+    /* min-height: 300px; */
     background: #fff;
+    border: 1px solid #e7e7e7;
 }
 .bcmain-header .title{
     width: 900;
@@ -144,7 +180,7 @@ export default {
 }
 .introduce {
     width: 900;
-    height: 256px;
+    /* height: 256px; */
     padding: 30px 30px 36px;
     text-align: left;
 }
@@ -176,7 +212,7 @@ export default {
 }
 .introduce li{
     list-style: none;
-    min-width: 420px;
+    min-width: 418px;
     height: 36px;
     line-height: 36px;
     float: left;
@@ -185,6 +221,87 @@ export default {
     border-bottom: 1px dotted #e1e1e1;
     padding-bottom: 6px;
 }
+/* 图文详情左下 */
+.bcbody{
+    width: 900px;
+    /* margin-top: 30px; */
+    padding: 50px 24px 0;
+    background: rgb(255,255,255);
+    border: 1px solid #e7e7e7;
+}
+
+.gray{
+    width: 900px;
+    height: 30px;
+    margin: 0 auto;
+    background: #f2f2f2;
+}
+.bcbody-content{
+    width: 100%;
+    /* height: 100px; */
+    /* border: 1px solid red; */
+}
+.bcbody-content ul{
+    width: 100%;
+    border-top: 1px solid #999;
+}
+.bcbody-content li{
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid yellow;
+    list-style: none;
+}
+.bcbody-content:after{
+    display: block;
+    content: "";
+    clear: both;
+}
+/* 图文详情右侧 */
+.bcright{
+    width: 260px;
+}
+.bcright-header{
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    background: #f45b08;
+}
+.bcright-body{
+    width: 100%;
+    padding: 15px 15px 0;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+}
+.bcright-body ul{
+    width: 100%;
+}
+.bcright-body li{
+    width: 100%;
+    height: 340px;
+    border: 1px solid red;
+    margin-bottom: 15px;
+    list-style: none;
+    padding:15px 15px 0; 
+}
+.bcright-body  li img{
+    border: 1px solid #999;
+}
+.bcright-body  li h5{
+    font-size:16px;
+    color: #333;
+    margin: 15px 0 14px;
+}
+.bcright-body  li h6{
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 5px;
+}
+.bcright-body  li div{
+    color: #ff2040;
+    font-size: 20px;
+}
 </style>
+
 
 
