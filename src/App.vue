@@ -1,21 +1,13 @@
 <template>
   <div id="app">
-    <headers></headers>
     <router-view></router-view>
-    <footers></footers>
   </div>
 </template>
 
 <script>
-import headers from './components/common/headers'
-import footers from './components/common/footers'
-import index from  './components/index/index'
 export default {
   name: 'App',
   components:{
-    headers,
-    footers,
-    index
   }
 }
 </script>

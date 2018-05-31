@@ -17,11 +17,11 @@
 <script>
 // import headers from '../common/headers'
 // import footers from '../common/footers'
-import brandingbusiness from './brandingbusiness'
-import service from './service'
-import seckill from './seckill'
-import newgoods from './newgoods'
-import commonList from './commonList'
+import brandingbusiness from 'components/index/brandingbusiness'
+import service from 'components/index/service'
+import seckill from 'components/index/seckill'
+import newgoods from 'components/index/newgoods'
+import commonList from 'components/index/commonList'
 export default {
     name:"index",
     components:{

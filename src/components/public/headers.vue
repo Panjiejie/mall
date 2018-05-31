@@ -21,11 +21,12 @@
       </div>
       <div class="navbar">
         <ul>
-          <li><span class="circle">.</span><router-link to="/index"> 商城</router-link></li>
-          <li><span class="circle">.</span><router-link to="/haitao">海淘</router-link></li>
-          <li><span class="circle">.</span><router-link to="/goodsguide">商品导购</router-link></li>
-          <li><span class="circle">.</span><router-link to="/newretail">新零售</router-link></li>
-          <li><span class="circle">.</span><router-link to="/dataserver">数据服务</router-link></li>
+          <li><span class="circle">.</span><router-link to="/nav"> 商城</router-link></li>
+          <li><span class="circle">.</span><router-link to="/nav/haitao">海淘</router-link></li>
+          <li><span class="circle">.</span><router-link to="/nav/goodsguide">商品导购</router-link></li>
+          <li><span class="circle">.</span><router-link to="/nav/newretail">新零售</router-link></li>
+          <!-- <li><span class="circle">.</span><router-link to="/nav/dataserver">数据服务</router-link></li> -->
+          <li><span class="circle">.</span><router-link to="/mine"><span style="color:red">个人主页</span></router-link></li>
         </ul>
       </div>
       <div class="inputblock">

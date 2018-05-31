@@ -1,56 +1,48 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import dataserver from '../components/dataserver/dataserver.vue'
-import goodsguide from '../components/goodsguide/goodsguide.vue'
-import haitao from '../components/haitao/haitao.vue'
-import newretail from '../components/newretail/newretail.vue'
-import index from '../components/index/index.vue'
-import goodsdetail from '../components/pages/goodsdetail.vue'
+import Dataserver from 'views/nav/dataserver'
+import Goodsguide from 'views/nav/goodsguide'
+import Haitao from 'views/nav/haitao'
+import Newretail from 'views/nav/newretail'
+import Nav from 'views/nav'
+import Home from 'views/nav/Home'
+import Mine from 'views/mine'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
-      name: 'index',
-      component: index,
-      children:[
-       
-      ]
-      },
-       {//商城
-        path: '/index',
-        name: 'index',
-        component: index,
+      redirect: '/nav'
+    },
+    {
+      path: '/nav',
+      component: Nav,
+      children: [{ //首页
+          path: '',
+          component: Home
         },
-        {//海淘
-          path:'/haitao',
-          name:'haitao',
-          component:haitao
+        { //海淘
+          path: 'haitao',
+          component: Haitao
         },
-        {//商品导购
-          path:'/goodsguide',
-          name:'goodsguide',
-          component:goodsguide
+        { //商品导购
+          path: 'goodsguide',
+          component: Goodsguide
         },
         {//数据服务
-          path:'/dataserver',
-          name:'dataserver',
-          component:dataserver
+          path:'dataserver',
+          component:Dataserver
         },
         {//新零售
-          path:'/newretail',
-          name:'newretail',
-          component:newretail
+          path:'newretail',
+          component:Newretail
         },
-        {//
-          path:'/goodsdetail',
-          name:'goodsdetail',
-          component:goodsdetail
-        }
-  
-    
-  
-]
+      ]
+    },
+    { //海淘
+      path: '/mine',
+      component: Mine
+    },
+  ]
 })
