@@ -7,6 +7,7 @@ import Newretail from 'views/nav/newretail'
 import Nav from 'views/nav'
 import Home from 'views/nav/Home'
 import Mine from 'views/mine'
+import goodsdetail from '../components/pages/goodsdetail.vue'
 
 Vue.use(Router)
 
@@ -38,6 +39,10 @@ export default new Router({
           path:'newretail',
           component:Newretail
         },
+        {//商品详情
+          path:'goodsdetail',
+          component:goodsdetail
+        }
       ]
     },
     { //海淘

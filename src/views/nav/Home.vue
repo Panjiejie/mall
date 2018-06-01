@@ -1,9 +1,6 @@
 <template>
     <div>
-       <div id="banner">
-           <div id="banner-nav">navbar</div>
-           <div id="banner-swiper">swiper</div>
-       </div>
+       <banner></banner>
        <brandingbusiness></brandingbusiness>
        <service></service>
        <seckill></seckill>
@@ -22,6 +19,7 @@ import service from 'components/index/service'
 import seckill from 'components/index/seckill'
 import newgoods from 'components/index/newgoods'
 import commonList from 'components/index/commonList'
+import banner from 'components/index/banner'
 export default {
     name:"index",
     components:{
@@ -29,7 +27,8 @@ export default {
         service,
         seckill,
         newgoods,
-        commonList
+        commonList,
+        banner
     },
     // props:[commonname],
     data(){
@@ -47,22 +46,6 @@ export default {
 </script>
 <style scoped>
 
-    #banner{
-        width: 1200px;
-        height:460px ;
-        margin: 0 auto 45px;
-    }
-    #banner-nav{
-        width: 120px;
-        height: 460px;
-        float: left;
-        border: 1px solid red;
-    }
-    #banner-swiper{
-        width: 1080px;
-        height: 460px;
-        float: left;
-        border: 1px solid red;
-    }
+  
 </style>
 
