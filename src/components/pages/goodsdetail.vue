@@ -39,9 +39,26 @@
             
             <!-- 商品详情右侧 -->
             <div class="rightside">
-                <h2 class="title">我们都有一个家名字叫中国，兄弟姐妹都很多。。。。。。。。。。。。。。。。。。。</h2>
+                <div class="title">我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多</div>
                 <div class="subtitle">[官方授权，正品保障] 超值预售火热进行中</div>
-                
+                <!-- 中间图文部分 -->
+                <div class="textinfo">
+
+                </div>
+                <!-- 选择参数部分 -->
+                <div class="choose-params">
+                    <div class="choose-color choose-line">
+                        <span class="ptitle">选择颜色</span>
+                        <img :src="bigImg" alt="" >
+                        <img :src="bigImg" alt="" >
+                    </div>
+                    <div class="choose-size">
+                        <span class="ptitle">选择尺码</span>
+                        <div class="sizefather">
+                        <span class="sizecontent" v-for="item in 7" :key="item.key">{{item}}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -428,9 +445,60 @@ export default {
  .rightside{
     width: 642px;
     min-height:200px;
+    padding-left: 42px;
     background: #f45b08;
     float: left;
-} 
+    text-align:left;
+}  
+.rightside .title{
+    font-family: "MicrosoftYaHei-Bold";
+    font-size: 21px;
+    color: #362f27;
+    text-align: left;
+}
+.rightside .subtitle{
+    margin:16px 0 30px;
+    color: #a9a9a9;
+    font-size: 14px;
+}
+.textinfo{
+    width: 100%;
+    height: 150px;
+    background: #f5f5f5;
+}
+/* 选择参数 */
+.choose-params{
+    width: 100%;
+    padding: 28px 0 30px 14px;
+}
+.choose-color img{
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin-right: 16px;
+    vertical-align: middle;
+}
+.choose-line{
+    margin-bottom: 28px;
+}
+.ptitle{
+    font-size: 14px;
+    margin-right: 16px;
+    float: left;
+}
+.sizecontent{
+    display: inline-block;
+    width: 80px;
+    height: 34px;
+    border: 1px solid #ddd;
+    text-align: center;
+    line-height: 34px;
+    margin: 0 16px 16px 0;
+}
+.sizefather{
+    width: 514px;
+    float: left;
+}
 </style>
 
 
