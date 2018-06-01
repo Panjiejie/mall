@@ -9,9 +9,40 @@
                 <li>耐克NIKE BENASSI SOLARSOFT &gt;</li>
             </ul>
         </div>
-        <!-- 商品详情 -->
+        <!-- 商品详情左侧-->
         <div class="goodschoose">
-
+            <div class="leftside">
+                <div class="imgbox">
+                    <div class="bigbox">
+                        <img :src="bigImg" alt="" style="width:100%;height:100%;">
+                    </div>
+                    <div class="minibox">
+                        <ul>
+                            <li  @mouseenter="enter(item)" v-for="item in imglist" :key="item.key">
+                                <img :src="item.src" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 收藏 -->
+                <div class="collocation">
+                    <span>
+                        <img @click="changeHeart()" :src="heart" alt="" style="width:20px;height:20px;">
+                        收藏商品
+                    </span>
+                    <span style="margin-left:38px;">
+                        <img :src="heart" alt="" style="width:20px;height:20px;">
+                        品牌主页
+                    </span>
+                </div>
+            </div>
+            
+            <!-- 商品详情右侧 -->
+            <div class="rightside">
+                <h2 class="title">我们都有一个家名字叫中国，兄弟姐妹都很多。。。。。。。。。。。。。。。。。。。</h2>
+                <div class="subtitle">[官方授权，正品保障] 超值预售火热进行中</div>
+                
+            </div>
         </div>
     </div>
     <!-- 图文详情 -->
@@ -70,8 +101,12 @@
 // import headers from '../common/headers'
 // import footers from '../common/footers'
 import imgurl from '../../assets/common/wechat.png'
+import imgurl1 from '../../assets/common/weibo.png'
 export default {
     name:'goodsdetail',
+    components:{
+        // imgurl
+    },
     data(){
         return {
             brandname:"耐克(NIKE)",
@@ -94,6 +129,28 @@ export default {
                 {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
                 {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
             ],
+            bigImg:imgurl,//左侧大图src
+            heart:imgurl,//收藏小心心图标src
+            imglist:[
+                {src:imgurl},
+                {src:imgurl1},
+                {src:imgurl},
+                {src:imgurl1},
+                {src:imgurl}
+            ]
+        }
+    },
+    methods:{
+        enter(value){//左侧点击换图片事件
+            this.bigImg=value.src;
+        },
+        changeHeart(){//收藏事件
+            if(this.heart==imgurl1){
+                this.heart=imgurl
+            }else if(this.heart==imgurl){
+                this.heart=imgurl1
+            }
+            
         }
     }
 }
@@ -301,6 +358,79 @@ export default {
     color: #ff2040;
     font-size: 20px;
 }
+/* 选择商品信息 商品详情 */
+.leftside{
+    width: 558px;
+    height: 496px;
+    /* background: rgba(251,45,51,.1); */
+    margin-bottom:16px;
+    float: left;
+}
+.bigbox{
+    width: 460px;
+    height: 460px;
+    border: 1px solid #e2e2e2;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    float: left;
+}
+.minibox{
+    float: left;
+    width: 84px;
+    height: 460px;
+    margin-left:14px;
+}
+.imgbox:after{
+    content: "";
+    display:block;
+    clear: both;
+}
+.minibox ul{
+    width: 100%;
+    height: 100%;
+}
+.minibox li{
+    width: 84px;
+    height: 84px;
+    margin-top:10px;
+    border: 1px solid #cdcdcd;
+    list-style: none;
+}
+.minibox li:hover{
+    border: 1px solid #f45f0f;
+}
+.minibox li:first-child{
+    margin-top: 0;
+}
+.minibox li img{
+    width: 100%;
+    height: 100%;
+}
+/* 收藏 */
+.collocation{
+    width: 558px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    /* border: 1px solid red; */
+    text-align: left;
+}
+.collocation span{
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+}
+.collocation img{
+    margin-right: 12px;
+    vertical-align: middle;
+}
+/* 商品详情右侧 */
+ .rightside{
+    width: 642px;
+    min-height:200px;
+    background: #f45b08;
+    float: left;
+} 
 </style>
 
 

@@ -64,16 +64,17 @@ export default {
   #banner{
         width: 1200px;
         height:460px ;
-        margin: 0 auto 45px;
+        margin: -3px auto 45px;
         position: relative;
     }
     .banner-detail{
         width: 1080px;
         height: 460px;
-        background: #f2f2f2;
+        background: greenyellow;
         position: absolute;
         top: 0;
         left: 120px;
+        z-index: 999;
         display: none;
     }
     .active{
@@ -91,11 +92,13 @@ export default {
         color: #fff;
     }
     .slidebar li:first-of-type{
-        margin-top: 42px;
+        margin-top: 24px;
     }
     .slidebar li{
         list-style: none;
         height: 50px;
+        line-height: 50px;
+        font-size: 14px;
         vertical-align: top;
         padding-left: 36px;
     }

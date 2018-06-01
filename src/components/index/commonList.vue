@@ -155,7 +155,7 @@ li img{
     border: 1px solid #999;
 }
 li h5{
-    font-size:16px;
+    font-size:14px;
     color: #333;
     margin: 15px 0 14px;
 }
@@ -163,6 +163,7 @@ li h6{
     font-size: 14px;
     color: #999;
     margin-bottom: 5px;
+    font-weight: 400;
 }
 li div{
     color: #ff2040;
