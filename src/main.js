@@ -6,8 +6,12 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
+
 
 Vue.use(VueAwesomeSwiper)//轮播
+Vue.use(iView);
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 /* eslint-disable no-new */

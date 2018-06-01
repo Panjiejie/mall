@@ -25,8 +25,8 @@
           <li><span class="circle">.</span><router-link to="/nav/haitao">海淘</router-link></li>
           <li><span class="circle">.</span><router-link to="/nav/goodsguide">商品导购</router-link></li>
           <li><span class="circle">.</span><router-link to="/nav/newretail">新零售</router-link></li>
-          <!-- <li><span class="circle">.</span><router-link to="/nav/dataserver">数据服务</router-link></li> -->
-          <li><span class="circle">.</span><router-link to="/mine"><span style="color:red">个人主页</span></router-link></li>
+          <li><span class="circle">.</span><router-link to="/nav/dataserver">数据服务</router-link></li>
+          <!-- <li><span class="circle">.</span><router-link to="/mine"><span style="color:red">个人主页</span></router-link></li> -->
         </ul>
       </div>
       <div class="inputblock">
@@ -192,6 +192,7 @@ export default {
     border-bottom:2px solid #F97127;
     /* font-weight: bold; */
     text-shadow: 1px 0 0 currentColor;
+    transition: all 1s;
   }
   .circle{
     display: inline-block;
