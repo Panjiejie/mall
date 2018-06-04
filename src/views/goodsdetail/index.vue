@@ -215,7 +215,7 @@ export default {
             }
             
         },
-        chooseSizeClick(e){
+        chooseSizeClick(e){//选择尺码
           let target=e.currentTarget;
           this.isclick=false;
           target.isclick=true;
