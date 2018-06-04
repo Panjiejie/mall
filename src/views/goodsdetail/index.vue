@@ -217,8 +217,8 @@ export default {
         },
         chooseSizeClick(e){//选择尺码
           let target=e.currentTarget;
-          this.isclick=false;
-          target.isclick=true;
+          this.isorange=false;
+          target.isorange=true;
           console.log(e);
           console.log(target)
         }
@@ -535,6 +535,7 @@ export default {
 }
 .choose-line{
     margin-bottom: 28px;
+    line-height: 60px;
 }
 .ptitle{
     font-size: 14px;
