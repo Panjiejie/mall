@@ -87,7 +87,7 @@
                     <div class="choose-size">
                         <span class="ptitle">选择尺码</span>
                         <ul class="sizefather" @click="chooseSizeClick($event)">
-                          <li :class="{sizecontent:unclick,sizeOrange:isclick}"   v-for="item in 7" :key="item.key">{{item}}</li>
+                          <li :class="{sizecontent:isgray,sizeOrange:isorange}"   v-for="item in 7" :key="item.key">{{item}}</li>
                         </ul>
                     </div>
                     <div class="mount-choose">
@@ -171,8 +171,8 @@ export default {
         return {
             brandname:"耐克(NIKE)",
             inputNumber:1,//商品数量计数器
-            unclick:true,//选择尺码样式
-            isclick:false,//选择尺码样式
+            isgray:true,//选择尺码样式
+            isorange:false,//选择尺码样式
             list:[
                 {title:"店铺","content":"耐克(NIKE)福建莆田货222222222222222222222222222222222222222222222"},
                 {title:"商品毛重","content":"1.0kg"},
