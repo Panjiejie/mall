@@ -79,10 +79,12 @@
                     </div>
                     <!-- 选择参数部分 -->
                     <div class="choose-params">
-                        <div class="choose-color choose-line">
+                        <div class="choose-color choose-line clearfix">
                             <span class="ptitle">选择颜色</span>
-                            <img :src="bigImg" alt="">
-                            <img :src="bigImg" alt="">
+                            <ul class="clearfix">
+                                <li v-for="item in chooseImgList" :key="item.key" @click="chooseColorClick(item)"><img :src="item.imgsrc" :class="{imggray:item.isgray,imgorange:item.isorange}" alt=""></li>
+                            </ul>
+                            
                         </div>
                         <div class="choose-size">
                             <span class="ptitle">选择尺码</span>
@@ -172,8 +174,6 @@ export default {
     return {
       brandname: "耐克(NIKE)",
       inputNumber: 1, //商品数量计数器
-      isgray: true, //选择尺码样式
-      isorange: false, //选择尺码样式
       chooleSizeList: [
         {
           label: 42,
@@ -190,6 +190,10 @@ export default {
           isgray: true,
           isorange: false
         }
+      ],
+      chooseImgList:[
+          {imgsrc:imgurl,isgray:true,isorange:false},
+          {imgsrc:imgurl,isgray:true,isorange:false}
       ],
       list: [
         {
@@ -281,6 +285,15 @@ export default {
     chooseSizeClick(item) {
       //选择尺码
       _.forEach(this.chooleSizeList, e => {
+        e.isgray = true;
+        e.isorange = false;
+      });
+      item.isgray = false;
+      item.isorange = true;
+    },
+    chooseColorClick(item){
+        //选择颜色
+         _.forEach(this.chooseImgList, e => {
         e.isgray = true;
         e.isorange = false;
       });
@@ -589,12 +602,28 @@ export default {
   width: 100%;
   padding: 28px 0 30px 14px;
 }
-.choose-color img {
+.choose-color ul{
+    float: left;
+}
+.choose-color li{
+    float: left;
+    list-style: none;
+}
+.choose-color .imggray {
   width: 60px;
   height: 60px;
   line-height: 60px;
   margin-right: 16px;
   vertical-align: middle;
+  border: 1px solid #999;
+}
+.choose-color .imgorange{
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  margin-right: 16px;
+  vertical-align: middle;
+  border: 1px solid rgb(244, 91, 8)
 }
 .choose-line {
   margin-bottom: 28px;
@@ -615,6 +644,12 @@ export default {
   margin: 0 16px 16px 0;
 }
 .size_orange {
+  display: inline-block;
+  width: 80px;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  margin: 0 16px 16px 0;
   border: 1px solid rgba(244, 91, 8);
 }
 .sizefather {
