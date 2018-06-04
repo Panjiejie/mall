@@ -7,6 +7,7 @@ import Newretail from 'views/nav/newretail'
 import Nav from 'views/nav'
 import Home from 'views/nav/Home'
 import goodsDetail from 'views/goodsdetail/index'
+import personalCenter from 'views/personalcenter'
 
 Vue.use(Router)
 
@@ -41,6 +42,10 @@ export default new Router({
         { //商品详情
           path: 'goodsDetail',
           component: goodsDetail
+        },
+        {
+          path: 'personalCenter',
+          component: personalCenter
         }
       ]
     },
