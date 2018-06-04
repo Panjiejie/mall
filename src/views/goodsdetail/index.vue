@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="content">
     <div class="detail-top">
         <div id="header">
             <ul>
@@ -43,7 +43,39 @@
                 <div class="subtitle">[官方授权，正品保障] 超值预售火热进行中</div>
                 <!-- 中间图文部分 -->
                 <div class="textinfo">
-
+                    <div class="seckill">
+                      <div class="seckill-top">
+                        <span class="seckill-text">限时秒杀</span>
+                        <div class="endtime">
+                          <span class="end">距离结束：</span>
+                          <span class="timecontent">23</span>:
+                          <span class="timecontent">22</span>:
+                          <span class="timecontent">21</span>
+                        </div>
+                      </div>
+                      <!-- 图文下 -->
+                      <div class="seckill-bottom">
+                        <div class="title clearfix">
+                          <span class="ltitle">正品汇正品保障</span>
+                          <span class="rsearch">商品追溯-></span>
+                        </div>
+                        <div class="text-content">
+                          <div class="line">
+                            <span class="ptitle">秒杀价</span>
+                            <span class="seckill-money">￥<span style="font-size:30px;">255.00</span></span>
+                            <span class="oldermoney">￥298.00</span>
+                          </div>
+                          <div class="otherline">
+                            <span class="ptitle">运费</span>
+                            <span class="yunfei">运费10块</span>
+                          </div>
+                          <div class="otherline" style="margin-bottom:16px;">
+                            <span class="ptitle">服务</span>
+                            <span class="yunfei">.无忧货到付款 .正品汇正品认真</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
                 <!-- 选择参数部分 -->
                 <div class="choose-params">
@@ -54,9 +86,20 @@
                     </div>
                     <div class="choose-size">
                         <span class="ptitle">选择尺码</span>
-                        <div class="sizefather">
-                        <span class="sizecontent" v-for="item in 7" :key="item.key">{{item}}</span>
-                        </div>
+                        <ul class="sizefather" @click="chooseSizeClick($event)">
+                          <li :class="{sizecontent:unclick,sizeOrange:isclick}"   v-for="item in 7" :key="item.key">{{item}}</li>
+                        </ul>
+                    </div>
+                    <div class="mount-choose">
+                      <span class="ptitle">选择数量</span>
+                      <div class="input-number">
+                        <el-input-number id="numbers" v-model="inputNumber"  :min="1"  label="描述文字"></el-input-number>
+                      </div>
+                    </div>
+                    <!-- 按钮组 -->
+                    <div class="btngroups">
+                      <button class="addcart">加入购物车</button>
+                      <button class="buying">立即购买</button>
                     </div>
                 </div>
             </div>
@@ -127,6 +170,9 @@ export default {
     data(){
         return {
             brandname:"耐克(NIKE)",
+            inputNumber:1,//商品数量计数器
+            unclick:true,//选择尺码样式
+            isclick:false,//选择尺码样式
             list:[
                 {title:"店铺","content":"耐克(NIKE)福建莆田货222222222222222222222222222222222222222222222"},
                 {title:"商品毛重","content":"1.0kg"},
@@ -168,15 +214,23 @@ export default {
                 this.heart=imgurl1
             }
             
+        },
+        chooseSizeClick(e){
+          let target=e.currentTarget;
+          this.isclick=false;
+          target.isclick=true;
+          console.log(e);
+          console.log(target)
         }
     }
 }
 </script>
 <style scoped>
+
 .detail-top{
     width: 1200px;
-    height: 687px;
-    background: rgba(244,91,8,.1);
+    min-height: 687px;
+    /* background: rgba(244,91,8,.1); */
     margin: 0 auto;
 }
 #header{
@@ -323,6 +377,7 @@ export default {
     width: 100%;
     min-height: 200px;
     border: 1px solid yellow;
+    border-top: none;
     list-style: none;
 }
 .bcbody-content:after{
@@ -446,7 +501,7 @@ export default {
     width: 642px;
     min-height:200px;
     padding-left: 42px;
-    background: #f45b08;
+    /* background: #f45b08; */
     float: left;
     text-align:left;
 }  
@@ -463,7 +518,7 @@ export default {
 }
 .textinfo{
     width: 100%;
-    height: 150px;
+    min-height: 220px;
     background: #f5f5f5;
 }
 /* 选择参数 */
@@ -495,9 +550,143 @@ export default {
     line-height: 34px;
     margin: 0 16px 16px 0;
 }
+.size-orange{
+  border: 1px solid rgba(244,91,8)
+}
 .sizefather{
-    width: 514px;
+    width: 502px;
     float: left;
+}
+.choose-size:after{
+  content: "";
+  display: block;
+  clear: both;
+}
+/* 计数器 */
+.mount-choose{
+  margin-top: 12px;
+  margin-bottom: 40px;
+  height: 34px;
+  line-height: 34px;
+}
+.input-number{
+  height: 34px;
+}
+#numbers{
+  width: 140px;
+  height: 34px;
+}
+.el-input_inner{
+  height: 34px;
+  line-height: 34px;
+}
+.el-input-number__decrease, .el-input-number__increase {
+  background: #fff;
+  color:rgb(76,70,64)
+}
+/* 按钮组 */
+.btngroups button{
+  width: 160px;
+  height: 50px;
+  border: 1px solid rgb(244,91,8);
+  background:#fff;
+  color: rgb(244,91,8);
+}
+.btngroups .addcart{
+  background: rgb(244,91,8);
+  color: #fff;
+  margin-right: 24px;
+}
+.goodschoose:after{
+  content: "";
+  display: block;
+  clear: both;
+}
+/* 秒杀图文详情 */
+.seckill-top{
+  width: 600px;
+  height: 44px;
+  background: rgb(251,41,51);
+  color: #fff;
+  padding: 0 14px;
+
+}
+.seckill-text{
+  float: left;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 44px;
+}
+.endtime{
+  float: right;
+  height: 44px;
+  line-height: 44px;
+}
+.end{
+  font-size: 14px;
+  color: #fff;
+}
+.timecontent{
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  /* transform: translateY(8px); */
+  background: rgb(54,47,39);
+  color: #fff;
+  line-height: 28px;
+  margin-top: 8px;
+  text-align: center;
+  margin-right: 1px;
+}
+.seckill-bottom{
+  width: 100%;
+  height: 36px;
+  padding: 0 14px;
+  line-height: 36px;
+  background: linear-gradient(left,rgb(244,93,8),rgb(251,221,29))
+}
+.seckill-bottom .title{
+  margin-bottom:16px;
+}
+.ltitle{
+  display: inline-block;
+  font-size: 14px;
+  color: #fff;
+  margin-left:52px ;
+}
+.rsearch{
+  font-size: 14px;
+  float: right;
+}
+.line{
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 14px;
+}
+.seckill-money{
+  font-size: 14px;
+  color: rgb(251,41,51);
+  display: inline-block;
+  margin: 0 24px 0 0;
+}
+.oldermoney{
+  font-size: 16px;
+  text-decoration: line-through;
+  color: #999;
+}
+.otherline .ptitle{
+  width: 66px;
+  height: 36px;
+  text-align: left;
+  height: 36px;
+  font-size: 14px;
+}
+.yunfei{
+  display: inline-block;
+  height: 36px;
+  font-size: 14px;
+  line-height: 36px;
 }
 </style>
 

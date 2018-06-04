@@ -64,7 +64,7 @@ export default {
   #banner{
         width: 1200px;
         height:460px ;
-        margin: -3px auto 45px;
+        margin: 0 auto 45px;
         position: relative;
     }
     .banner-detail{
