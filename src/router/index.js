@@ -8,6 +8,15 @@ import Nav from 'views/nav'
 import Home from 'views/nav/Home'
 import goodsDetail from 'views/goodsdetail/index'
 import personalCenter from 'views/personalcenter'
+import safeAdmin from 'views/personalcenter/safeAdmin'
+import personalSetting from 'views/personalcenter/personalSetting'
+import addressAdmin from 'views/personalcenter/addressAdmin'
+import myFootpoint from 'views/personalcenter/myFootpoint'
+import myOrder from 'views/personalcenter/myOrder'
+import myFavorite from 'views/personalcenter/myFavorite'
+import changePhonenumber from 'views/personalcenter/safeAdmin/changePhonenumber/index.vue'
+import changePhonenumberSecond from 'views/personalcenter/safeAdmin/changePhonenumber/changePhonenumberSecond.vue'
+import changeSuccess from 'views/personalcenter/safeAdmin/changePhonenumber/changeSuccess.vue'
 
 Vue.use(Router)
 
@@ -43,9 +52,47 @@ export default new Router({
           path: 'goodsDetail',
           component: goodsDetail
         },
-        {
+        {//个人中心
           path: 'personalCenter',
-          component: personalCenter
+          component: personalCenter,
+          children:[
+            { //个人设置
+              path: 'personalSetting',
+              component: personalSetting
+            },
+            { //安全管理
+              path: 'safeAdmin',
+              component: safeAdmin
+            },
+            {//地址管理
+              path:'addressAdmin',
+              component:addressAdmin
+            },
+            {//我的足迹
+              path:'myFootpoint',
+              component:myFootpoint
+            },
+            {//我的订单
+              path:'myOrder',
+              component:myOrder
+            },
+            {//收藏的商品
+              path:'myFavorite',
+              component:myFavorite
+            },
+            {//修改手机号码
+              path:'changePhonenumber',
+              component:changePhonenumber
+            },
+            {//修改手机号码第二步
+              path:'changePhonenumberSecond',
+              component:changePhonenumberSecond
+            },
+            {//修改手机号码第三步  修改成功
+              path:'changeSuccess',
+              component:changeSuccess
+            }
+          ]
         }
       ]
     },
