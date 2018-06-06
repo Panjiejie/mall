@@ -184,7 +184,11 @@ export default {
     height: 100px;
     margin-left: 250px;
     position: relative;
+    padding-left: 70px;
     /* transform: translateY(30px) */
+  }
+  .tleft{
+    padding-left: 100px;
   }
   .tright{
     margin-left: 0;

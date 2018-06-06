@@ -50,6 +50,7 @@
                     <img v-if="imageUrl" :src="imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     <div class="warn-info">支持大小不超过5m的jpg、png图片</div>
+                    <div class="btn"></div>
             </el-upload>
         </el-dialog>
     </div>
