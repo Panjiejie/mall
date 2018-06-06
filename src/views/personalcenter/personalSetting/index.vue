@@ -17,14 +17,14 @@
 </span>
                 </div>
                 <div class="line clearfix">
-                    <span class="infotitle">性别：</span>
+                    <span class="infotitle">性&nbsp;&nbsp;&nbsp;别：</span>
                     <span class="infos">
                         <el-radio v-model="sex" label="1">男</el-radio>
                         <el-radio v-model="sex" label="2">女</el-radio>
                     </span>
                 </div>
                 <div class="line clearfix">
-                    <span class="infotitle">生日：</span>
+                    <span class="infotitle">生&nbsp;&nbsp;&nbsp;日：</span>
                     <span class="infos">
                         <!-- <select name="year" id="year" v-model="1">
                             <option value=""></option>

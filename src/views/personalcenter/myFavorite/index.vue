@@ -2,18 +2,18 @@
     <div class="contents">
         <div class="title">
             收藏的商品 
-            <a href=""> +全部清除</a>
+            <a  @click="deleteAll"> +全部清除</a>
         </div>
         <div class="contentbox">
              <div class="content clearfix">
                         <div class="clearfix item-content">
-                            <div   @mouseenter="enter(val)" class="item" v-for="val in footpointList" :key="val.key">
-                                <img :src="val.src" alt="">
+                            <div   @mouseenter="enter(val)" class="item" v-for="(val , index) in footpointList" :key="val.key">
+                                <img :src="val.src" alt="" >
                                 <div class="tmoney">
                                     <h5 style="height:30px;line-height:30px;">{{val.title}}</h5>
                                     <h5><span class="price-logo red">￥</span><span class="red" style="font-size:16px;">{{val.price}}</span></h5>
                                 </div>
-                                <span class="close" :class="{show:val.isshow}">×</span>
+                                <span class="close" @click="removeGoods(index)" :class="{show:val.isshow}">×</span>
                             </div>
                         </div>
              </div>      
@@ -55,7 +55,13 @@ export default {
                 //     this.footpointList[i].isshow=false;
                 // }
                 item.isshow = true;
-            }
+            },
+        removeGoods(val){
+            this.footpointList.splice(val,1)
+        },
+        deleteAll(){
+            this.footpointList=[];
+        }
     }
 }
 </script>
