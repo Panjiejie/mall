@@ -5,7 +5,7 @@
         <ul>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">请先登录</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">免费注册</router-link></li>
-          <li><span class="ver-line"></span><router-link to="/">我的订单</router-link></li>
+          <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">帮助中心</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li>
           <li class="cart-content"><span class="ver-line"></span><router-link to="/">购物车<span class="cartBage"><a href="" class="cartNumber">{{cartMsg}}</a></span></router-link></li>
