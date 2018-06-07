@@ -78,7 +78,8 @@ export default new Router({
             },
             {//我的订单
               path:'myOrder',
-              component:myOrder
+              component:myOrder,
+              meta:{auth:true},
             },
             {//收藏的商品
               path:'myFavorite',
