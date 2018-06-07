@@ -7,6 +7,7 @@ import Newretail from 'views/nav/newretail'
 import Nav from 'views/nav'
 import Home from 'views/nav/Home'
 import goodsDetail from 'views/goodsdetail/index'
+import login from 'views/login/index'
 import personalCenter from 'views/personalcenter'
 import safeAdmin from 'views/personalcenter/safeAdmin'
 import personalSetting from 'views/personalcenter/personalSetting'
@@ -55,10 +56,12 @@ export default new Router({
         {//个人中心
           path: 'personalCenter',
           component: personalCenter,
+          meta:{auth:true},
           children:[
             { //个人设置
               path: 'personalSetting',
-              component: personalSetting
+              component: personalSetting,
+              meta:{auth:true},
             },
             { //安全管理
               path: 'safeAdmin',
@@ -99,6 +102,10 @@ export default new Router({
     { //商品详情
       path: '/goodsDetail',
       component: goodsDetail
+    },
+    { //商品详情
+      path: '/login',
+      component: login
     },
   ]
 })
