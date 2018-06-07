@@ -11,35 +11,44 @@
         </div>
         <div class='line'>商品信息</div>
         <div id="table">
-            <table>
-                <th>
-                    <td>商品信息</td>
-                    <td>单价</td>
-                    <td>数量</td>
-                    <td>小计</td>
-                    <td>实付</td>
-                </th>
-                <tr v-for="item in tableList" :key="item.key">
-                    <td>
-                        <img :src="item.imgUrl" alt="">
-                        <span>{{item.title}}</span>
-                        <span>颜色：{{item.color}} 尺寸：{{item.size}}</span>
-                    </td>
-                    <td>￥{{item.price}}</td>
-                    <td>{{item.amount}}</td>
-                    <td>{{item.subtotal}}</td>
-                    <td>{{item.net}}</td>
-                </tr>
-            </table>
+          <div id="table-header">
+              <span class="goodsinfo" style="line-height:40px">商品信息</span>
+              <span class="price">单价</span>
+              <span class="amount">数量</span>
+              <span class="subtotal">小计</span>
+              <span class="realpay">实付</span>
+          </div>
+          <!-- 表格主体 -->
+          <div class="table-line clearfix" v-for="item in tableList" :key="item.key">
+              <div class="goodsinfo clearfix">
+                  <img :src="item.imgUrl" alt="">
+                  <div class="goodsinfo-right">
+                    <span class="infotitle" >{{item.title}}</span><br>
+                    <span>颜色：{{item.color}} 尺寸：{{item.size}}</span>
+                  </div>
+              </div>
+              <div class="price">￥ {{item.price}}</div>
+              <div class="amount">{{item.amount}}</div>
+              <div class="subtotal">￥ {{item.subtotal}}</div>
+              <div class="realpay">￥ {{item.net}}</div>
+          </div>
+        </div>
+        <div id="receiveInfos">
+            <consigneeInfo></consigneeInfo>
         </div>
     </div>
 </template>
 <script>
 import imgUrl from '../../assets/common/logo.png'
+import consigneeInfo from './consigneeInfo'
 export default {
     name:'innerBottom',
+    components:{
+        consigneeInfo
+    },
     data(){
         return{
+            src:imgUrl,
             tableList:[
                 {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
                 {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
@@ -69,27 +78,57 @@ export default {
         font-size: 14px;
         color: #333;
     }
-    table{
-        border-collapse: collapse;
-        border: 1px solid #999;
+    #table-header{
         width: 930px;
-        border-top: none;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        background: #f2f2f2;
+        border: 1px solid rgb(221,221,221);
     }
-    #table img{
+    #table-header span{
+        /* display:inline-block; */
+        float: left;
+    }
+    .goodsinfo{
+        width: 300px;
+        line-height: 14px;
+    }
+    .price{width: 250px;}
+    .amount{width: 140px;}
+    .subtotal{width: 140px;}
+    .realpay{width: 98px;}
+    .table-line{
+        width: 930px;
+        height: 90px;
+        line-height: 90px;
+        border: 1px solid rgb(221,221,221);
+        border-top: 0;
+    }
+    .table-line>div{
+        float: left;
+        text-align: center;
+    }
+    .goodsinfo img{
         width: 60px;
         height: 60px;
+        margin: 16px 0 0 16px;
+        float: left;
     }
-    th{
-        height: 40px;
-        /* width: 930px; */
+    .goodsinfo-right{
+        float: left;
+        margin:20px 0 0 14px;
+        font-size: 12px;
+        color: #999;
     }
-    th td{
-        border-right:1px solid #999;
-        border-top:1px solid #999;
-        height: 40px; 
+    .infotitle{
+        font-size: 14px;
+        color: black;
+        line-height: 20px;
     }
-    tr{
-        height: 92px;
-        border-top: 1px solid #999;
+    #receiveInfos{
+        width: 930px;
+        height: 172px;
+        background: yellowgreen;
     }
 </style>
