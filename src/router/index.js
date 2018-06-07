@@ -17,6 +17,7 @@ import myFavorite from 'views/personalcenter/myFavorite'
 import changePhonenumber from 'views/personalcenter/safeAdmin/changePhonenumber/index.vue'
 import changePhonenumberSecond from 'views/personalcenter/safeAdmin/changePhonenumber/changePhonenumberSecond.vue'
 import changeSuccess from 'views/personalcenter/safeAdmin/changePhonenumber/changeSuccess.vue'
+import waitingSend from 'views/personalcenter/myOrder/waitingSend/index.vue'
 
 Vue.use(Router)
 
@@ -91,6 +92,10 @@ export default new Router({
             {//修改手机号码第三步  修改成功
               path:'changeSuccess',
               component:changeSuccess
+            },
+            {//我的订单 待发货 内部详情页面
+              path:'waitingSend',
+              component:waitingSend
             }
           ]
         }
