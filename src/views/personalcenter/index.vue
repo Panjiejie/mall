@@ -2,7 +2,7 @@
     <div class="content">
         <div class="innercontent">
             <div class="innerhead">
-                首页>个人中心
+                 首页>个人中心
             </div>
             <div class="innerbody clearfix">
                 <!-- 左侧 -->

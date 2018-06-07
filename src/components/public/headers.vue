@@ -1,55 +1,120 @@
 <template>  
-  <div>
+  <div id="content">
     <div id="header">
       <div class="main">
         <ul>
-          <li><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">请先登录</router-link></li>
+          <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">{{loginIn}}</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
-          <li><span class="ver-line"></span><router-link to="/">帮助中心</router-link></li>
+          <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li>
-          <li class="cart-content"><span class="ver-line"></span><router-link to="/">购物车<span class="cartBage"><a href="" class="cartNumber">{{cartMsg}}</a></span></router-link></li>
+          <li class="cart-content"><span class="ver-line"></span><router-link to="/">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li>
         </ul>
       </div>
     </div>
     <div class="navcontent">
       <div id="nav">
-      <div class="logocontent" @click="toHome">
-          <img class="logo" src="../../assets/common/logo.png" alt="">
-          <span class="title">正品汇</span><br>
-          <span class="secondTitle">惠聚品质商品</span>
+        <div class="logocontent" @click="toHome">
+            <img class="logo" src="../../assets/common/logo.png" alt="">
+            <span class="title">正品汇</span><br>
+            <span class="secondTitle">惠聚品质商品</span>
+        </div>
+        <div class="navbar">
+          <ul>
+            <li><span class="circle">.</span><router-link to="/nav"> 商城</router-link></li>
+            <li><span class="circle">.</span><router-link to="/nav/haitao">海淘</router-link></li>
+            <li><span class="circle">.</span><router-link to="/nav/goodsguide">商品导购</router-link></li>
+            <li><span class="circle">.</span><router-link to="/nav/newretail">新零售</router-link></li>
+            <li><span class="circle">.</span><router-link to="/nav/dataserver">数据服务</router-link></li>
+            <!-- <li><span class="circle">.</span><router-link to="/mine"><span style="color:red">个人主页</span></router-link></li> -->
+          </ul>
+        </div>
+        <div class="inputblock">
+          <input type="text">
+          <button><img src="../../assets/common/logo.png" alt="" style="width:16px;height:16px;"></button>
+        </div>
+          <!-- 个人中心小三角和下拉框 -->
+    <!-- <div class="triangle" :class='{isTriangle:personalCenter.isTriangle}'></div> -->
+    <div class="personal-center" :class='{isshow:isshow}' @mouseleave='isoutPersonalCenter'>
+      <ul>
+        <li><a href="">个人中心</a></li>
+        <li><a href="">商品收藏</a></li>
+        <li><a href="">安全设置</a></li>
+        <li><a href="">退出登录</a></li>
+        <li class="triangle"></li>
+      </ul>
+    </div>
+    <!-- 购物车 -->
+    <div class="shopping-cart">
+      <ul>
+        <li v-for="item in shoppingCartList" :key='item.key'>
+          <img :src="item.Filepath" alt="">
+          <div class="cartlist-right">
+             <h4 class="cartgoods-title">{{item.title}}</h4>
+              <div class="price">
+                <span>￥{{item.price}}</span> x{{item.num}}
+              </div>
+          </div>
+        </li>
+      </ul>
+      <div class="cart-footer">
+        <p class="goods-amount"> 共{{totalsAmount}}件商品</p>
+        <p class="totalprice">共计:<span>￥{{totalsMoney}}</span></p>
+        <button>去购物车</button>
       </div>
-      <div class="navbar">
-        <ul>
-          <li><span class="circle">.</span><router-link to="/nav"> 商城</router-link></li>
-          <li><span class="circle">.</span><router-link to="/nav/haitao">海淘</router-link></li>
-          <li><span class="circle">.</span><router-link to="/nav/goodsguide">商品导购</router-link></li>
-          <li><span class="circle">.</span><router-link to="/nav/newretail">新零售</router-link></li>
-          <li><span class="circle">.</span><router-link to="/nav/dataserver">数据服务</router-link></li>
-          <!-- <li><span class="circle">.</span><router-link to="/mine"><span style="color:red">个人主页</span></router-link></li> -->
-        </ul>
-      </div>
-      <div class="inputblock">
-        <input type="text">
-        <button><img src="../../assets/common/logo.png" alt="" style="width:16px;height:16px;"></button>
-      </div>
+    </div>
     </div>
     </div>
   </div>
 </template>  
   
 <script>  
-
+import imgurl from '../../assets/common/kefu.png'
 export default { 
   name: 'headerNav', 
   data () {  
     return {  
-       cartMsg:0,//购物车bage
+      //  cartMsg:0,//购物车bage
+       loginIn:'请先登录',
+       isshow:false,
+       totalCartMoney:0,//购物车总价
+       totalCartAmount:0,//购物车商品总数
+       shoppingCartList:[
+         {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
+         {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
+         {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
+       ]
     } 
-  },  
+  }, 
+  computed:{
+    totalsMoney(){//购物车总价
+      this.shoppingCartList.forEach(item=>{
+        this.totalCartMoney+=item.price*item.num;
+      })
+      return this.totalCartMoney;
+    },
+    totalsAmount(){//购物车商品总数
+        this.shoppingCartList.forEach(item=>{
+        this.totalCartAmount+=item.num*1;
+      })
+      return this.totalCartAmount;
+    }
+  },
+  watch:{
+    isshow(){
+      console.log(this.isshow)
+    },
+  },
   methods: {  
      toHome(){
        this.$router.push('/')
+     },
+     isshowPersonalCenter(){
+       this.isshow=true;
+
+     },
+     isoutPersonalCenter(){
+       this.isshow=false;
      }
   },  
   mounted(){  
@@ -61,6 +126,9 @@ export default {
   
 <!-- Add "scoped" attribute to limit CSS to this component only -->  
 <style scoped>
+#content{
+  position: relative;
+}
   a{
     text-decoration-line: none;
   }  
@@ -96,15 +164,15 @@ export default {
     font-size: 14px;
     color: #CCCCCC;
   }
-  .main li:hover{
+  /* .main li:hover{
     background: #3E3E3E;
-  }
+  } */
   .ver-line{
     width: 1px;
     height: 12px;
     line-height: 36px;
     float: left;
-    display: inline-block;
+    /* display: inline-block; */
     text-align: left;
     margin-top: 12px;
     background: #CCCCCC;
@@ -138,7 +206,6 @@ export default {
     width: 48px;
     height: 48px;
     line-height: 48px;
-    display: inline-block;
     float:left;
     margin: 26px 20px 0 0;
   }
@@ -149,11 +216,13 @@ export default {
     text-align: left;
     box-shadow: 0 4px 4px #f2f2f2;
     margin-bottom: 4px;
+    position: relative;
   }
   #nav{
     width: 1200px;
     height: 100%;
     margin: 0 auto;
+    position: relative;
   }
   .title{
     display: inline-block;
@@ -233,4 +302,121 @@ export default {
     background: #fff;
     outline: 0;
   }
-</style>  
+  /* 个人中心 */
+  .triangle{
+    width: 0;
+    height: 0;
+    border: none;
+    border: 10px solid transparent;
+    border-bottom:10px solid #fff;
+    position: absolute;
+    top: -44px;
+    right: 50px;
+    z-index: 33;
+    /* display: none; */
+  }
+  .personal-center{
+    width: 120px;
+    height: 150px;
+    background: #fff;
+    position: absolute;
+    top: 0px;
+    right: 380px;
+    margin-top: 24px;
+    display: none;
+  }
+  .personal-center li{
+    list-style: none;
+    text-align: center;
+    height: 24;
+    line-height: 24px;
+  }
+  .personal-center li:hover a{
+    color: rgb(249,126,61) !important
+  }
+  .isshow{
+    display: block;
+  }
+  /* 购物车 */
+  .shopping-cart{
+    width: 270px;
+    min-height:228px;
+    padding-bottom: 60px;
+    /* background: #F45B08; */
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    background: #fff;
+    box-shadow: 0px 4px 4px 4px  rgba(232,232,232,.5);
+    display: none;
+  }
+  .cart-footer{
+    width: 270px;
+    height: 60px;
+    background: #272424;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    padding: 12px;
+  }
+  .shopping-cart li{
+    list-style: none;
+    width: 270px;
+    height: 84px;
+    font-size: 14px;
+    font-size: 400;
+    padding: 12px;
+    border-bottom: 1px dashed #999;
+  }
+  .shopping-cart li img{
+    width: 60px;
+    height: 60px;
+    float: left;
+  }
+  .cartlist-right{
+    width: 180px;
+    float: left;
+    margin-left: 6px;
+  }
+  .cartlist-right h4{
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 20px;
+    /* height: 12px; */
+    line-height: 12px;
+  }
+  .cartlist-right .price span{
+    font-size: 14px;
+    color: #ff2040;
+    font-weight: 600;
+  }
+  .goods-amount{
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 6px;
+    line-height: 12px;
+  }
+  .totalprice{
+    font-size: 14px;
+    color: #fff;
+  }
+  .totalprice span{
+    color: #ff2040;
+    font-weight: 600;
+  }
+  .cart-footer button{
+    width: 85px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    color: #f97127;
+    border: 1px solid #f97127;
+    background: transparent;
+    outline: none;
+    position: absolute;
+    top: 12px;
+    right: 12px;;
+  }
+</style>    

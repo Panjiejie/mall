@@ -8,7 +8,6 @@
                             <span>下单时间：2018-01-08 15:02:00</span>
                             &nbsp;&nbsp;
                             <span>订单编号：62205723918</span>
-                            <span class="endtime">付款截止：剩余22时44分</span>
                         </div>
                         <div class="body-content">
                             <img src="../../../assets/common/logo.png" alt="">

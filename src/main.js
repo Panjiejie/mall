@@ -9,12 +9,14 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import _ from 'lodash'
+// import store from './store'
 
 Vue.prototype._ = _
 Vue.use(VueAwesomeSwiper)//轮播
 Vue.use(iView);
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+// Vue.use(store)s
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

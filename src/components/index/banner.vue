@@ -2,12 +2,54 @@
     <div id="banner" @mouseleave="leave">
            <div id="banner-nav" >
                <ul class="slidebar" >
-                   <li v-for="item in 7" :key="item.key" @mouseenter="enter(item)" >
-                       {{item}}<span>&gt;</span>
+                   <li v-for="item in navLeft" :class="{isorange:item.isShow}" :key="item.key" @mouseenter="enter(item)" >
+                       {{item.text}}<span>&gt;</span>
+                   </li>
+                   <li @mouseenter="brands()" :class="{isorange:isShow}" >
+                       品牌<span>&gt;</span>
                    </li>
                </ul>
                 <!-- 二级导航 -->
-                <div class="banner-detail" v-bind:class="{ active: isActive }">{{detailmsg}}</div>
+                <div class="banner-detail" v-bind:class="{ active: isActive }">
+                    <p>分类推荐</p>
+                    <ul class="second-mnue clearfix">
+                        <li class="clearfix" v-for="item in detailmsg" :key="item.key">
+                            <img :src="item.Filepath" alt="">
+                            <div class="goods-detail">
+                                <h4>{{item.title}}</h4>
+                                <p>{{item.subtitle}}</p>
+                                <p class="price">￥{{item.price}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 二级导航品牌 -->
+                 <div class="banner-detail brand-tab" v-bind:class="{ brands: isBrands }">
+                    <div class="brand-tab-left">
+                        <div class="tab-title">
+                            <span>品牌商</span>
+                            <a>查看全部></a>
+                        </div>
+                        <ul class="brand-detail clearfix">
+                            <li class="clearfix" v-for="item in brand" :key="item.key">
+                                <img :src="item.Filepath" alt="">
+                                <p>{{item.brandName}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="brand-tab-right">
+                        <div class="tab-title">
+                            <span>热门品牌</span>
+                            <a>查看全部></a>
+                        </div>
+                        <ul class="brand-detail clearfix">
+                            <li class="clearfix" v-for="item in brand" :key="item.key">
+                                <img :src="item.Filepath" alt="">
+                                <p>{{item.brandName}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
            </div>
            <!-- 轮播 -->
            <div id="banner-swiper">
@@ -26,41 +68,87 @@ export default {
     data(){
         return{
             vals:"",//slidebar li值
-            detailmsg:"1",
             value2:0,
-            isActive:false,
+            isActive:false,//行业右侧显示隐藏
+            isBrands:false,//品牌内容显示隐藏
+            isShow:false,//品牌显示隐藏背景色
+            lis:"",//nav li的val
+            navLeft:[
+                {isShow:false,text:'珠宝'},
+                {isShow:false,text:'酒类'},
+                {isShow:false,text:'奶粉'},
+                {isShow:false,text:'服饰'},
+                {isShow:false,text:'食品'},
+                {isShow:false,text:'其他'},
+            ],
             list:[
                 {src:imgurl},
                 {src:imgurl},
                 {src:imgurl},
                 {src:imgurl},
+            ],
+            detailmsg:[
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',subtitle:'明星产品 明星产品',price:'255'},
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机2',subtitle:'明星产品 明星产品',price:'255'},
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机3',subtitle:'明星产品 明星产品',price:'255'},
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机4',subtitle:'明星产品 明星产品',price:'255'},
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机5',subtitle:'明星产品 明星产品',price:'255'},
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机6',subtitle:'明星产品 明星产品',price:'255'},
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机7',subtitle:'明星产品 明星产品',price:'255'},
+                {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机8',subtitle:'明星产品 明星产品',price:'255'}
+            ],
+            brand:[
+                {Filepath:imgurl,brandName:"卡地亚1"},
+                {Filepath:imgurl,brandName:"卡地亚2"},
+                {Filepath:imgurl,brandName:"卡地亚3"},
+                {Filepath:imgurl,brandName:"卡地亚4"},
+                {Filepath:imgurl,brandName:"卡地亚5"},
+                {Filepath:imgurl,brandName:"卡地亚6"},
+                {Filepath:imgurl,brandName:"卡地亚7"},
+                {Filepath:imgurl,brandName:"卡地亚8"},
+                {Filepath:imgurl,brandName:"卡地亚9"},
             ]
         }
     },
     watch:{
-        vals:function(newval,oldval){
+        vals:function(newval,oldval){//监听左侧导航vals值 来请求不同商品
             // console.log(oldval+"----oldval;"+newval+"------newval");
-            this.detailmsg=newval;
+            this.lis=newval;
         }
     },
     methods:{
-        enter(val){
+        enter(val){//nav li鼠标移入事件
             this.vals=val;
-            if(!this.isActive){
-            this.isActive=true;
-            }
+            this.isShow=false;//隐藏品牌背景色
+            this.navLeft.forEach(item=>item.isShow=false);
+            val.isShow=true;//当前背景色显示
+            this.isBrands=false;//隐藏品牌内容
+            this.isActive=true;//显示当前内容
             console.log(this.isActive)
         },
         leave(){
-            if(this.isActive){
-                this.isActive=false;
-                // console.log(this.isActive)
-            }
+            // 隐藏行业和品牌内容，去除nav背景色
+            this.isActive=false;
+            this.isBrands=false;
+            this.navLeft.forEach(item=>item.isShow=false);
+            this.isShow=false;
+        },
+        brands(){
+            //品牌li进入事件
+            //隐藏 其他li背景色，隐藏其他li详情内容
+            //显示品牌背景色和内容
+            this.navLeft.forEach(item=>item.isShow=false);
+            this.isActive=false;
+            this.isBrands=true;
+            this.isShow=true;
         }
     }
 }
 </script>
 <style scoped>
+.isorange{
+    background: rgb(249, 113, 39);
+}
   #banner{
         width: 1200px;
         height:460px ;
@@ -70,14 +158,15 @@ export default {
     .banner-detail{
         width: 1080px;
         height: 460px;
-        background: greenyellow;
+        background: rgba(27, 91, 96,.6);
         position: absolute;
         top: 0;
         left: 120px;
         z-index: 999;
+        padding: 30px 0 0 30px;
         display: none;
     }
-    .active{
+    .active,.brands{
         display: block;
     }
     #banner-nav{
@@ -103,12 +192,9 @@ export default {
         padding-left: 36px;
     }
     .slidebar li:hover{
-        background: blue;
+        background: rgb(249, 113, 39);
     }
-    /* #banner-nav:hover>.banner-detail{
-        display: block;
-
-    } */
+    
     .slidebar li span{
         display: inline-block;
         margin-left: 16px;
@@ -117,8 +203,89 @@ export default {
         width: 1080px;
         height: 460px;
         float: left;
-        border: 1px solid red;
+        /* border: 1px solid red; */
     }
+    /* 二级导航 */
+    .banner-detail>p{
+        color: #fff;
+        text-align: left;
+        font-size: 14px;
+    }
+    .second-mnue{
+        width: 100%;
+    }
+    .second-mnue li{
+        width: 300px;
+        height: 100px;
+        float: left;
+        margin: 20px 20px 0 0;
+        list-style: none;
+        text-align: left;
+        background: #fff;
+    }
+    .second-mnue img{
+        width: 100px;
+        height: 100px;
+        float: left;
+    }
+    .second-mnue .goods-detail{
+        float: left;
+        width: 200px;
+        height: 100px;
+        padding: 10px;
+        border-left: 1px solid rgb(234,234,234)
+    }
+    .second-mnue h4{
+        font-size: 14px;
+        text-indent: 14px;
+    }
+    .second-mnue p{
+        color: #999;
+    }
+    .second-mnue .price{
+        color: rgb(255,32,64);
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    /* 品牌 */
+.tab-title{
+    text-align: left;
+    width: 390px;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.brand-tab ul{
+    width: 390px;
+    height: 360px;
+}
+.brand-tab li{
+    width: 130px;
+    height: 120px;
+    float: left;
+    color: #fff;
+    list-style: none;
+    text-align: center;
+    font-size: 14px;
+}
+.brand-tab img{
+    width: 80px;
+    height: 80px;
+}
+.brand-tab-left{
+    margin-right: 120px;
+}
+.brand-tab-left,.brand-tab-right{
+    float: left;
+    width: 390px;
+}
+.brand-tab a{
+    color: #fff;
+    float: right;
+}
 </style>
 
 
