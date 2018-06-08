@@ -50,7 +50,7 @@ export default {
     width: 1200px;
     min-height: 800px;
     margin: 0 auto;
-    background: rgba(244,91,8,.2);
+    /* background: rgba(244,91,8,.2); */
 }
 .innerhead{
     width: 1200px;
@@ -63,6 +63,10 @@ export default {
     height: 520px;
     background: #fff;
     float: left;
+    border: 1px solid #e4e7ed;
+}
+.el-tabs--card>.el-tabs__header .el-tabs__nav{
+    border: none;
 }
 .innerright{
     width: 990px;
@@ -70,6 +74,7 @@ export default {
     background: #f2f2f2;
     float: right;
     margin-bottom: 50px;
+    border: 1px solid #e4e7ed;
 }
 /* 左侧列表 */
 .list{

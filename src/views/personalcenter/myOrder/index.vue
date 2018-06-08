@@ -34,14 +34,36 @@
             </el-tab-pane>
             <el-tab-pane label="待发货" name="second">
                 <waitingSend></waitingSend>
+                <div class="page">
+                    <template>
+                         <Page :total="100" show-elevator></Page>
+                    </template>
+                </div>
             </el-tab-pane>
             <el-tab-pane label="待收货" name="third">
                 <waitingReceived></waitingReceived>
+                <div class="page">
+                    <template>
+                         <Page :total="100" show-elevator></Page>
+                    </template>
+                </div>
             </el-tab-pane>
             <el-tab-pane label="已完成" name="fourth">
                 <completedOrder></completedOrder>
+                <div class="page">
+                    <template>
+                         <Page :total="100" show-elevator></Page>
+                    </template>
+                </div>
             </el-tab-pane>
-            <el-tab-pane label="售后" name="fifth">售后</el-tab-pane>
+            <el-tab-pane label="售后" name="fifth">
+                <afterSale></afterSale>
+                <div class="page">
+                    <template>
+                         <Page :total="100" show-elevator></Page>
+                    </template>
+                </div>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -49,12 +71,14 @@
 import waitingSend from "../myOrder/waitingSend/index";
 import waitingReceived from "../myOrder/waitingReceived/index";
 import completedOrder from "../myOrder/completedOrder/index";
+import afterSale from "../myOrder/afterSale/index";
 export default {
   name: "myOrder",
   components: {
     waitingSend,
     waitingReceived,
-    completedOrder
+    completedOrder,
+    afterSale
   },
   data() {
     return {

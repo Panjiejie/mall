@@ -112,6 +112,7 @@ p{
     width: 990px;
     min-height: 660px;
     font-size: 14px;
+    background: #fff;
 }
 .title{
         width: 990px;
