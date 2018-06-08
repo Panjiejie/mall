@@ -67,8 +67,9 @@ export default {
 .innerright{
     width: 990px;
     min-height: 660px;
-    background: #fff;
+    background: #f2f2f2;
     float: right;
+    margin-bottom: 50px;
 }
 /* 左侧列表 */
 .list{

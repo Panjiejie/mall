@@ -1,10 +1,9 @@
 <template>
     <div id="consigneeInfo-content">
-        <p>收货信息</p>
+        <p>支付方式及送货时间</p>
         <div id="consigneeInfo">
-            <p><span>收货人：</span>大中国</p>
-            <p><span>联系方式：</span>18689207260</p>
-            <p><span>收货地址：</span>我们都有一个家名字叫中国，兄弟姐妹都很多</p>
+            <p>支付方式：<span class="red">货到付款</span></p>
+            <p>送货时间：<span class="gray">双休日、假日送货(适合于家庭地址)</span></p>
         </div>
     </div>
 </template>
@@ -14,9 +13,17 @@ export default {
 }
 </script>
 <style scoped>
+.red{
+    color: rgb(255, 32, 64)
+}
+.gray{
+    color: #999;
+}
 #consigneeInfo-content{
     text-align: left;
-    margin-top:40px ;
+    padding-top:40px ;
+    width: 930px;
+    height: 150px;
 }
 #consigneeInfo-content>p{
     width: 930px;
@@ -25,18 +32,16 @@ export default {
     vertical-align: top;
 }
 #consigneeInfo{
-    width: 930px;
-    height: 100px;
+    width: 468px;
+    height: 78px;
     padding-left: 12px;
-    border: 1px solid rgb(221,221,221)
+    border: 1px solid rgb(221,221,221);
+    background: #f2f2f2;
 }
 #consigneeInfo p{
     height: 32px;
     line-height: 32px;
     font-size: 14px;
-    color: #999;
-}
-#consigneeInfo  span{
-    color :#333;
+    color: #333;
 }
 </style>

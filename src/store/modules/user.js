@@ -1,6 +1,6 @@
 const user={
     state:{
-        name:''
+        name:'zs'
     },
     mutations: {
         SET_NAME:(state,name)=>{

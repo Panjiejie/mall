@@ -19,6 +19,8 @@ import changePhonenumber from 'views/personalcenter/safeAdmin/changePhonenumber/
 import changePhonenumberSecond from 'views/personalcenter/safeAdmin/changePhonenumber/changePhonenumberSecond.vue'
 import changeSuccess from 'views/personalcenter/safeAdmin/changePhonenumber/changeSuccess.vue'
 import waitingSend from 'views/personalcenter/myOrder/waitingSend/index.vue'
+import waitingSendDetail from 'views/personalcenter/myOrder/waitingSend/detail.vue'
+import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/detail.vue'
 
 Vue.use(Router)
 
@@ -97,9 +99,18 @@ export default new Router({
               path:'changeSuccess',
               component:changeSuccess
             },
-            {//我的订单 待发货 内部详情页面
+            {//我的订单 代发货 首页
               path:'waitingSend',
               component:waitingSend
+            },
+            {//我的订单 待发货 内部详情页面
+              path:'waitingSendDetail',
+              component:waitingSendDetail
+            },
+            {//我的订单 售后服务页面
+              path:'afterSaleDetail',
+              component:afterSaleDetail,
+              meta:{auth:true},
             }
           ]
         }

@@ -7,14 +7,14 @@
 <script>
 import indexListItem from '../../../../components/myOrder/indexListItem'
 export default {
-    name:'waitingSend',
+    name:'waitingReceived',
     components:{
         indexListItem
     },
     data(){
         return{
             isshowLogistics:false,
-            orderStatus:'待发货'
+            orderStatus:'已完成'
         }
     },
     methods:{

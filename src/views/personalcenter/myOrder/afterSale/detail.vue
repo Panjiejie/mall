@@ -1,15 +1,11 @@
 <template>
-    <div id="content">
-        <div class="step">
-            <el-steps :active="1" finish-status="success" align-center>
-                <el-step title="提交订单" description="22222222444534"></el-step>
-                <el-step title="等待出库"></el-step>
-                <el-step title="等待签收"></el-step>
-                <el-step title="等待付款"></el-step>
-                <el-step title="交易完成"></el-step>
-            </el-steps>
-        </div>
-        <div class='line'>商品信息</div>
+    <div id="aftersale">
+        <innerTitle :none="none" :statusMsg="statusMsg"></innerTitle>
+        <!-- <innerBottom></innerBottom> -->
+        <div class="bottom">
+            
+             <!-- 表格 -->
+           <div class='line'>商品信息</div>
         <div id="table">
           <div id="table-header">
               <span class="goodsinfo" style="line-height:40px">商品信息</span>
@@ -33,31 +29,34 @@
               <div class="realpay">￥ {{item.net}}</div>
           </div>
         </div>
-        <div id="receiveInfos">
-            <consigneeInfo></consigneeInfo>
-            <invoiceinfos></invoiceinfos>
-            <payment></payment>
-            <orderList></orderList>
+        <consigneeInfo></consigneeInfo>
+        <payment></payment>
+        <orderList></orderList>
+
         </div>
+         
     </div>
 </template>
 <script>
-import imgUrl from '../../assets/common/logo.png'
-import consigneeInfo from './consigneeInfo'
-import invoiceinfos from './invoiceInfos'
-import payment from './payment'
-import orderList from './orderList'
+import imgUrl from '../../../../assets/common/logo.png'
+import innerTitle from '../../../../components/myOrder/innerTitle'
+import consigneeInfo from '../../../../components/myOrder/consigneeInfo'
+import payment from '../../../../components/myOrder/payment'
+import orderList from '../../../../components/myOrder/orderList'
+// import innerBottom from '../../../../components/myOrder/innerBottom'
 export default {
-    name:'innerBottom',
+    name:'afterSale',
     components:{
+        innerTitle,
         consigneeInfo,
-        invoiceinfos,
         payment,
         orderList
+        // innerBottom
     },
     data(){
         return{
-            src:imgUrl,
+            none:true,
+            statusMsg:'售后中',
             tableList:[
                 {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
                 {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
@@ -68,30 +67,22 @@ export default {
 }
 </script>
 <style scoped>
-    .display-none{
-        display: none;
-    }
-    #content{
-        width: 990px;
-        min-height:600px;
-        background: #fff;
-        padding: 0 30px;
-        border: 1px solid rgb(221,221,221);
-    }
-    .step{
-        width: 930px;
-        height: 108px;
-        padding-top: 24px;
-        margin-bottom: 26px;
-    }
-    .line{
+#aftersale{
+    width: 990px;
+}
+.bottom{
+    width: 990px;
+    padding: 30px 30px 0;
+    background: #fff;
+}
+ .line{
         height:48px;
         line-height:48px;
         text-align:left;
         font-size: 14px;
         color: #333;
     }
-    #table-header{
+ #table-header{
         width: 930px;
         height: 40px;
         line-height: 40px;
@@ -139,10 +130,6 @@ export default {
         color: black;
         line-height: 20px;
     }
-    #receiveInfos{
-        width: 930px;
-        /* height: 132px; */
-        /* background: yellowgreen; */
-    }
-   
 </style>
+
+
