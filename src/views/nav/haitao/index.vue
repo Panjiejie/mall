@@ -1,7 +1,7 @@
 <template>
     <div id="haitao">
         <div class="h-title">
-            首页 > 海涛
+            首页 > 海淘
         </div>
         <!-- 选项 -->
         <div class="h-brandslist">
@@ -22,6 +22,14 @@
         <div class="h-content">
             <div class="h-content-title">
                 <span @click="chooseSorts(item,detailTitle)" class="front" :class="{isorange:item.isshowOrange}" v-for='item in detailTitle' :key="item.key">{{item.title}}</span>
+                <span  class="front h-t-price" :class="{isorange:isshowPriceOrange}">
+                    价格排序&nbsp;
+                    <span class="top-triangle" :class='{btriangle:isTopOrange}' @click="toLowerPrice()"></span>
+                    <span class="bottom-triangle" :class="{ttriangle:isBottomOrange}" @click="toExpensivePrice()"></span>
+                </span>
+                <span class="h-t-right" :class="{isorange:isStore}" @click="isStoreOrNot">
+                    仅显示有货
+                </span>
             </div>
             <div class="h-content-body">
                 <ul class="clearfix" >
@@ -41,6 +49,10 @@ export default {
     },
     data(){
         return{
+            isshowPriceOrange:false,//是否更改价格排序字体颜色
+            isTopOrange:false,
+            isBottomOrange:false,
+            isStore:false,
             sortlist:[
                 {'text':'全部',isshowOrange:true,value:'0'},
                 {'text':'全部',isshowOrange:false,value:'0'},
@@ -79,9 +91,7 @@ export default {
             ],
             detailTitle:[
                 {title:'最新商品',isshowOrange:true},
-                {title:'最高人气',isshowOrange:false},
-                {title:'价格排序',isshowOrange:false},
-                {title:'仅显示有货商品',isshowOrange:false},
+                {title:'最高人气',isshowOrange:false}
             ] 
         }
     },
@@ -91,6 +101,8 @@ export default {
     methods:{
         chooseSorts(item,list){
             list.forEach((val)=>(val.isshowOrange=false));
+            this.isBottomOrange=false;
+            this.isTopOrange=false;
             item.isshowOrange=true;
         },
         goodsListFilter(){//最后一个li去除margin
@@ -99,6 +111,22 @@ export default {
                     item.noMargin=true;
                 }
             })
+        },
+        toLowerPrice(){
+            alert('价格从低到高排列');
+            this.detailTitle.forEach(item=>item.isshowOrange=false)
+            this.isTopOrange=true;
+            this.isBottomOrange=false;
+        },
+        toExpensivePrice(){
+            alert('价格从高到底排列');
+            this.detailTitle.forEach(item=>item.isshowOrange=false)
+            this.isBottomOrange=true;
+            this.isTopOrange=false;
+        },
+        isStoreOrNot(){
+            //仅显示有货
+            this.isStore?this.isStore=false:this.isStore=true;
         }
     },
     computed:{
@@ -109,6 +137,7 @@ export default {
     #haitao{
         width: 100%;
         background: #f2f2f2;
+        position: relative;
     }
     .h-title{
         width: 1200px;
@@ -133,7 +162,7 @@ export default {
         font-size: 14px;
     }
     .list-item-title{
-        color: #999;
+        color: rgb(51,51,51);
         float: left;
         height: 50px;
         line-height: 50px;
@@ -170,7 +199,7 @@ export default {
     .front{
         float: left;
         margin-right: 36px;
-        color: #999;
+        color: rgb(51,51,51);
     }
     .h-content-body{
         width: 1200px;
@@ -193,6 +222,37 @@ export default {
     }
     .isorange{
         color: rgb(244,91,8);
+    }
+    .h-content-title span{
+        cursor: pointer;
+    }
+    .h-t-price{
+        position: relative;
+        width: 78px;
+    }
+    .h-t-price>span{
+        position: absolute;
+        width: 7px;
+        height: 0px;
+        border: 4px solid transparent;
+    }
+    .h-t-price .top-triangle{
+        border-bottom-color: rgb(51,51,51);
+        top: 0;
+        right: 5px;
+    }
+    .h-t-price .bottom-triangle{
+        border-top-color: rgb(51,51,51);
+        top: 9px;
+    }
+    .ttriangle{
+        border-top-color:rgb(244,91,8) !important;
+    }
+    .btriangle{
+        border-bottom-color:rgb(244,91,8) !important;
+    }
+    .h-t-right{
+        float: right;
     }
 </style>
 

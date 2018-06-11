@@ -21,12 +21,10 @@
         </div>
         <div class="navbar">
           <ul>
-            <li><span class="circle">.</span><router-link to="/nav"> 商城</router-link></li>
-            <li><span class="circle">.</span><router-link to="/nav/haitao">海淘</router-link></li>
-            <li><span class="circle">.</span><router-link to="/nav/goodsguide">商品导购</router-link></li>
-            <li><span class="circle">.</span><router-link to="/nav/newretail">新零售</router-link></li>
-            <li><span class="circle">.</span><router-link to="/nav/dataserver">数据服务</router-link></li>
-            <!-- <li><span class="circle">.</span><router-link to="/mine"><span style="color:red">个人主页</span></router-link></li> -->
+            <li v-for='item in navList' :key='item.key' @click="chooseNav(item)">
+              <span class="circle"></span>
+              <router-link :to="item.pathTo" :class="{navbarchoose:item.isChoose}">{{item.text}}</router-link>
+            </li>
           </ul>
         </div>
         <div class="inputblock">
@@ -79,6 +77,13 @@ export default {
        isshow:false,
        totalCartMoney:0,//购物车总价
        totalCartAmount:0,//购物车商品总数
+       navList:[
+         {text:'商城',isChoose:true,pathTo:'/nav'},
+         {text:'海淘',isChoose:false,pathTo:'/nav/haitao'},
+         {text:'商品导购',isChoose:false,pathTo:'/nav/goodsguide'},
+         {text:'新零售',isChoose:false,pathTo:'/nav/newretail'},
+         {text:'数据服务',isChoose:false,pathTo:'/nav/dataserver'}
+       ],
        shoppingCartList:[
          {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
          {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
@@ -98,6 +103,10 @@ export default {
         this.totalCartAmount+=item.num*1;
       })
       return this.totalCartAmount;
+    },
+    chooseNav(item){//导航条样式点击跳转+粗和下边框
+      this.navList.forEach(es=>es.isChoose=false);
+      item.isChoose=true;
     }
   },
   watch:{
@@ -240,7 +249,7 @@ export default {
     width: 550px;
     height: 100%;
     float: left;
-    padding: 0 55px;
+    padding: 0 0 0 55px;
   }
   .navbar ul{
     float: left;
@@ -252,23 +261,37 @@ export default {
     line-height: 100px;
     width: 80px;
     text-align: center;
+    position: relative;
+  }
+  .navbar ul li:nth-child(3){
+    width: 110px;
+  }
+  .navbar ul li:nth-child(4){
+    width: 100px;
+  }
+  .navbar ul li:nth-child(5){
+    width: 120px;
   }
   .navbar ul li a{
     font-size: 16px;
     color: #333333;
   }
-  .navbar a:hover{
+  .navbarchoose{
     border-bottom:2px solid #F97127;
     /* font-weight: bold; */
     text-shadow: 1px 0 0 currentColor;
-    transition: all 1s;
+    transition: all .1s;
   }
   .circle{
     display: inline-block;
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
     border-radius:50%;
     line-height: 100px; 
+    background: rgb(226,226,226);
+    position: absolute;
+    top: 47px;
+    left: 0;
   }
   /* 搜索框 */
   .inputblock{
