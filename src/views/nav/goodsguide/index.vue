@@ -125,8 +125,8 @@ export default {
     opacity: 1;
 }
 .navlist .ischoose{
-    /* background: linear-gradient(270deg rgb(245,102,30) rgb(246,133,16)); */
-    background: rgb(247,107,28);
+    background: linear-gradient(270deg, rgb(245,103,30), rgb(246,132,16));
+    /* background: rgb(247,107,28); */
     color: #fff;
 }
 .navlist li .line{

@@ -6,7 +6,7 @@
           <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">{{loginIn}}</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
-          <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li>
+          <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->
           <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li>
           <li class="cart-content"><span class="ver-line"></span><router-link to="/">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li>
         </ul>
@@ -81,8 +81,8 @@ export default {
          {text:'商城',isChoose:true,pathTo:'/nav'},
          {text:'海淘',isChoose:false,pathTo:'/nav/haitao'},
          {text:'商品导购',isChoose:false,pathTo:'/nav/goodsguide'},
-         {text:'新零售',isChoose:false,pathTo:'/nav/newretail'},
-         {text:'数据服务',isChoose:false,pathTo:'/nav/dataserver'}
+        //  {text:'新零售',isChoose:false,pathTo:'/nav/newretail'},
+        //  {text:'数据服务',isChoose:false,pathTo:'/nav/dataserver'}
        ],
        shoppingCartList:[
          {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
@@ -104,10 +104,6 @@ export default {
       })
       return this.totalCartAmount;
     },
-    chooseNav(item){//导航条样式点击跳转+粗和下边框
-      this.navList.forEach(es=>es.isChoose=false);
-      item.isChoose=true;
-    }
   },
   watch:{
     isshow(){
@@ -124,7 +120,11 @@ export default {
      },
      isoutPersonalCenter(){
        this.isshow=false;
-     }
+     },
+    chooseNav(item){//导航条样式点击跳转+粗和下边框
+      this.navList.forEach(es=>es.isChoose=false);
+      item.isChoose=true;
+    }
   },  
   mounted(){  
       
