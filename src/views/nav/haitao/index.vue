@@ -1,19 +1,199 @@
 <template>
-    <div>
-        海淘
+    <div id="haitao">
+        <div class="h-title">
+            首页 > 海涛
+        </div>
+        <!-- 选项 -->
+        <div class="h-brandslist">
+            <div class="list-item clearfix">
+                <div class="list-item-title">分类：</div>
+                <div class="list-item-content">
+                    <span class='brands'  @click='chooseSorts(item,sortlist)' :class='{isshoworange:item.isshowOrange}' v-for='item in sortlist' :key="item.key">{{item.text}}</span>
+                </div>
+            </div>
+            <div class="list-item clearfix">
+                <div class="list-item-title">品牌：</div>
+                <div class="list-item-content">
+                    <span class='brands'  @click='chooseSorts(item,brandList)' :class='{isshoworange:item.isshowOrange}' v-for='item in brandList' :key="item.key">{{item.text}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- 详情区域 -->
+        <div class="h-content">
+            <div class="h-content-title">
+                <span @click="chooseSorts(item,detailTitle)" class="front" :class="{isorange:item.isshowOrange}" v-for='item in detailTitle' :key="item.key">{{item.title}}</span>
+            </div>
+            <div class="h-content-body">
+                <ul class="clearfix" >
+                    <li  v-for="item in goodsList" :key="item.key" :class="{nonemarginright:item.noMargin}"><goodsItem :itemParams='item'></goodsItem> </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import imgurl from '../../../assets/common/logo.png'
+import goodsItem from '../../../components/public/goodsitem'
 export default {
     name:"haitao",
-    components:{},
+    components:{
+        goodsItem
+    },
     data(){
-        return{}
+        return{
+            sortlist:[
+                {'text':'全部',isshowOrange:true,value:'0'},
+                {'text':'全部',isshowOrange:false,value:'0'},
+                {'text':'全部',isshowOrange:false,value:'0'},
+                {'text':'全部',isshowOrange:false,value:'0'},
+                {'text':'全部',isshowOrange:false,value:'0'},
+                {'text':'全部',isshowOrange:false,value:'0'},
+                {'text':'全部',isshowOrange:false,value:'0'},
+                ],
+            brandList:[
+                    {'text':'品牌',isshowOrange:true,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                    {'text':'品牌',isshowOrange:false,value:'0'},
+                ],
+            goodsList:[
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+                {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
+            ],
+            detailTitle:[
+                {title:'最新商品',isshowOrange:true},
+                {title:'最高人气',isshowOrange:false},
+                {title:'价格排序',isshowOrange:false},
+                {title:'仅显示有货商品',isshowOrange:false},
+            ] 
+        }
+    },
+    mounted:function(){
+        this.goodsListFilter()
+    },
+    methods:{
+        chooseSorts(item,list){
+            list.forEach((val)=>(val.isshowOrange=false));
+            item.isshowOrange=true;
+        },
+        goodsListFilter(){//最后一个li去除margin
+            this.goodsList.forEach((item,index)=>{
+                if(index%5==4){
+                    item.noMargin=true;
+                }
+            })
+        }
+    },
+    computed:{
     }
 }
 </script>
 <style scoped>
+    #haitao{
+        width: 100%;
+        background: #f2f2f2;
+    }
+    .h-title{
+        width: 1200px;
+        height: 50px;
+        line-height: 50px;
+        /* color: #999; */
+        font-size: 14px;
+        margin: 0 auto;
+        text-align: left;
+    }
+    .h-brandslist{
+        width: 1200px;
+        height: 190px;
+        padding: 20px 30px;
+        background: #fff;
+        margin: 0 auto;
+    }
+    .list-item{
+        width: 1140px;
+        /* height: 50px; */
+        /* line-height: 50px; */
+        font-size: 14px;
+    }
+    .list-item-title{
+        color: #999;
+        float: left;
+        height: 50px;
+        line-height: 50px;
+    }
 
+    .list-item-content{
+        float: left;
+        width: 1098px;
+    }
+    .brands{
+        float: left;
+        height: 32px;
+        line-height: 15px;
+        margin:8px 0 8px 40px;
+        padding: 8px 16px;
+        border: 1px solid transparent;
+        border-radius: 18px;
+    }
+    .isshoworange{
+        border-color: rgb(244,91,8);
+        color: rgb(244,91,8);
+    }
+    .h-content{
+        width: 1200px;
+        min-height:800px;
+        background: #f2f2f2;
+        padding: 30px 0  50px 0;
+        margin: 0 auto;
+    }
+    .h-content-title{
+        width: 1200px;
+        height: 30px;
+    }
+    .front{
+        float: left;
+        margin-right: 36px;
+        color: #999;
+    }
+    .h-content-body{
+        width: 1200px;
+    }
+    .h-content-body ul{
+        width: 1200px;
+        float: left;
+    }
+    .h-content-body li{
+        float: left;
+        /* width: 230px; */
+        /* height: 340px; */
+        /* background: #999;s */
+        list-style: none;
+        margin-right:12px ;
+        cursor: pointer;
+    }
+    .nonemarginright{
+        margin-right:0 !important;
+    }
+    .isorange{
+        color: rgb(244,91,8);
+    }
 </style>
 
 

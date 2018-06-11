@@ -2,35 +2,12 @@
     <div class="content">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="全部订单" name="first">
-                <ul>
-                    <li>
-                        <div class="header">
-                            <span>下单时间：2018-01-08 15:02:00</span>
-                            &nbsp;&nbsp;
-                            <span>订单编号：62205723918</span>
-                        </div>
-                        <div class="body-content">
-                            <img src="../../../assets/common/logo.png" alt="">
-                            <div class="textinfo">
-                                <h4>韩国制造。。。</h4>
-                                <h5>颜色分类：洒下是潇洒奥斯的就是</h5>
-                            </div>
-                            <div class="operation">
-                                <div class="wait-goods">
-                                    <span>待发货</span>
-                                </div>
-                                <div class="goods-price">
-                                    <div class="money">$39.00</div>
-                                    <div class="payway">货到付款</div>
-                                </div>
-                                <div class="goods-price">
-                                    <div class="money blue">查看详情</div>
-                                    <div class="payway blue">申请售后</div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <waitingSend></waitingSend>
+               <div class="page">
+                    <template>
+                         <Page :total="100" show-elevator></Page>
+                    </template>
+                </div>
             </el-tab-pane>
             <el-tab-pane label="待发货" name="second">
                 <waitingSend></waitingSend>
