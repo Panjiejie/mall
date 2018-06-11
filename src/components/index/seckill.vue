@@ -184,7 +184,7 @@ export default {
     margin-right:6px; 
 }
 .seckill-btn{
-    width: 225px;
+    width: 229px;
     height: 50px;
     background: #ff2040;
     /* margin-top: 5px; */

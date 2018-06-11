@@ -20,7 +20,8 @@ import changePhonenumberSecond from 'views/personalcenter/safeAdmin/changePhonen
 import changeSuccess from 'views/personalcenter/safeAdmin/changePhonenumber/changeSuccess.vue'
 import waitingSend from 'views/personalcenter/myOrder/waitingSend/index.vue'
 import waitingSendDetail from 'views/personalcenter/myOrder/waitingSend/detail.vue'
-import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/detail.vue'
+import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/detail.vue'//售后详情
+import seckill from 'components/public/seckill.vue' //秒杀
 
 Vue.use(Router)
 
@@ -55,6 +56,10 @@ export default new Router({
         { //商品详情
           path: 'goodsDetail',
           component: goodsDetail
+        },
+        {
+          path:'seckill',
+          component:seckill
         },
         {//个人中心
           path: 'personalCenter',
