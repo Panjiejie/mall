@@ -26,7 +26,7 @@
                     </ul>
                     <!-- 按钮组 -->
                     <div class="btn-group">
-                        <button style="margin-right:10px;">切换地址</button>
+                        <button style="margin-right:10px;" @click="dialogVisible = true">切换地址</button>
                         <button style="margin-left:10px;">新建地址</button>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
             <div class="delivery-time">
                 <p>配送时间</p>
                 <div class="choose-time">
-                    <span v-for="item in chooseDeliveryTime" :key="item.key" :class="{isOrange:item.isOrange}">{{item.text}}</span>
+                    <span  @click="changeDeliveryTime(item)" v-for="item in chooseDeliveryTime" :key="item.key" :class="{isOrange:item.isOrange}">{{item.text}}</span>
                 </div>
             </div>
             <!-- 支付方式 -->
@@ -49,24 +49,145 @@
                 </div>
             </div>
             <!-- 发票信息 -->
-            <div class="invoice-infomation"></div>
+            <div class="invoice-information">
+                <p>发票信息</p>
+                <div class="invoice-content">
+                     <el-checkbox v-model="checked">我要开发票</el-checkbox>
+                     <span style="margin-left:30px;">发票类型：电子普通发票</span>
+                     <span>发票抬头：电子普通发票</span>
+                     <span>内容：电子普通发票</span>
+                     <span>发票金额：电子普通发票</span>
+                     <b>发票信息</b>
+                </div>
+            </div>
+            <!-- 购物清单表格 -->
+            <div class="goodslist-table">
+                <p>商品信息</p>
+                <!-- 表格 -->
+                <div id="table">
+                    <div id="table-header">
+                        <span class="goodsinfo" style="line-height:40px">商品信息</span>
+                        <span class="price">单价</span>
+                        <span class="amount">数量</span>
+                        <span class="subtotal">小计</span>
+                        <span class="realpay">实付</span>
+                    </div>
+                    <!-- 表格主体 -->
+                    <div class="table-line clearfix" v-for="item in tableList" :key="item.key">
+                        <div class="goodsinfo clearfix">
+                            <img :src="item.imgUrl" alt="">
+                            <div class="goodsinfo-right">
+                                <span class="infotitle" >{{item.title}}</span><br>
+                                <span>颜色：{{item.color}} 尺寸：{{item.size}}</span>
+                            </div>
+                        </div>
+                        <div class="price">￥ {{item.price}}</div>
+                        <div class="amount">{{item.amount}}</div>
+                        <div class="subtotal">￥ {{item.subtotal}}</div>
+                        <div class="realpay">￥ {{item.net}}</div>
+                    </div>
+                </div>
+            </div>
+            <!-- 金额明细 -->
+            <div class="price-detail">
+                <p>金额明细</p>
+                <!-- <orderList></orderList> -->
+                <div class="orderList">
+                    <ul class="clearfix">
+                        <li><span>商品总数</span><span>4</span></li>
+                        <li><span>商品总价</span><span class="red">￥1245</span></li>
+                        <li><span>活动优惠</span><span class="red">0</span></li>
+                        <li><span>运费</span><span class="red">0</span></li>
+                        <li><span>应付总额</span><span class="red">￥1245</span></li>
+                    </ul>
+                 </div>
+            </div>
+            <!-- 提交订单按钮组 -->
+            <div class="commit-group clearfix">
+                <div class="group-left">
+                    <p> <span>张三</span> 18689207345</p>
+                    <p>广东省深圳市罗湖区罗湖区罗湖区</p>
+                </div>
+                <div class="group-right">
+                    <button @click="toSuccess">提交订单</button>
+                </div>
+            </div>
         </div>
+        <!-- 切换地址对话框 -->
+        <el-dialog
+            title="切换地址"
+            :visible.sync="dialogVisible"
+            width="730px"
+            :before-close="handleClose"
+            center>
+            <div class="change-address">
+                <ul>
+                    <li v-for="item in addressList" :key='item.key' :class="{iscolorOrange:item.isDefault}">
+                        <div class="address-item">
+                            <span>收货人：</span>{{item.name}}
+                            <a :class="{isshow:item.isDefault}">默认地址</a>
+                        </div>
+                        <div class="address-item">
+                            <span>联系方式：</span>{{item.tell}}
+                        </div>
+                        <div class="address-item">
+                            <span>收货地址：</span>{{item.address}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
+import imgUrl from '../../../assets/common/logo.png'
+// import orderList from 'components/myOrder/orderList'
 export default {
     name:'configureRecipient',
-    components:{},
+    components:{
+        // orderList,
+    },
     data(){
         return{
+            checked:true,
+            dialogVisible:false,//修改密码弹窗
             chooseDeliveryTime:[//选择配送时间
                 {text:'不限送货时间：周一至周日',isOrange:true},
                 {text:'不限送货时间：周一至周日',isOrange:false},
                 {text:'不限送货时间：周一至周日',isOrange:false}
             ],
+            tableList:[
+                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
+                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
+                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
+            ],
+            addressList:[
+                {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:true},
+                {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
+                {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
+            ],
         }
     },
-    methods:{},
+    methods:{
+         handleClose(done) {
+            this.$confirm('确认关闭？')
+            .then(_ => {
+                done();
+            })
+            .catch(_ => {});
+        },
+        changeDeliveryTime(val){
+            this.chooseDeliveryTime.forEach(e=>e.isOrange=false);
+            val.isOrange=true;
+        },
+        toSuccess(){
+            this.$router.push('submitOrderSuccess')
+        }
+    },
 }
 </script>
 <style scoped>
@@ -163,7 +284,6 @@ div.infos-bottom{
 /* 配送时间 */
 .delivery-time{
     height: 126px;
-    background: yellow;
     text-align: left;
 }
 .isOrange{
@@ -209,6 +329,190 @@ div.infos-bottom{
     color: rgb(244,91,8);
 }
 /* 发票信息 */
+.invoice-information{
+    height: 161px;
+}
+.invoice-information p,.goodslist-table p{
+    height: 34px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+}
+.invoice-content{
+    height: 90px;
+    line-height: 90px;
+    padding: 0 30px;
+    font-size: 14px;
+    text-align: left;
+    position: relative;
+    border: 1px solid rgb(221,221,221);
+}
+.invoice-content span{
+    display: inline-block;
+    color: #999;
+    margin-right: 20px;
+}
+.invoice-content b{
+    float: right;
+    color: rgb(34,108,145)
+}
+.goodslist-table{
+    padding-bottom: 40px;
+}
+/* 表格 */
+#table-header{
+        /* width: 930px; */
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        background: #f2f2f2;
+        border: 1px solid rgb(221,221,221);
+    }
+    #table-header span{
+        /* display:inline-block; */
+        float: left;
+    }
+    .goodsinfo{
+        width: 488px;
+        line-height: 14px;
+    }
+    .price{width: 250px;}
+    .amount{width: 140px;}
+    .subtotal{width: 140px;}
+    .realpay{width: 98px;}
+    .table-line{
+        /* width: 930px; */
+        height: 90px;
+        line-height: 90px;
+        border: 1px solid rgb(221,221,221);
+        border-top: 0;
+    }
+    .table-line>div{
+        float: left;
+        text-align: center;
+    }
+    .goodsinfo img{
+        width: 60px;
+        height: 60px;
+        margin: 16px 0 0 16px;
+        float: left;
+    }
+    .goodsinfo-right{
+        float: left;
+        margin:20px 0 0 14px;
+        font-size: 12px;
+        color: #999;
+    }
+    .infotitle{
+        font-size: 14px;
+        color: black;
+        line-height: 20px;
+    }
+    /* 金额明细 */
+    .price-detail{
+        width: 1120px;
+        /* height: 215px; */
+    }
+    .price-detail p{
+        height: 34px;
+        text-align: left;
+        vertical-align: top;
+        font-size: 14px;
+        border-bottom: 1px dashed rgb(221,221,221);
+    }
+     .orderList{
+        /* width: 930px; */
+        /* height: 270px; */
+        padding: 20px 0;
+    }
+    .orderList li{
+        list-style: none;
+        font-size: 14px;
+        text-align: right;
+        height: 26px;
+        line-height: 26px;
+    }
+    .orderList li span:first-child{
+        float: left;
+        width: 1000px;
+        text-align: right;
+    }
+    .orderList li span.red{
+        color: rgb(255,32,64);
+    } 
+    .orderList li:last-child{
+        margin-top: 30px;
+    }
+    .orderList li:last-child .red{
+        font-size: 16px;
+        font-weight: 600;
+    }
+    /* 提交订单 */
+    .commit-group{
+        width: 1120px;
+        height: 90px;
+    }
+    .group-left{
+        width: 415px;
+        height: 90px;
+        text-align: left;
+        padding:30px 0 0 14px; 
+        font-size: 14px;
+        float: left;
+    }
+    .group-right{
+        width: 245px;
+        height: 90px;
+        line-height: 90px;
+        float: right;
+        text-align: right;
+    }
+    .group-right button{
+        width: 180px;
+        height: 50px;
+        line-height: 50px;
+        background: rgb(244,91,8);
+        color: #fff;
+        text-align: center;
+        outline: none;
+        border: 1px solid rgb(244,91,8);
+        font-size: 14px;
+    }
+    /* 切换地址对话框 */
+    /* .change-address{ */
+        /* height: 500px;
+        background: yellow; */
+    /* } */
+    .change-address li{
+        height: 110px;
+        padding: 20px 24px;
+        margin-bottom:20px;
+        list-style: none;
+        text-align: left;
+        font-size: 14px;
+        line-height: 22px;
+        color: black;
+        border: 1px solid rgb(221,221,221);
+    }
+    .address-item a{
+        float: right;
+        opacity: 0;
+        color: rgb(244,91,8);
+    }
+    .isshow{
+        opacity: 1 !important;
+    }
+    .iscolorOrange{
+        border-color:rgb(244,91,8) !important;
+    }
+    .address-item span{
+        display: inline-block;
+        width: 70px;
+        text-align: left;
+    }
+    .el-dialog__header{
+        text-align: left;
+    }
 </style>
 
 

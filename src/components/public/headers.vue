@@ -8,7 +8,7 @@
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
           <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->
           <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li>
-          <li class="cart-content"><span class="ver-line"></span><router-link to="/">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li>
+          <li class="cart-content"><span class="ver-line"></span><router-link to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li>
         </ul>
       </div>
     </div>

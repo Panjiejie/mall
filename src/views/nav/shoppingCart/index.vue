@@ -49,7 +49,7 @@
                     <span class='f-operation'>移入收藏夹</span>
                     <span class="gray">共&nbsp;{{totalGoods}}件商品 已选择&nbsp;{{havechoose}}件 &nbsp;商品合计：￥&nbsp;{{totalPrice}} &nbsp;活动优惠-￥&nbsp;{{discount}}&nbsp; 应付总额：<span class="red"> ￥{{realPay}}</span></span>
                 </div>
-                <div class="f-btn">
+                <div class="f-btn" @click="toConfigureRecipient">
                     下单结算
                 </div>
             </div>
@@ -266,6 +266,9 @@ export default {
         }
       });
       this.realPay = this.totalPrice - this.discount;
+    },
+    toConfigureRecipient(){
+      this.$router.push('../nav/configureRecipient')
     }
   }
 };

@@ -24,6 +24,7 @@ import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/detail.vue'/
 import seckill from 'components/public/seckill.vue' //秒杀
 import shoppingCart from 'views/nav/shoppingCart' //购物车
 import configureRecipient from 'views/nav/shoppingCart/configureRecipient.vue' //购物车收货信息
+import submitOrderSuccess from 'views/nav/shoppingCart/submitOrderSuccess.vue' //购物车订单提交成功
 
 Vue.use(Router)
 
@@ -70,6 +71,10 @@ export default new Router({
         {//购物车收货信息
           path:'configureRecipient',
           component:configureRecipient
+        },
+        {//购物车订单提交成功
+          path:'submitOrderSuccess',
+          component:submitOrderSuccess
         },
         {//个人中心
           path: 'personalCenter',
