@@ -22,6 +22,7 @@ import waitingSend from 'views/personalcenter/myOrder/waitingSend/index.vue'
 import waitingSendDetail from 'views/personalcenter/myOrder/waitingSend/detail.vue'
 import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/detail.vue'//售后详情
 import seckill from 'components/public/seckill.vue' //秒杀
+import shoppingCart from 'views/nav/shoppingCart' //购物车
 
 Vue.use(Router)
 
@@ -57,9 +58,13 @@ export default new Router({
           path: 'goodsDetail',
           component: goodsDetail
         },
-        {
+        {//秒杀
           path:'seckill',
           component:seckill
+        },
+        {//购物车
+          path:'shoppingCart',
+          component:shoppingCart
         },
         {//个人中心
           path: 'personalCenter',

@@ -7,27 +7,26 @@
 
                 </div>
                 <div class="editphoto" @click='editPhoto'>修改头像</div>
-                <div class="line clearfix">
-                    <span class="infotitle">用户ID：</span>
-                    <span class="infos">00001</span>
-                </div>
+                <!-- <div class="line clearfix"> -->
+                    <!-- <span class="infotitle">用户ID：</span> -->
+                    <!-- <span class="infos">00001</span> -->
+                <!-- </div> -->
                 <div class="line clearfix">
                     <span class="infotitle">用户名：</span>
-                    <span class="infos"><el-input v-model="userName"  id="username" placeholder="请输入用户名"></el-input>
+                    <span class="infos"><el-input v-model="userName"  id="username" placeholder="请输入用户名" disabled="true"></el-input>
 </span>
                 </div>
-                <div class="line clearfix">
+                <!-- <div class="line clearfix">
                     <span class="infotitle">性&nbsp;&nbsp;&nbsp;别：</span>
                     <span class="infos">
                         <el-radio v-model="sex" label="1">男</el-radio>
                         <el-radio v-model="sex" label="2">女</el-radio>
                     </span>
-                </div>
-                <div class="line clearfix">
+                </div> -->
+                <!-- <div class="line clearfix">
                     <span class="infotitle">生&nbsp;&nbsp;&nbsp;日：</span>
                     <span class="infos">
                           <div class="block">
-                                <!-- <span class="demonstration">默认</span> -->
                                 <el-date-picker
                                 v-model="value1"
                                 type="date"
@@ -35,7 +34,7 @@
                                 </el-date-picker>
                          </div>
                     </span>
-                </div>
+                </div> -->
                 <button class="save">保存</button>
             </div>
         </div>

@@ -28,7 +28,8 @@
                     <span class="bottom-triangle" :class="{ttriangle:isBottomOrange}" @click="toExpensivePrice()"></span>
                 </span>
                 <span class="h-t-right" :class="{isorange:isStore}" @click="isStoreOrNot">
-                    仅显示有货
+                    <!-- 仅显示有货 -->
+                    <el-checkbox v-model="checked">仅显示有货</el-checkbox>
                 </span>
             </div>
             <div class="h-content-body">
@@ -53,6 +54,7 @@ export default {
             isTopOrange:false,
             isBottomOrange:false,
             isStore:false,
+            checked:true,
             sortlist:[
                 {'text':'全部',isshowOrange:true,value:'0'},
                 {'text':'全部',isshowOrange:false,value:'0'},
@@ -126,7 +128,8 @@ export default {
         },
         isStoreOrNot(){
             //仅显示有货
-            this.isStore?this.isStore=false:this.isStore=true;
+            // this.isStore?this.isStore=false:this.isStore=true;
+            console.log(this.checked)
         }
     },
     computed:{
