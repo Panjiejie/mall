@@ -116,7 +116,7 @@ export default {
         // this.cartInit();
     },
     computed:{
-        cartLists:function(){
+        cartLists(){
              this.cartList.forEach(item=>{
                 item.subtotal=item.price*item.amount;
                 this.totalPrice+=item.subtotal*1;
