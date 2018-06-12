@@ -48,6 +48,8 @@
                     <span>货到付款</span>
                 </div>
             </div>
+            <!-- 发票信息 -->
+            <div class="invoice-infomation"></div>
         </div>
     </div>
 </template>
@@ -206,6 +208,7 @@ div.infos-bottom{
     border: 1px solid rgb(244,91,8);
     color: rgb(244,91,8);
 }
+/* 发票信息 */
 </style>
 
 
