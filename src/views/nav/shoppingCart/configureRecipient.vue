@@ -188,6 +188,23 @@ div.infos-bottom{
 .payment{
     height: 125px;
     font-size: 14px;
+    text-align: left;
+}
+.payment p{
+    height: 34px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+}
+.choose-payment span{
+    display: inline-block;
+    width: 160px;
+    height: 54px;
+    line-height: 54px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid rgb(244,91,8);
+    color: rgb(244,91,8);
 }
 </style>
 
