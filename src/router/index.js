@@ -25,6 +25,7 @@ import seckill from 'components/public/seckill.vue' //秒杀
 import shoppingCart from 'views/nav/shoppingCart' //购物车
 import configureRecipient from 'views/nav/shoppingCart/configureRecipient.vue' //购物车收货信息
 import submitOrderSuccess from 'views/nav/shoppingCart/submitOrderSuccess.vue' //购物车订单提交成功
+import toBrands from 'components/public/toBrands.vue'
 
 Vue.use(Router)
 
@@ -75,6 +76,10 @@ export default new Router({
         {//购物车订单提交成功
           path:'submitOrderSuccess',
           component:submitOrderSuccess
+        },
+        {//品牌页面
+          path:'toBrands',
+          component:toBrands
         },
         {//个人中心
           path: 'personalCenter',
