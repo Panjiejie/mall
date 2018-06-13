@@ -22,7 +22,7 @@
             </div>
             <div class="common-right">
                 <ul>
-                    <li v-for="item in list" :key="item.id">
+                    <li v-for="item in list" :key="item.id" @click="toGoodsDetail">
                         <img :src="item.src" style="width:200px;height:200px;" alt="">
                         <h5>{{item.name}}</h5>
                         <h6>{{item.subtitle}}</h6>
@@ -57,6 +57,11 @@ export default {
                 {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
                 {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
             ],
+        }
+    },
+    methods:{
+        toGoodsDetail(){
+            this.$router.push('nav/goodsdetail')
         }
     }
 }

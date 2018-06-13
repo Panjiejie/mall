@@ -1,5 +1,5 @@
 <template>
-    <div class="item-content">
+    <div class="item-content" @click="toGoodsDetail">
         <img :src="itemParams.src" style="width:200px;height:200px;" alt="">
         <h5>{{itemParams.title}}</h5>
         <h6>{{itemParams.subtitle}}</h6>
@@ -17,6 +17,11 @@ export default {
     return {
         item:{src:imgurl,title:'多热烈的白羊',subtitle:'小毛驴',price:'12345'}
     };
+  },
+  methods:{
+      toGoodsDetail(){
+          this.$router.push('goodsDetail')
+      }
   }
 };
 </script>

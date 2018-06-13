@@ -31,7 +31,7 @@
                 <evaluation v-for='item in evaluationList' :key='item.key' :list='item' class="evaluation-item"></evaluation>
             </div>
             <!-- 相关商品 -->
-            <p class="about-goods">相关商品 <router-link to="relatedProducts" class="fr">查看全部 ></router-link></p>
+            <p class="about-goods">相关商品 <span class="red">{{totalGoods}}</span><router-link to="relatedProducts" class="fr">查看全部 ></router-link></p>
             <div class="about-goods-content">
                 <ul class="clearfix">
                     <li class="goods-item" v-for='i in aboutGoodsList' :key='i.key'>
@@ -56,6 +56,7 @@ export default {
         return{
             brandName:'橄榄树',
             brandBanner:brandBanner,
+            totalGoods:100,
             des:'橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树橄榄树'
             ,evaluationList:[
                  {img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
@@ -81,6 +82,7 @@ export default {
 }
 </script>
 <style scoped>
+.red{color:#ff2040}
 #brand-detail{
     background: #f2f2f2;
     padding-bottom: 40px;
@@ -162,7 +164,7 @@ export default {
 #detail-body{
     width: 1200px;
     min-height: 500px;
-    background: yellowgreen;
+    /* background: yellowgreen; */
     margin: 0 auto;
 }
 .evaluation,.about-goods{

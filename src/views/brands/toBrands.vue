@@ -2,7 +2,8 @@
     <div class="to-brands-content">
         <div class="to-brands-body">
             <p class="brand-header">
-                首页>品牌
+                <router-link to="/">首页 ></router-link>
+                <router-link to="toBrands">品牌</router-link>
             </p>
             <!-- 分类产地参数选择列表 -->
               <div class="params-list">

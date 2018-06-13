@@ -20,7 +20,7 @@ export default {
 <style scoped>
     .evaluation{
         width: 284px;
-        height: 419px;
+        min-height: 419px;
         background: #fff;
         border: 1px solid rgb(221,221,221);
         text-align:left;
@@ -30,8 +30,8 @@ export default {
         height: 284px;
     }
     h5{
-        height: 34px;
-        line-height: 34px;
+        /* height: 54px; */
+        /* line-height: 34px; */
         font-size: 16px;
         padding: 0 14px;
     }

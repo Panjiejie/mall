@@ -3,10 +3,10 @@
         <div class="detail-top">
             <div id="header">
                 <ul>
-                    <li>首页 &gt;</li>
-                    <li>耐克 &gt;</li>
+                    <li> <router-link to="/">首页</router-link>&gt;</li>
+                    <li><router-link to="toBrands">品牌</router-link>&gt;</li>
                     <li>拖鞋 &gt;</li>
-                    <li>耐克NIKE BENASSI SOLARSOFT &gt;</li>
+                    <li>耐克NIKE BENASSI SOLARSOFT</li>
                 </ul>
             </div>
             <!-- 商品详情左侧-->

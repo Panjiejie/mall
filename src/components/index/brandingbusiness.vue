@@ -4,7 +4,7 @@
             <span class="line"></span>
             <span class="maintitle">品牌商</span>
             <span class="subhead">品牌直达 剔除溢价</span>
-            <router-link to="" class="morebrand" >更多品牌商> </router-link>
+            <router-link to="nav/toBrands" class="morebrand" >更多品牌商> </router-link>
         </div>
         <div class="brands">
             <ul>

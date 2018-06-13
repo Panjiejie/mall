@@ -13,7 +13,7 @@
                 <div class="banner-detail" v-bind:class="{ active: isActive }">
                     <p>分类推荐</p>
                     <ul class="second-mnue clearfix">
-                        <li class="clearfix" v-for="item in detailmsg" :key="item.key">
+                        <li class="clearfix" v-for="item in detailmsg" :key="item.key" @click="toGoodsDetail">
                             <img :src="item.Filepath" alt="">
                             <div class="goods-detail">
                                 <h4>{{item.title}}</h4>
@@ -28,10 +28,10 @@
                     <div class="brand-tab-left">
                         <div class="tab-title">
                             <span>品牌商</span>
-                            <a>查看全部></a>
+                            <router-link to="nav/toBrands">查看全部></router-link>
                         </div>
                         <ul class="brand-detail clearfix">
-                            <li class="clearfix" v-for="item in brand" :key="item.key">
+                            <li class="clearfix" v-for="item in brand" :key="item.key" @click="toBrands">
                                 <img :src="item.Filepath" alt="">
                                 <p>{{item.brandName}}</p>
                             </li>
@@ -43,7 +43,7 @@
                             <router-link to="nav/toBrands">查看全部></router-link>
                         </div>
                         <ul class="brand-detail clearfix">
-                            <li class="clearfix" v-for="item in brand" :key="item.key">
+                            <li class="clearfix" v-for="item in brand" :key="item.key" @click="toBrands">
                                 <img :src="item.Filepath" alt="">
                                 <p>{{item.brandName}}</p>
                             </li>
@@ -54,10 +54,10 @@
            <!-- 轮播 -->
            <div id="banner-swiper">
                  <Carousel autoplay v-model="value2" loop>
-        <CarouselItem  v-for="item in list" :key="item.key">
-            <img :src="item.src" alt="" style="width:1080px;height:460px;">
-        </CarouselItem>
-    </Carousel>
+                     <CarouselItem  v-for="item in list" :key="item.key">
+                        <img :src="item.src" alt="" style="width:1080px;height:460px;">
+                     </CarouselItem>
+                </Carousel>
            </div>
        </div>
 </template>
@@ -141,7 +141,13 @@ export default {
             this.isActive=false;
             this.isBrands=true;
             this.isShow=true;
-        }
+        },
+        toBrands(){
+            this.$router.push('nav/toBrands')
+        },
+        toGoodsDetail(){
+            this.$router.push('nav/goodsdetail')
+        },
     }
 }
 </script>

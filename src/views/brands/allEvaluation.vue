@@ -1,14 +1,18 @@
 <template>
     <div class="evaluation">
         <div class="evaluation-content">
-            <p>首页 > 品牌 > {{brandName}} > 全部评论</p>
+            <p><router-link to="/">首页</router-link> > <router-link to="/nav/toBrands">品牌</router-link>  > <router-link to="/nav/toBrandDetail">{{brandName}} </router-link>> 全部评论</p>
             <div class="evaluation-body">
-                <p>全部评论{{comments}}</p>
-                <ul class='comments-list clearfix'>
-                    <li class="comments-item" v-for='item in commentsList' :key='item.key'>
+                <p>全部评论<span class="red">{{comments}}</span></p>
+                <ul class='cs-list clearfix'>
+                    <li class="cs-item" v-for='item in commentsList' :key='item.key'>
                         <evaluation :list='item'></evaluation>
                     </li>
                 </ul>
+                <!-- 分页 -->
+                <div class="page-content">
+                    <Page :total="100" show-elevator></Page>
+                </div>
             </div>
         </div>
     </div>
@@ -26,7 +30,23 @@ export default {
             brandName:'zhangsan',
             comments:100,//评论总数
             commentsList:[
-                 {img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                 {img:brandBanner,title:'boss眼睛新品系列boss眼睛新品系列boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列boss眼睛新品系列boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列boss眼睛新品系列boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
+                ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
                 ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
                 ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
                 ,{img:brandBanner,title:'boss眼睛新品系列',description:'文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容文章主题内容'}
@@ -36,6 +56,7 @@ export default {
 }
 </script>
 <style scoped>
+    .red{color: #ff2040;}
     .evaluation{
         background: #f2f2f2;
         font-size: 14px;
@@ -43,7 +64,7 @@ export default {
     .evaluation-content{
         width: 1200px;
         min-height: 500px;
-        background: #fff;
+        /* background: #fff; */
         margin: 0 auto;
     }
     .evaluation-content p{
@@ -52,20 +73,27 @@ export default {
         text-align: left;
         background: #f2f2f2;
     }
-    .evaluation-body p{
+    /* .evaluation-body p{
         background: #fff;
-    }
-    .comments-list {
+    } */
+    .cs-list {
         width: 1200px;
+        padding-bottom: 40px;
     }
-    .comments-item{
+    .cs-item{
+        float: left;
         width: 284px;
         height: 419px;
         list-style: none;
-        margin-right: 21.25px;
+        margin:0 21.25px 24px 0;
+        background: #fff;
     }
-    .comments-list .comments-item:nth-child(4n){
+    .cs-list .cs-item:nth-child(4n){
         margin-right: 0;
+    }
+    .page-content{
+        width: 1200px;
+        padding-bottom: 20px;
     }
 </style>
 
