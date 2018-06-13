@@ -185,7 +185,7 @@ export default {
         border-radius: 18px;
     }
     .isshoworange{
-        border-color: rgb(244,91,8);
+        /* border-color: rgb(244,91,8); */
         color: rgb(244,91,8);
     }
     .h-content{

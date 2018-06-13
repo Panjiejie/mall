@@ -40,7 +40,7 @@
                     <div class="brand-tab-right">
                         <div class="tab-title">
                             <span>热门品牌</span>
-                            <a>查看全部></a>
+                            <router-link to="nav/toBrands">查看全部></router-link>
                         </div>
                         <ul class="brand-detail clearfix">
                             <li class="clearfix" v-for="item in brand" :key="item.key">

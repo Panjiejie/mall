@@ -14,7 +14,7 @@
             </div>
             <!-- table-body -->
             <div class="c-body">
-                <div class="c-body-line" v-for='item in cartList' :key='item.key'>
+                <div class="c-body-line" v-for='item in cartLists' :key='item.key'>
                     <div class="checkbox">
                         <el-checkbox v-model="item.ischecked"></el-checkbox>
                     </div>
@@ -240,19 +240,19 @@ export default {
     this.cartInit();
   },
   computed: {
-    // cartLists(){
-    //      this.cartList.forEach(item=>{
-    //         item.subtotal=item.price*item.amount;
-    //         this.totalPrice+=item.subtotal*1;
-    //         if(item.ischecked){
-    //             this.havechoose+=item.amount*1;
-    //             this.chooseList.push(item);
-    //         }
-    //     });
-    //     this.realPay=this.totalPrice-this.discount;
-    //     this.totalGoods=this.cartList.length;
-    //     return this.cartList;
-    // }
+    cartLists(){
+         this.cartList.forEach(item=>{
+            item.subtotal=item.price*item.amount;
+            this.totalPrice+=item.subtotal*1;
+            if(item.ischecked){
+                this.havechoose+=item.amount*1;
+                this.chooseList.push(item);
+            }
+        });
+        this.realPay=this.totalPrice-this.discount;
+        this.totalGoods=this.cartList.length;
+        return this.cartList;
+    }
   },
   methods: {
     cartInit() {
