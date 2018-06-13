@@ -25,7 +25,10 @@ import seckill from 'components/public/seckill.vue' //秒杀
 import shoppingCart from 'views/nav/shoppingCart' //购物车
 import configureRecipient from 'views/nav/shoppingCart/configureRecipient.vue' //购物车收货信息
 import submitOrderSuccess from 'views/nav/shoppingCart/submitOrderSuccess.vue' //购物车订单提交成功
-import toBrands from 'components/public/toBrands.vue'
+import toBrands from 'views/brands/toBrands.vue'//品牌页面
+import toBrandDetail from 'views/brands/toBrandDetail.vue'//单一品牌详情页面
+import allEvaluation from 'views/brands/allEvaluation.vue'//品牌测评全部详情页面
+import relatedProducts from 'views/brands/relatedProducts.vue'//品牌测评全部详情页面
 
 Vue.use(Router)
 
@@ -80,6 +83,18 @@ export default new Router({
         {//品牌页面
           path:'toBrands',
           component:toBrands
+        },
+        {//品牌详情
+          path:'toBrandDetail',
+          component:toBrandDetail
+        },
+        {//全部品牌测评详情页面
+          path:'allEvaluation',
+          component:allEvaluation
+        },
+        {//品牌 全部相关商品页面
+          path:'relatedProducts',
+          component:relatedProducts
         },
         {//个人中心
           path: 'personalCenter',

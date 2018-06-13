@@ -27,21 +27,52 @@
                     </div>
             </div>
             <ul class="brand-detail-list clearfix">
-                <li class="brand-list-item clearfix">
+                <li class="brand-list-item clearfix" @click="toBrandDetail" v-for="item in brandItemList" :key="item.key">
                     <div class="item-left-content">
-                        <!-- <img src="../../assets/common/" alt=""> -->
+                        <div class="location-content">
+                            <img class='location' src="../../assets/common/kefu.png" alt="">{{item.production}}
+                        </div>
+                        <div>
+                            <img class='brand-logo' :src="item.brandLogo" alt="">  
+                        </div>
+                        <h6>{{item.brandName}}</h6>
+                        <p>{{item.brandMatto}}</p>
                     </div>
-                    <img src="../../assets/goodsGuide/bg.png" alt="">
+                    <img :src="item.brandImg" alt="">
                 </li>
             </ul>
         </div>
     </div>
 </template>
 <script>
+import img from '../../assets/common/kefu.png'
+import imgUrl from '../../assets/goodsGuide/bg.png'
 export default {
     name:'toBrands',
     data(){
         return{
+            brandItemList:[
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+                {brandLogo:img,brandName:'李宁',brandMotto:'坚守中国原创初心',brandImg:imgUrl,production:'中国'},
+            ],
             params:{
                 classify:[
                     {name:'全部',value:'0',isChecked:true},
@@ -95,6 +126,9 @@ export default {
             list.forEach((val)=>(val.isChecked=false));
             item.isChecked=true;
         },
+        toBrandDetail(){
+            this.$router.push('toBrandDetail')
+        }
     },
 }
 </script>
@@ -172,12 +206,13 @@ export default {
     .brand-detail-list{
         width: 1200px;
         min-height: 600px;
-        background: yellowgreen;
+        padding-bottom: 20px;
     }
     .brand-list-item{
         float: left;
         width: 578px;
         height: 210px;
+        font-size: 14px;
         list-style: none;
         margin: 0 0 20px;
         background: #fff;
@@ -193,11 +228,35 @@ export default {
         width: 210px;
         height: 210px;
         float: left;
+        text-align: center;
     }
-    .brand-list-item img{
+    .brand-list-item>img{
         width: 366px;
         height: 210px;
         float: left;
+    }
+     .brand-list-item .location{
+        width: 11px;
+        height: 16px;
+        position: relative;
+        top: 2px;
+        margin: 0 10px;
+    }
+    .brand-list-item .brand-logo{
+        width: 90px;
+        height: 90px;
+    }
+    .brand-list-item h6{
+        font-size: 14px;
+    }
+    .brand-list-item p{
+        font-size: 14px;
+        color: #999;
+    }
+    .location-content{
+        height: 36px;
+        line-height: 36px;
+        text-align: left;
     }
 </style>
 

@@ -15,7 +15,7 @@ export default {
   props: ['itemParams'],
   data() {
     return {
-        item:{src:imgurl,name:'多热烈的白羊',subtitle:'小毛驴',price:'12345'}
+        item:{src:imgurl,title:'多热烈的白羊',subtitle:'小毛驴',price:'12345'}
     };
   }
 };
@@ -35,7 +35,7 @@ export default {
 .item-content h5{
     font-size: 14px; 
     color: #333;
-    margin: 15px 0 14px;
+    margin: 15px 0 0;
 }
 .item-content h6{
     font-size: 14px;
