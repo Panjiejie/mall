@@ -4,7 +4,7 @@
             <span class="line"></span>
             <span class="maintitle">新品上架</span>
             <div class="morebrand">
-                <span style='position:relative;top:4px;left:6px;'><img src="../../assets/index/lt.png" alt=""></span>
+                <span style='position:relative;left:6px;'><img src="../../assets/index/lt.png" alt=""></span>
                 <span><img src="../../assets/index/gt.png" alt=""></span>
             </div>
         </div>
@@ -21,7 +21,7 @@
                         <div>
                             <span class="price"><span class="mlogo">¥</span>2258</span>
                         </div>
-                        <div class="seckill-btn"></div>
+                        <div class="seckill-btn">立即购买</div>
                     </li>
                     <li class="last">
                         <h2>浏览更多新品</h2>

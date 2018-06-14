@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="seckill-right">
-                <ul>
+                <ul class="clearfix"> 
                     <li @click="toSeckillDetailPage" v-for='i in 4' :key="i.key">
                         <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
                         <h5>pt950铂金钻石结婚对戒</h5>
@@ -119,7 +119,7 @@ export default {
 }
 .seckill-right{
     float: left;
-    width: 956px;
+    width: 970px;
 }
 .seckill-left:after , .seckill-right:after{
     content: "";
@@ -129,7 +129,7 @@ export default {
 .seckill-right li{
     width:230px ;
     height: 340px;
-    margin-left:9px ;
+    margin-left:12.25px ;
     float: left;
     list-style: none;
     padding: 15px 15px 0;

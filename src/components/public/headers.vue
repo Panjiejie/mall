@@ -315,7 +315,7 @@ export default {
     text-align: center;
     position: relative;
   }
-  .navbar ul li:nth-child(3){
+  /* .navbar ul li:nth-child(3){
     width: 110px;
   }
   .navbar ul li:nth-child(4){
@@ -323,7 +323,7 @@ export default {
   }
   .navbar ul li:nth-child(5){
     width: 120px;
-  }
+  } */
   .navbar ul li a{
     font-size: 16px;
     color: #333333;
