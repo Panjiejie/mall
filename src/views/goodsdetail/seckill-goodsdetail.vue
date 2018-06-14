@@ -5,7 +5,7 @@
                 <ul>
                     <li> <router-link to="/">首页</router-link>&gt;</li>
                     <li><router-link to="toBrands">品牌</router-link>&gt;</li>
-                    <li>拖鞋 &gt;</li>
+                    <li><router-link to="toBrandDetail">耐克</router-link>&gt;</li>
                     <li>耐克NIKE BENASSI SOLARSOFT</li>
                 </ul>
             </div>
@@ -30,7 +30,7 @@
                             <img @click="changeHeart()" :src="heart" alt="" style="width:20px;height:20px;"> 收藏商品
                         </span>
                         <span style="margin-left:38px;">
-                            <img :src="heart" alt="" style="width:20px;height:20px;"> 品牌主页
+                            <img @click="toBrandDetail" src="../../assets/common/detail-home.png" alt="" style="width:20px;height:20px;"> 品牌主页
                         </span>
                     </div>
                 </div>
@@ -54,12 +54,13 @@
                             <!-- 图文下 -->
                             <div class="seckill-bottom">
                                 <div class="title clearfix">
+                                    <img src="../../assets/common/medal.png" alt="" style="float:left;">
                                     <span class="ltitle">正品汇正品保障</span>
                                     <span class="rsearch">商品追溯-></span>
                                 </div>
                                 <div class="text-content">
                                     <div class="line">
-                                        <span class="ptitle">秒杀价</span>
+                                        <span class="ptitle" style="margin-right:36px;">秒杀价</span>
                                         <span class="seckill-money">￥
                                             <span style="font-size:30px;">255.00</span>
                                         </span>
@@ -71,7 +72,7 @@
                                     </div>
                                     <div class="otherline" style="margin-bottom:16px;">
                                         <span class="ptitle">服务</span>
-                                        <span class="yunfei">.无忧货到付款 .正品汇正品认真</span>
+                                        <span class="yunfei">无忧货到付款 正品汇正品认证</span>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +145,7 @@
                     </div>
                     <div class="bcright-body">
                         <ul>
-                            <li v-for="item in rightlist" :key="item.key">
+                            <li v-for="item in rightlist" :key="item.key" @click="toGoodsDetail">
                                 <img :src="item.src" style="width:200px;height:200px;" alt="">
                                 <h5>{{item.name}}</h5>
                                 <h6>{{item.subtitle}}</h6>
@@ -161,8 +162,8 @@
     </div>
 </template>
 <script>
-// import headers from '../common/headers'
-// import footers from '../common/footers'
+import heart from '../../assets/common/detail_heart.png'
+import redHeart from '../../assets/common/detail-redheart.png'
 import imgurl from "../../assets/common/wechat.png";
 import imgurl1 from "../../assets/common/weibo.png";
 export default {
@@ -259,7 +260,7 @@ export default {
         }
       ],
       bigImg: imgurl, //左侧大图src
-      heart: imgurl, //收藏小心心图标src
+      heart: heart, //收藏小心心图标src
       imglist: [
         { src: imgurl },
         { src: imgurl1 },
@@ -276,10 +277,10 @@ export default {
     },
     changeHeart() {
       //收藏事件
-      if (this.heart == imgurl1) {
-        this.heart = imgurl;
-      } else if (this.heart == imgurl) {
-        this.heart = imgurl1;
+      if (this.heart == redHeart) {
+        this.heart = heart;
+      } else if (this.heart == heart) {
+        this.heart = redHeart;
       }
     },
     chooseSizeClick(item) {
@@ -299,6 +300,12 @@ export default {
       });
       item.isgray = false;
       item.isorange = true;
+    },
+    toBrandDetail(){
+      this.$router.push('toBrandDetail')
+    },
+    toGoodsDetail(){
+      this.$router.push('goodsdetail')
     }
   }
 };
@@ -484,14 +491,14 @@ export default {
 .bcright-body li {
   width: 100%;
   height: 340px;
-  border: 1px solid red;
+  border: 1px solid rgb(221,221,221);
   margin-bottom: 15px;
   list-style: none;
   padding: 15px 15px 0;
 }
-.bcright-body li img {
+/* .bcright-body li img {
   border: 1px solid #999;
-}
+} */
 .bcright-body li h5 {
   font-size: 16px;
   color: #333;
@@ -745,14 +752,14 @@ export default {
   line-height: 36px;
   background: linear-gradient(left, rgb(244, 93, 8), rgb(251, 221, 29));
 }
-.seckill-bottom .title {
+/* .seckill-bottom .title {
   margin-bottom: 16px;
-}
+} */
 .ltitle {
   display: inline-block;
   font-size: 14px;
   color: #fff;
-  margin-left: 52px;
+  margin-left: 12px;
 }
 .rsearch {
   font-size: 14px;
@@ -786,6 +793,12 @@ export default {
   height: 36px;
   font-size: 14px;
   line-height: 36px;
+}
+#header a{
+  color: #333;
+}
+#header a:hover{
+  color: #333;
 }
 </style>
 

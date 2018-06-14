@@ -38,7 +38,7 @@
                 <!-- 商品详情右侧 -->
                 <div class="rightside">
                     <div class="title">我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多</div>
-                    <div class="subtitle"><img src="../../assets/common/" alt="">[官方授权，正品保障] 超值预售火热进行中</div>
+                    <div class="subtitle">[官方授权，正品保障] 超值预售火热进行中</div>
                     <!-- 中间图文部分 -->
                     <div class="textinfo">
                         <div class="seckill">
@@ -54,12 +54,13 @@
                             <!-- 图文下 -->
                             <div class="seckill-bottom">
                                 <div class="title clearfix">
+                                    <img src="../../assets/common/medal.png" alt="" style="float:left;">
                                     <span class="ltitle">正品汇正品保障</span>
                                     <span class="rsearch">商品追溯-></span>
                                 </div>
                                 <div class="text-content">
                                     <div class="line">
-                                        <span class="ptitle">秒杀价</span>
+                                        <span class="ptitle" style="margin-right:36px;">秒杀价</span>
                                         <span class="seckill-money">￥
                                             <span style="font-size:30px;">255.00</span>
                                         </span>
@@ -71,7 +72,7 @@
                                     </div>
                                     <div class="otherline" style="margin-bottom:16px;">
                                         <span class="ptitle">服务</span>
-                                        <span class="yunfei">.无忧货到付款 .正品汇正品认真</span>
+                                        <span class="yunfei">无忧货到付款 正品汇正品认证</span>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +145,7 @@
                     </div>
                     <div class="bcright-body">
                         <ul>
-                            <li v-for="item in rightlist" :key="item.key">
+                            <li v-for="item in rightlist" :key="item.key" @click="toGoodsDetail">
                                 <img :src="item.src" style="width:200px;height:200px;" alt="">
                                 <h5>{{item.name}}</h5>
                                 <h6>{{item.subtitle}}</h6>
@@ -302,6 +303,9 @@ export default {
     },
     toBrandDetail(){
       this.$router.push('toBrandDetail')
+    },
+    toGoodsDetail(){
+      this.$router.push('goodsdetail')
     }
   }
 };
@@ -487,14 +491,14 @@ export default {
 .bcright-body li {
   width: 100%;
   height: 340px;
-  border: 1px solid red;
+  border: 1px solid rgb(221,221,221);
   margin-bottom: 15px;
   list-style: none;
   padding: 15px 15px 0;
 }
-.bcright-body li img {
+/* .bcright-body li img {
   border: 1px solid #999;
-}
+} */
 .bcright-body li h5 {
   font-size: 16px;
   color: #333;
@@ -755,7 +759,7 @@ export default {
   display: inline-block;
   font-size: 14px;
   color: #fff;
-  margin-left: 52px;
+  margin-left: 12px;
 }
 .rsearch {
   font-size: 14px;
@@ -789,6 +793,12 @@ export default {
   height: 36px;
   font-size: 14px;
   line-height: 36px;
+}
+#header a{
+  color: #333;
+}
+#header a:hover{
+  color: #333;
 }
 </style>
 
