@@ -101,7 +101,7 @@
                         </div>
                         <!-- 按钮组 -->
                         <div class="btngroups">
-                            <button class="addcart">加入购物车</button>
+                            <button class="addcart"><img src="../../assets/common/cart.png" alt=""> 加入购物车</button>
                             <button class="buying">立即购买</button>
                         </div>
                     </div>
@@ -478,6 +478,8 @@ export default {
   line-height: 44px;
   text-align: center;
   background: #f45b08;
+  color: #fff;
+  font-size: 14px;
 }
 .bcright-body {
   width: 100%;
@@ -698,6 +700,13 @@ export default {
   border: 1px solid rgb(244, 91, 8);
   background: #fff;
   color: rgb(244, 91, 8);
+  position: relative;
+  font-size: 14px;
+}
+.btngroups button img{
+  position: absolute;
+  top: 10px;
+  left: 12px;
 }
 .btngroups .addcart {
   background: rgb(244, 91, 8);
@@ -775,6 +784,7 @@ export default {
   color: rgb(251, 41, 51);
   display: inline-block;
   margin: 0 24px 0 0;
+  font-weight: bold;
 }
 .oldermoney {
   font-size: 16px;

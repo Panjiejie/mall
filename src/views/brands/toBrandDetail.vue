@@ -1,7 +1,8 @@
 <template>
     <div id='brand-detail'>
         <div class="detail-header">
-            首页 > 品牌 > {{brandName}}
+            <router-link to="/">首页</router-link>>
+            <router-link to="nav/toBrands">品牌</router-link>>{{brandName}}
         </div>
         <!-- banner -->
         <div class="detail-banner clearfix">
@@ -15,7 +16,7 @@
                         <h4>{{brandName}}</h4>
                         <p>源于德国的世界知名奢侈品牌</p>
                         <div class="logo-location">
-                            <img :src="brandBanner" alt="">中国
+                            <img src="../../assets/brand/location.png" alt="">中国
                         </div>
                     </div>
                 </div>
@@ -94,6 +95,12 @@ export default {
     line-height: 50px;
     margin: 0 auto;
     text-align: left;
+}
+.detail-header a{
+    color: #333;
+}
+.detail-header a:hover{
+    color: #333;
 }
 .detail-banner{
     width: 1200px;

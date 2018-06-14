@@ -8,7 +8,7 @@
               <el-popover
                 placement="bottom"
                 width="120"
-                trigger="click">
+                trigger="hover">
                 <div class="personal-center">
                   <ul>
                     <li><a href="">个人中心</a></li>

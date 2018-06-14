@@ -150,6 +150,12 @@ export default {
     font-size: 14px;
     text-align: left;
 }
+.brand-header a{
+    color: #333;
+}
+.brand-header a:hover{
+    color: #333;
+}
 .params-list{
     width: 100%;
     min-height: 190px;
