@@ -75,7 +75,7 @@
         </div>
         <div class="inputblock">
           <input type="text">
-          <button><img src="../../assets/common/logo.png" alt="" style="width:16px;height:16px;"></button>
+          <button><img src="../../assets/common/search.png" alt="" style="width:16px;height:16px;"></button>
         </div>
           <!-- 个人中心小三角和下拉框 -->
     <!-- <div class="triangle" :class='{isTriangle:personalCenter.isTriangle}'></div> -->
@@ -364,6 +364,7 @@ export default {
     width: 50px;
     height: 40px;
     border: 1px solid #ddd;
+    padding-top: 4px;
     border-left:none;
     border-top-right-radius:5px; 
     border-bottom-right-radius:5px; 
