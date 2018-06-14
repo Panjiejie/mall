@@ -9,6 +9,7 @@
        <common-list :commonname="commonname2"></common-list>
        <common-list :commonname="commonname3"></common-list>
        <common-list :commonname="commonname4"></common-list>
+       
     </div> 
 </template>
 <script>

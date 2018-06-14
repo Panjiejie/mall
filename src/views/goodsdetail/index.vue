@@ -692,6 +692,7 @@ export default {
   color: rgb(244, 91, 8);
   position: relative;
   font-size: 14px;
+  outline: none;
 }
 .btngroups button img{
   position: absolute;
@@ -749,7 +750,7 @@ export default {
   height: 36px;
   padding: 0 14px;
   line-height: 36px;
-  background: linear-gradient(left, rgb(244, 93, 8), rgb(251, 221, 29));
+  background-image: url(../../assets/goodsdetail/line.png);
 }
 .seckill-bottom .title {
   margin-bottom: 16px;
