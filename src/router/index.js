@@ -7,6 +7,7 @@ import Newretail from 'views/nav/newretail'
 import Nav from 'views/nav'
 import Home from 'views/nav/Home'
 import goodsDetail from 'views/goodsdetail/index'
+import seckillGoodsDetail from 'views/goodsdetail/seckill-goodsDetail.vue'
 import login from 'views/login/index'
 import personalCenter from 'views/personalcenter'
 import safeAdmin from 'views/personalcenter/safeAdmin'
@@ -67,9 +68,13 @@ export default new Router({
           path: 'goodsDetail',
           component: goodsDetail
         },
-        {//秒杀
+        {//秒杀主页面
           path:'seckill',
           component:seckill
+        },
+        {//秒杀商品详情页面
+          path:'seckillGoodsDetail',
+          component:seckillGoodsDetail
         },
         {//购物车
           path:'shoppingCart',
