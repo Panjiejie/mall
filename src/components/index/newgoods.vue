@@ -4,8 +4,8 @@
             <span class="line"></span>
             <span class="maintitle">新品上架</span>
             <div class="morebrand">
-                <span></span>
-                <span>&gt;</span>
+                <span><img src="../../assets/index/lt.png" alt=""></span>
+                <span><img src="../../assets/index/gt.png" alt=""></span>
             </div>
         </div>
         <div class="brands clearfix">
