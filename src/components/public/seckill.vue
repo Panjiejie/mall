@@ -21,7 +21,7 @@
                 </li>
             </ul>
         </div>
-        <!-- 秒杀商品区域 -->
+        <!-- 商品区域 -->
         <ul class="seckill clearfix">
             <li v-for='item in seckillList' :key='item.key' :class="{noMargin:item.noMargin}">
                 <img :src="item.Filepath"  alt="">

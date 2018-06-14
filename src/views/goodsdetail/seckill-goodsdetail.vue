@@ -42,7 +42,7 @@
                     <!-- 中间图文部分 -->
                     <div class="textinfo">
                         <div class="seckill">
-                            <!-- <div class="seckill-top">
+                            <div class="seckill-top">
                                 <span class="seckill-text">限时秒杀</span>
                                 <div class="endtime">
                                     <span class="end">距离结束：</span>
@@ -50,7 +50,7 @@
                                     <span class="timecontent">22</span>:
                                     <span class="timecontent">21</span>
                                 </div>
-                            </div> -->
+                            </div>
                             <!-- 图文下 -->
                             <div class="seckill-bottom">
                                 <div class="title clearfix">
@@ -161,7 +161,8 @@
     </div>
 </template>
 <script>
-// import heart from '../../assets/brand/'
+// import headers from '../common/headers'
+// import footers from '../common/footers'
 import imgurl from "../../assets/common/wechat.png";
 import imgurl1 from "../../assets/common/weibo.png";
 export default {
