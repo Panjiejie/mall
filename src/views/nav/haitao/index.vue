@@ -163,6 +163,7 @@ export default {
         /* height: 50px; */
         /* line-height: 50px; */
         font-size: 14px;
+        border-bottom: 1px dashed rgb(221,221,221);
     }
     .list-item-title{
         color: rgb(51,51,51);

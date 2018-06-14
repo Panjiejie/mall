@@ -195,7 +195,7 @@ export default {
         line-height: 50px;
         font-size: 14px;
         vertical-align: top;
-        padding-left: 36px;
+        /* padding-left: 36px; */
     }
     .slidebar li:hover{
         background: rgb(249, 113, 39);
@@ -280,6 +280,9 @@ export default {
 .brand-tab img{
     width: 80px;
     height: 80px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid transparent;
 }
 .brand-tab-left{
     margin-right: 120px;

@@ -3,13 +3,58 @@
     <div id="header">
       <div class="main">
         <ul>
-          <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">张三的歌</router-link></li>
+          <li>
+              <span class="ver-line"></span>
+              <el-popover
+                placement="bottom"
+                width="120"
+                trigger="click">
+                <div class="personal-center">
+                  <ul>
+                    <li><a href="">个人中心</a></li>
+                    <li><a href="">商品收藏</a></li>
+                    <li><a href="">安全设置</a></li>
+                    <li><a href="">退出登录</a></li>
+                    <li class="triangle"></li>
+                  </ul>
+                </div>
+              <router-link to="/nav/personalCenter/personalSetting" slot='reference'>张三的歌</router-link>
+            </el-popover>
+          </li>
           <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">{{loginIn}}</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
           <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->
           <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li>
-          <li class="cart-content"><span class="ver-line"></span><router-link to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li>
+          <li class="cart-content"><span class="ver-line"></span>
+
+          <el-popover
+            placement="bottom"
+            width="200"
+            trigger="hover">
+             <div class="shopping-cart">
+               <ul>
+                <li v-for="item in shoppingCartList" :key='item.key'>
+                  <img :src="item.Filepath" alt="">
+                  <div class="cartlist-right">
+                    <h4 class="cartgoods-title">{{item.title}}</h4>
+                      <div class="price">
+                        <span>￥{{item.price}}</span> x{{item.num}}
+                      </div>
+                  </div>
+                </li>
+              </ul>
+      <div class="cart-footer">
+        <p class="goods-amount"> 共{{totalsAmount}}件商品</p>
+        <p class="totalprice">共计:<span>￥{{totalsMoney}}</span></p>
+        <button>去购物车</button>
+      </div>
+    </div>
+            <!-- <el-button slot="reference">click 激活</el-button> -->
+            <router-link slot="reference" to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link>
+        </el-popover>
+          </li>
+          <!-- <router-link to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li> -->
         </ul>
       </div>
     </div>
@@ -34,7 +79,7 @@
         </div>
           <!-- 个人中心小三角和下拉框 -->
     <!-- <div class="triangle" :class='{isTriangle:personalCenter.isTriangle}'></div> -->
-    <div class="personal-center" :class='{isshow:isshow}' @mouseleave='isoutPersonalCenter'>
+    <!-- <div class="personal-center" :class='{isshow:isshow}' @mouseleave='isoutPersonalCenter'>
       <ul>
         <li><a href="">个人中心</a></li>
         <li><a href="">商品收藏</a></li>
@@ -42,9 +87,9 @@
         <li><a href="">退出登录</a></li>
         <li class="triangle"></li>
       </ul>
-    </div>
+    </div> -->
     <!-- 购物车 -->
-    <div class="shopping-cart">
+    <!-- <div class="shopping-cart">
       <ul>
         <li v-for="item in shoppingCartList" :key='item.key'>
           <img :src="item.Filepath" alt="">
@@ -61,7 +106,7 @@
         <p class="totalprice">共计:<span>￥{{totalsMoney}}</span></p>
         <button>去购物车</button>
       </div>
-    </div>
+    </div> -->
     </div>
     </div>
   </div>
@@ -343,11 +388,11 @@ export default {
     width: 120px;
     height: 150px;
     background: #fff;
-    position: absolute;
-    top: 0px;
-    right: 380px;
+    position: relative;
+    /* top: 0px; */
+    /* right: 380px; */
     margin-top: 24px;
-    display: none;
+    /* display: none; */
   }
   .personal-center li{
     list-style: none;
@@ -365,7 +410,7 @@ export default {
   .shopping-cart{
     width: 270px;
     min-height:228px;
-    padding-bottom: 60px;
+    /* padding-bottom: 60px; */
     /* background: #F45B08; */
     position: absolute;
     top: 0;
@@ -373,17 +418,18 @@ export default {
     z-index: 9999;
     background: #fff;
     box-shadow: 0px 4px 4px 4px  rgba(232,232,232,.5);
-    display: none;
+    /* display: none; */
   }
   .cart-footer{
     width: 270px;
     height: 60px;
     background: #272424;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: relative;
+    /* bottom: 0; */
+    /* left: 0; */
     color: #fff;
     padding: 12px;
+    display: block;
   }
   .shopping-cart li{
     list-style: none;
