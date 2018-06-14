@@ -5,7 +5,7 @@
                 <ul>
                     <li> <router-link to="/">首页</router-link>&gt;</li>
                     <li><router-link to="toBrands">品牌</router-link>&gt;</li>
-                    <li>拖鞋 &gt;</li>
+                    <li><router-link to="toBrandDetail">耐克</router-link>&gt;</li>
                     <li>耐克NIKE BENASSI SOLARSOFT</li>
                 </ul>
             </div>
@@ -30,7 +30,7 @@
                             <img @click="changeHeart()" :src="heart" alt="" style="width:20px;height:20px;"> 收藏商品
                         </span>
                         <span style="margin-left:38px;">
-                            <img :src="heart" alt="" style="width:20px;height:20px;"> 品牌主页
+                            <img @click="toBrandDetail" src="../../assets/common/detail-home.png" alt="" style="width:20px;height:20px;"> 品牌主页
                         </span>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                 <!-- 商品详情右侧 -->
                 <div class="rightside">
                     <div class="title">我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多</div>
-                    <div class="subtitle">[官方授权，正品保障] 超值预售火热进行中</div>
+                    <div class="subtitle"><img src="../../assets/common/" alt="">[官方授权，正品保障] 超值预售火热进行中</div>
                     <!-- 中间图文部分 -->
                     <div class="textinfo">
                         <div class="seckill">
@@ -161,7 +161,8 @@
     </div>
 </template>
 <script>
-// import heart from '../../assets/brand/'
+import heart from '../../assets/common/detail_heart.png'
+import redHeart from '../../assets/common/detail-redheart.png'
 import imgurl from "../../assets/common/wechat.png";
 import imgurl1 from "../../assets/common/weibo.png";
 export default {
@@ -258,7 +259,7 @@ export default {
         }
       ],
       bigImg: imgurl, //左侧大图src
-      heart: imgurl, //收藏小心心图标src
+      heart: heart, //收藏小心心图标src
       imglist: [
         { src: imgurl },
         { src: imgurl1 },
@@ -275,10 +276,10 @@ export default {
     },
     changeHeart() {
       //收藏事件
-      if (this.heart == imgurl1) {
-        this.heart = imgurl;
-      } else if (this.heart == imgurl) {
-        this.heart = imgurl1;
+      if (this.heart == redHeart) {
+        this.heart = heart;
+      } else if (this.heart == heart) {
+        this.heart = redHeart;
       }
     },
     chooseSizeClick(item) {
@@ -298,6 +299,9 @@ export default {
       });
       item.isgray = false;
       item.isorange = true;
+    },
+    toBrandDetail(){
+      this.$router.push('toBrandDetail')
     }
   }
 };
