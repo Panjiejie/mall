@@ -1,7 +1,7 @@
 <template>
     <div>
        <banner></banner>
-       <brandingbusiness></brandingbusiness>
+       <!-- <brandingbusiness></brandingbusiness> -->
        <service></service>
        <seckill></seckill>
        <newgoods></newgoods>

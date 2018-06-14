@@ -3,45 +3,32 @@
         <div class="title">
             <span class="line"></span>
             <span class="maintitle">新品上架</span>
-            <a class="morebrand" href="/haitao"> &lt; </a>
-            <a class="morebrand" href="/haitao"> &gt; </a>
+            <div class="morebrand">
+                <span></span>
+                <span>&gt;</span>
+            </div>
         </div>
-        <div class="brands">
+        <div class="brands clearfix">
             <div class="seckill-left">
                 <h2>春季新品上架</h2>
                 <span class="newline"></span>
             </div>
             <div class="seckill-right">
-                <ul>
-                    <li>
+                <ul class="clearfix">
+                    <li v-for='i in 3' :key="i.key" @click="toGoodsDetail">
                         <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
                         <h5>pt950铂金钻石结婚对戒</h5>
                         <div>
                             <span class="price"><span class="mlogo">¥</span>2258</span>
                         </div>
                         <div class="seckill-btn"></div>
-                    </li>
-                    <li>
-                        <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
-                        <h5>pt950铂金钻石结婚对戒</h5>
-                        <div>
-                            <span class="price"><span class="mlogo">¥</span>2258</span>
-                        </div>
-                        <div class="seckill-btn"></div>
-                    </li>
-                    <li>
-                        <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
-                        <h5>pt950铂金钻石结婚对戒</h5>
-                        <div>
-                            <span class="price"><span class="mlogo">¥</span>2258</span>
-                        </div>
-                        <div class="seckill-btn">立即购买</div>
                     </li>
                     <li class="last">
                         <h2>浏览更多新品</h2>
                         <h4>Browse more new products</h4>
-                        <span class="lines"></span>
-                        <div class="arr">&gt;</div>
+                        <p class="lines"></p>
+                        <img src="../../assets/index/circle_arr.png" alt="">
+                        <!-- <div class="arr">&gt;</div> -->
                     </li>
                 </ul>
             </div>
@@ -59,6 +46,11 @@ export default {
                 {name:"22制造商",price:"49元起"},
                 {name:"33制造商",price:"59元起"}
             ]
+        }
+    },
+    methods:{
+        toGoodsDetail(){
+            this.$router.push('nav/goodsDetail')
         }
     }
 }
@@ -103,6 +95,14 @@ export default {
     color: #333;
     font-size: 14px;
 }
+.morebrand span{
+    display: inline-block;
+    width: 36px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border: 1px solid rgb(221,221,221)
+}
 .seckill-left{
     width: 230px;
     height: 340px;
@@ -114,7 +114,7 @@ export default {
 }
 .seckill-right{
     float: left;
-    width: 956px;
+    width: 970px;
 }
 .seckill-left:after , .seckill-right:after{
     content: "";
@@ -122,12 +122,12 @@ export default {
     clear: both;
 }
 .seckill-right li{
-    width:225px ;
+    width:230px ;
     height: 340px;
-    margin-left:14px ;
+    margin-left:12.25px ;
     float: left;
     list-style: none;
-    padding: 3px 3px 0;
+    padding: 15px 15px 0;
     position: relative;
     border: 1px solid #f6f6f6;
 }
@@ -136,8 +136,13 @@ export default {
     width: 200px;
     height: 200px;
 }
+.seckill-right .last img{
+    width: 54px;
+    height: 54px;
+    margin:40px 0 0 70.5px;
+}
 .seckill-right li h5{
-    margin:15px 0 14px; 
+    margin:12px 0 0px; 
     font-size: 18px;
     font-weight: 300;
 }
@@ -156,6 +161,12 @@ export default {
     display: inline-block;
     margin-right:6px; 
 }
+.lines{
+    width: 38px;
+    height: 2px;
+    background: rgb(120,120,120);
+    margin:26px 78.5px;
+}
 .seckill-btn{
     width: 225px;
     height: 50px;
@@ -167,6 +178,8 @@ export default {
     /* padding: 10px 8px 0; */
     color: #fff;
     line-height: 50px;
+    font-size: 14px;
+    font-weight: 500;
 }
 .progress{
     width: 135px;

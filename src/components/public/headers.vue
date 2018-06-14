@@ -18,41 +18,41 @@
                     <li class="triangle"></li>
                   </ul>
                 </div>
-              <router-link to="/nav/personalCenter/personalSetting" slot='reference'>张三的歌</router-link>
+              <router-link  class="hover" to="/nav/personalCenter/personalSetting" slot='reference'>张三的歌</router-link>
             </el-popover>
           </li>
           <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">{{loginIn}}</router-link></li>
           <li><span class="ver-line"></span><router-link to="/">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
           <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->
-          <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li>
-          <li class="cart-content"><span class="ver-line"></span>
-
-          <el-popover
-            placement="bottom"
-            width="200"
-            trigger="hover">
-             <div class="shopping-cart">
-               <ul>
-                <li v-for="item in shoppingCartList" :key='item.key'>
-                  <img :src="item.Filepath" alt="">
-                  <div class="cartlist-right">
-                    <h4 class="cartgoods-title">{{item.title}}</h4>
-                      <div class="price">
-                        <span>￥{{item.price}}</span> x{{item.num}}
-                      </div>
+          <!-- <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li> -->
+          <li class="cart-content shopping-cart-btn">
+              <!-- <span class="ver-line"></span> -->
+              <el-popover
+                          placement="bottom"
+                          width="200"
+                          trigger="hover">
+                          <div class="shopping-cart">
+                            <ul>
+                              <li v-for="item in shoppingCartList" :key='item.key'>
+                                <img :src="item.Filepath" alt="">
+                                <div class="cartlist-right">
+                                  <h4 class="cartgoods-title">{{item.title}}</h4>
+                                    <div class="price">
+                                      <span>￥{{item.price}}</span> x{{item.num}}
+                                    </div>
+                                </div>
+                              </li>
+                            </ul>
+                    <div class="cart-footer">
+                      <p class="goods-amount"> 共{{totalsAmount}}件商品</p>
+                      <p class="totalprice">共计:<span>￥{{totalsMoney}}</span></p>
+                      <button>去购物车</button>
+                    </div>
                   </div>
-                </li>
-              </ul>
-      <div class="cart-footer">
-        <p class="goods-amount"> 共{{totalsAmount}}件商品</p>
-        <p class="totalprice">共计:<span>￥{{totalsMoney}}</span></p>
-        <button>去购物车</button>
-      </div>
-    </div>
-            <!-- <el-button slot="reference">click 激活</el-button> -->
-            <router-link slot="reference" to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link>
-        </el-popover>
+                      <!-- <el-button slot="reference">click 激活</el-button> -->
+                  <router-link slot="reference" to="/nav/shoppingCart" class="hover ">购物车<span class="cartBage" ><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link>
+                </el-popover>
           </li>
           <!-- <router-link to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li> -->
         </ul>
@@ -68,7 +68,7 @@
         <div class="navbar">
           <ul>
             <li v-for='item in navList' :key='item.key' @click="chooseNav(item)">
-              <span class="circle"></span>
+              <!-- <span class="circle"></span> -->
               <router-link :to="item.pathTo" :class="{navbarchoose:item.isChoose}">{{item.text}}</router-link>
             </li>
           </ul>
@@ -125,10 +125,10 @@ export default {
        totalCartAmount:0,//购物车商品总数
        navList:[
          {text:'商城',isChoose:true,pathTo:'/nav'},
-         {text:'海淘',isChoose:false,pathTo:'/nav/haitao'},
+        //  {text:'海淘',isChoose:false,pathTo:'/nav/haitao'},
          {text:'商品导购',isChoose:false,pathTo:'/nav/goodsguide'},
-        //  {text:'新零售',isChoose:false,pathTo:'/nav/newretail'},
-        //  {text:'数据服务',isChoose:false,pathTo:'/nav/dataserver'}
+         {text:'新零售',isChoose:false,pathTo:'/nav/newretail'},
+         {text:'数据服务',isChoose:false,pathTo:'/nav/dataserver'}
        ],
        shoppingCartList:[
          {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
@@ -219,9 +219,15 @@ export default {
     font-size: 14px;
     color: #CCCCCC;
   }
-  /* .main li:hover{
-    background: #3E3E3E;
-  } */
+  .main li>a:hover{
+    color: #c4c4c4 !important;
+  }
+  .main li .hover:hover{
+    color: #c4c4c4;
+  }
+  .shopping-cart-btn{
+    background: rgb(62,62,62) !important;
+  }
   .ver-line{
     width: 1px;
     height: 12px;

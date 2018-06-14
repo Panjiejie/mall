@@ -28,7 +28,7 @@
                     <div class="brand-tab-left">
                         <div class="tab-title">
                             <span>品牌商</span>
-                            <router-link to="nav/toBrands">查看全部></router-link>
+                            <!-- <router-link to="nav/toBrands">查看全部></router-link> -->
                         </div>
                         <ul class="brand-detail clearfix">
                             <li class="clearfix" v-for="item in brand" :key="item.key" @click="toBrands">
@@ -54,7 +54,7 @@
            <!-- 轮播 -->
            <div id="banner-swiper">
                  <Carousel autoplay v-model="value2" loop>
-                     <CarouselItem  v-for="item in list" :key="item.key">
+                     <CarouselItem  v-for="item in list" :key="item.key" @click="toGoodsDetail">
                         <img :src="item.src" alt="" style="width:1080px;height:460px;">
                      </CarouselItem>
                 </Carousel>

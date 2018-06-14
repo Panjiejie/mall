@@ -116,10 +116,10 @@
                     <div class="bcmain-header">
                         <div class="title">商品详情</div>
                         <div class="introduce">
-                            <div class="brand-name">
+                            <!-- <div class="brand-name">
                                 <span class="intro-title">品牌</span>
                                 <span class="intro-content">{{brandname}}</span>
-                            </div>
+                            </div> -->
                             <ul>
                                 <li v-for="item in list" :key="item.key">
                                     <span class="intro-title">{{item.title}}</span>
@@ -197,6 +197,10 @@ export default {
           {imgsrc:imgurl,isgray:true,isorange:false}
       ],
       list: [
+        {
+          title:'品牌',
+          content:'nike'
+        },
         {
           title: "店铺",
           content:
@@ -369,26 +373,8 @@ export default {
   border-top: 3px solid #f45b08;
   text-align: center;
   line-height: 44px;
-  background: #fff;
-
-  /* 条纹背景 */
-  /* -webkit-background-size: 50px 50px;
-    -moz-background-size: 50px 50px;
-    background-size: 50px 50px; /* 控制条纹的大小 */
-  /*background-image: -webkit-gradient(linear, 0 0, 100% 100%,
-                            color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
-                            color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
-                            color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
-                            to(transparent));
-    background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-                        transparent 75%, transparent);
-    background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-                        transparent 75%, transparent);
-    background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-                        transparent 75%, transparent); */
+  background: #f2f2f2;
+  font-size: 14px;
 }
 .introduce {
   width: 900;
@@ -427,6 +413,10 @@ export default {
   height: 36px;
   line-height: 36px;
   float: left;
+}
+.introduce li:first-child{
+  width: 100%;
+  border-bottom: 1px dashed rgb(221,221,221);
 }
 .introduce ul {
   border-bottom: 1px dotted #e1e1e1;

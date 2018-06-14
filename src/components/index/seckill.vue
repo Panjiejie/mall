@@ -23,34 +23,7 @@
             </div>
             <div class="seckill-right">
                 <ul>
-                    <li @click="toSeckillDetailPage">
-                        <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
-                        <h5>pt950铂金钻石结婚对戒</h5>
-                        <div>
-                            <span class="price"><span class="mlogo">¥</span>2258</span>
-                            <span class="count-price">¥2500</span>
-                        </div>
-                        <div class="seckill-btn"></div>
-                    </li>
-                    <li>
-                        <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
-                        <h5>pt950铂金钻石结婚对戒</h5>
-                        <div>
-                            <span class="price"><span class="mlogo">¥</span>2258</span>
-                            <span class="count-price">¥2500</span>
-                        </div>
-                        <div class="seckill-btn"></div>
-                    </li>
-                    <li>
-                        <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
-                        <h5>pt950铂金钻石结婚对戒</h5>
-                        <div>
-                            <span class="price"><span class="mlogo">¥</span>2258</span>
-                            <span class="count-price">¥2500</span>
-                        </div>
-                        <div class="seckill-btn"></div>
-                    </li>
-                    <li>
+                    <li @click="toSeckillDetailPage" v-for='i in 4' :key="i.key">
                         <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
                         <h5>pt950铂金钻石结婚对戒</h5>
                         <div>
@@ -84,7 +57,7 @@ export default {
     },
     methods:{
         toSeckillDetailPage(){
-            this.$router.push('seckillGoodsDetail')
+            this.$router.push('nav/seckillGoodsDetail')
         }
     },
 }
@@ -159,7 +132,7 @@ export default {
     margin-left:9px ;
     float: left;
     list-style: none;
-    padding: 3px 3px 0;
+    padding: 15px 15px 0;
     position: relative;
     border: 1px solid #f6f6f6;
     border-top:3px solid rosybrown;
@@ -170,7 +143,7 @@ export default {
     height: 200px;
 }
 .seckill-right li h5{
-    margin:15px 0 14px; 
+    margin:12px 0 0px; 
     font-size: 18px;
     font-weight: 300;
 }
@@ -210,6 +183,7 @@ export default {
     font-size: 14px;
     color: #fff;
     line-height: 30px;
+    font-weight: 500;
 }
 .seckill-btn:after{
     content: "";

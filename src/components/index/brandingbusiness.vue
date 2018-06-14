@@ -8,15 +8,15 @@
         </div>
         <div class="brands">
             <ul>
-                <li   v-for="item in list" :key="item.id">
+                <li v-for="item in list" :key="item.id" @click="toBrandDetail">
                     <h2 class="brandname">{{item.name}}</h2>
                     <span class="verline"></span>
                     <p class="price">{{item.price}}</p>
                 </li>
             </ul>
             <div class="lastbrand">
-                <div class="top">1</div>
-                <div class="bottom">2</div>
+                <div class="top" @click="toBrandDetail">1</div>
+                <div class="bottom" @click="toBrandDetail">2</div>
             </div>
         </div>
     </div>
@@ -33,7 +33,12 @@ export default {
                 {name:"33制造商",price:"59元起"}
             ]
         }
-    }
+    },
+    methods:{
+        toBrandDetail(){
+            this.$router.push('nav/toBrandDetail')
+        }
+    },
 }
 </script>
 <style scoped>
