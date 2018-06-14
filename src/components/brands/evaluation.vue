@@ -1,5 +1,5 @@
 <template>
-    <div class="evaluation" @click="toAllEvaluation">
+    <div class="evaluation-items" @click="toAllEvaluation">
         <!-- 品牌测评小组件 -->
         <div id='brand-logo'><img :src="list.img" alt=""></div>
         <h5>{{list.title}}</h5>
@@ -18,7 +18,7 @@ export default {
 }
 </script>
 <style scoped>
-    .evaluation{
+    .evaluation-items{
         width: 284px;
         min-height: 419px;
         background: #fff;

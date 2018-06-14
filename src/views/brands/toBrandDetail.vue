@@ -120,7 +120,6 @@ export default {
     width: 558px;
     height: 358px;
     padding: 30px 30px 0;
-    background: yellow;
 }
 .des-top{
     width: 100%;
@@ -153,11 +152,14 @@ export default {
     width: 10px;
     height: 16px;
     margin-right: 6px;
+    position: relative;
+    top: 4px;
 }
 .logo-location{
     font-size: 12px;
     color: #999;
     margin-top: 14px;
+    position: relative;
 }
 .des-bottom{
     margin-top: 30px;

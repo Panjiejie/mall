@@ -64,7 +64,7 @@ export default {
     .evaluation-content{
         width: 1200px;
         min-height: 500px;
-        /* background: #fff; */
+        background: #f2f2f2;
         margin: 0 auto;
     }
     .evaluation-content p{
@@ -72,6 +72,12 @@ export default {
         line-height: 50px;
         text-align: left;
         background: #f2f2f2;
+    }
+    .evaluation-content>p a{
+        color: #333;
+    }
+    .evaluation-content>p a:hover{
+        color: #333;
     }
     /* .evaluation-body p{
         background: #fff;

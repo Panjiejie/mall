@@ -34,9 +34,6 @@ export default {
     border: 1px solid rgb(221,221,221);
     margin-bottom: 12px;
 }
-.item-content img{
-    border: 1px solid #999;
-}
 .item-content h5{
     font-size: 14px; 
     color: #333;

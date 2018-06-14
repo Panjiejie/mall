@@ -156,9 +156,9 @@ li{
     padding-top:45px;
     /* margin-top: 35px; */
 }
-li img{
+/* li img{
     border: 1px solid #999;
-}
+} */
 li h5{
     font-size:14px;
     color: #333;

@@ -5,7 +5,7 @@
             <span class="maintitle">限时秒杀</span>
             <span class="subhead">每日好物 限量秒杀</span>
             <!-- <a class="morebrand" href="/haitao">查看全部> </a> -->
-            <router-link class="morebrand" to="nav/seckillGoodsDetail">查看全部> </router-link>
+            <router-link class="morebrand" to="nav/seckill">查看全部> </router-link>
         </div>
         <div class="brands">
             <div class="seckill-left">
@@ -23,7 +23,7 @@
             </div>
             <div class="seckill-right">
                 <ul>
-                    <li>
+                    <li @click="toSeckillDetailPage">
                         <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
                         <h5>pt950铂金钻石结婚对戒</h5>
                         <div>
@@ -81,7 +81,12 @@ export default {
                 {name:"33制造商",price:"59元起"}
             ]
         }
-    }
+    },
+    methods:{
+        toSeckillDetailPage(){
+            this.$router.push('seckillGoodsDetail')
+        }
+    },
 }
 </script>
 <style scoped>

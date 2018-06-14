@@ -23,7 +23,7 @@
         </div>
         <!-- 商品区域 -->
         <ul class="seckill clearfix">
-            <li v-for='item in seckillList' :key='item.key' :class="{noMargin:item.noMargin}">
+            <li v-for='item in seckillList' :key='item.key' :class="{noMargin:item.noMargin}" @click="toSeckillGoodsDetail">
                 <img :src="item.Filepath"  alt="">
                 <h5>{{item.title}}</h5>
                 <div>
@@ -80,7 +80,10 @@ export default {
                     e.noMargin=true;
                 }
             })
-        }
+        },
+        toSeckillGoodsDetail(){
+            this.$router.push('seckillGoodsDetail')
+        },
     },
 }
 </script>
@@ -190,7 +193,6 @@ export default {
     display: block;
     width: 200px;
     height: 200px;
-    border: 1px solid red;
 }
 .seckill li h5{
     margin:15px 0 0 14px ; 

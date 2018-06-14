@@ -60,6 +60,12 @@ export default {
         text-align: left;
         background: #f2f2f2;
     }
+    .evaluation-content>p a{
+        color: #333;
+    }
+    .evaluation-content>p a:hover{
+        color: #333;
+    }
     .cs-list {
         width: 1200px;
         padding-bottom: 40px;
