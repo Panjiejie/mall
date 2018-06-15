@@ -3,12 +3,17 @@
         <!-- 表单 -->
         <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
             <el-form-item label="手机号码" prop="pass">
-                <el-input type="number" v-model="ruleForm2.pass" auto-complete="off"></el-input>
+                <el-input type="text" v-model="ruleForm2.pass" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="短信验证码" prop="checkPass" class="verification-code">
                 <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
                 <span>发送验证码</span>
             </el-form-item>
+            <el-form-item label="">
+            <el-radio-group v-model="resource">
+            <el-radio label="已阅读并同意"></el-radio><router-link to="/">《用户服务协议》</router-link>
+            </el-radio-group>
+        </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="toSecond">下一步</el-button>
                 <!-- <el-button @click="resetForm('ruleForm2')">重置</el-button> -->
@@ -57,6 +62,7 @@ export default {
         }
       };
       return {
+        resource:'',
         ruleForm2: {
           pass: '',
           checkPass: '',
@@ -73,19 +79,6 @@ export default {
       };
     },
      methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
       toSecond(){
         bus.$emit('changeSteps', 2);
         this.$router.push('registerSecond')
@@ -96,7 +89,7 @@ export default {
 <style scoped lang='less'>
 .el-form{
     width: 526px;
-    margin: 0 auto;
+    margin: 100px auto 0;
     .el-input{
         width: 300px;
     }

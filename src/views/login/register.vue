@@ -41,8 +41,10 @@ export default {
 <style lang="less" scoped>
 #register{
     width: 1200px;
-    padding: 40px;
-    background: rgb(223,235,357);
+    height: 580px;
+    padding:  20px 40px;
+    margin: 20px 0;
+    background: #fff;
     p{
        text-align: left;
        font-size: 14px;
@@ -59,7 +61,7 @@ export default {
 }
 .el-steps{
     width: 800px;
-    margin: 40px auto 60px;
+    margin: 10px auto ;
 }
 
 </style>
