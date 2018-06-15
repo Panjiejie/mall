@@ -30,7 +30,11 @@ import toBrands from 'views/brands/toBrands.vue'//品牌页面
 import toBrandDetail from 'views/brands/toBrandDetail.vue'//单一品牌详情页面
 import allEvaluation from 'views/brands/allEvaluation.vue'//品牌测评全部详情页面
 import relatedProducts from 'views/brands/relatedProducts.vue'//品牌测评全部详情页面
-
+import register from 'views/login/register.vue'//注册首页
+import registerIndex from 'views/login/registerIndex.vue'//注册首页
+import registerSecond from 'views/login/registerSecond.vue'//注册第二个页面
+import registerThird from 'views/login/registerThird.vue'//注册第二个页面
+import registerLast from 'views/login/registerLast.vue'//注册第二个页面
 Vue.use(Router)
 
 export default new Router({
@@ -170,7 +174,31 @@ export default new Router({
     },
     { //商品详情
       path: '/login',
-      component: login
+      component: login,
+      children:[
+        {//注册
+          path:'register',
+          component:register,
+          children:[
+            {
+              path:'registerIndex',
+              component:registerIndex
+            },
+            {
+             path:'registerSecond',
+             component:registerSecond
+            },
+            {
+              path:'registerThird',
+              component:registerThird
+             },
+             {
+              path:'registerLast',
+              component:registerLast
+             }
+          ]
+        }
+      ]
     },
   ]
 })
