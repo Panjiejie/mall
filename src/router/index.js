@@ -33,8 +33,9 @@ import relatedProducts from 'views/brands/relatedProducts.vue'//品牌测评全�
 import register from 'views/login/register.vue'//注册首页
 import registerIndex from 'views/login/registerIndex.vue'//注册首页
 import registerSecond from 'views/login/registerSecond.vue'//注册第二个页面
-import registerThird from 'views/login/registerThird.vue'//注册第二个页面
-import registerLast from 'views/login/registerLast.vue'//注册第二个页面
+import registerThird from 'views/login/registerThird.vue'//注册第三个页面
+import registerLast from 'views/login/registerLast.vue'//注册第四个页面
+import userAgreement from 'views/login/userAgreement.vue'//注册用户协议页面
 Vue.use(Router)
 
 export default new Router({
@@ -195,9 +196,13 @@ export default new Router({
              {
               path:'registerLast',
               component:registerLast
-             }
+             },
           ]
-        }
+        },
+        {//用户协议
+          path:'userAgreement',
+          component:userAgreement
+         }
       ]
     },
   ]

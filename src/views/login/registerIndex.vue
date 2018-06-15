@@ -1,24 +1,23 @@
 <template>
     <div>
         <!-- 表单 -->
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="手机号码" prop="pass">
-                <el-input type="text" v-model="ruleForm2.pass" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="短信验证码" prop="checkPass" class="verification-code">
-                <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
-                <span>发送验证码</span>
-            </el-form-item>
-            <el-form-item label="">
-            <el-radio-group v-model="resource">
-            <el-radio label="已阅读并同意"></el-radio><router-link to="/">《用户服务协议》</router-link>
-            </el-radio-group>
-        </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="toSecond">下一步</el-button>
-                <!-- <el-button @click="resetForm('ruleForm2')">重置</el-button> -->
-            </el-form-item>
-        </el-form>
+        <form id='formInfo'>
+          <div class="form-item">
+            <label for="#phone">手机号:</label>
+            <input type="text" id='phone' placeholder="输入手机号码">
+            <span class="userName" :class="{isshow:isshowUserNameWarn}">{{userName}}</span>
+          </div>
+          <div class="form-item">
+            <label for="#verification-code">验证码:</label>
+            <input type="text" placeholder="短信验证码">
+            <!-- <a>发送验证码</a> -->
+            <span class="userName" :class="{isshow:isshowUserNameWarn}">{{verificationCode}}</span>
+          </div>
+          <P>
+            <el-radio v-model="radio" label="1">已阅读并同意</el-radio><span>《用户服务协议》</span>
+          </P>
+       <button @click="toSecond">下一步</button>
+       </form>
     </div>
 </template>
 <script>
@@ -26,57 +25,12 @@ import { bus } from '../../bus.js'
 export default {
     name:'registerIndex',
     data(){
-        var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
-      return {
-        resource:'',
-        ruleForm2: {
-          pass: '',
-          checkPass: '',
-          age: '',
-        },
-        rules2: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-        }
-      };
+       return{
+         userName:'333',
+         verificationCode:'请输入正确的验证码',
+         isshowUserNameWarn:true,
+         radio:''
+       }
     },
      methods: {
       toSecond(){
@@ -87,31 +41,64 @@ export default {
 }
 </script>
 <style scoped lang='less'>
-.el-form{
-    width: 526px;
-    margin: 100px auto 0;
-    .el-input{
-        width: 300px;
-    }
-    .el-button{
-        width: 200px;
-        height: 40px;
-    }
-    .verification-code{
-        position: relative;
+ #formInfo{
+        width: 600px;
+        margin: 100px auto 0;
+        label{
+          display: inline-block;
+          font-size: 14px;
+          margin-right: 20px;
+        }
+        input{
+            display:inline-block;
+            width: 400px;
+            height: 44px;
+            line-height: 44px;
+            padding-left: 20px;
+            margin: 0 auto;
+            font-size: 14px;
+            border: 1px solid rgb(221,221,221);
+            outline: none;
+        }
         span{
-            position: absolute;
-            top: 0;
-            right: 88px;
-            color: rgb(241,94,8)
+            display: block;
+            width: 400px;
+            text-align: left;
+            margin: 0 auto; 
+            padding-left: 50px;
+            color: rgb(241,91,8);
+        }
+        button{
+            width: 400px;
+            height: 44px;
+            line-height: 44px;
+            border: 1px solid rgb(241,91,8);
+            background: rgb(241,91,8);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            position: relative;
+            left: 34px;
+            margin-top: 12px;
+        }
+        p{
+          height: 30px;
+          line-height: 30px;
+          font-size: 14px;
+          span{
+            display: inline;
+            padding: 0;
+          }
+          .el-radio{
+            margin-right: 0;
+          }
+        }
+        a{
+          color: rgb(241,91,8);
+          font-size: 14px;
+          position: relative;
+          left: -80px;
         }
     }
-    .el-form-item{
-        .el-form-item__error{
-            left: 62px !important;
-        }
-    }
-    
-}
 </style>
 
