@@ -92,16 +92,16 @@
         background: #f2f2f2;
         height: 100%;
     }
-    #header{
+    /* #header{
         position: fixed;
         top: 0;
         left: 0;
-    }
+    } */
     #footer{
         background: rgb(39,36,36);
-        /* position: fixed; */
-        /* bottom: 0; */
-        /* left: 0; */
+        position: fixed; 
+        bottom: 0;
+        left: 0;
     }
     .logocontent{
     width: 250px;
