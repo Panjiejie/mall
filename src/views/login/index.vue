@@ -59,8 +59,16 @@ import register from 'views/login/register'
         height: 100px;
         margin: 0 auto;
     }
+    #header{
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
     #footer{
-        background: rgb(39,36,36)
+        background: rgb(39,36,36);
+        position: fixed;
+        bottom: 0;
+        left: 0;
     }
     #main{
         width: 1200px;
