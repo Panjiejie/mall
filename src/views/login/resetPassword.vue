@@ -19,6 +19,12 @@ export default {
         return{
             active:1,
         }
+    },
+    mounted(){
+         bus.$on('changeSteps', (text) => {
+            // console.log('这是接受的数据'+text);
+            this.active=text;
+            })
     }
 }
 </script>

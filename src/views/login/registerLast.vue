@@ -1,6 +1,6 @@
 <template>
     <div id='register-last'>
-        <img src="../../assets/index/circle_arr.png" alt="">
+        <img src="../../assets/index/circle_success.png" alt="">
         <p>恭喜注册成功</p>
         <div>请妥善保管您的账户信息</div>
         <button>0{{time}}秒后进入首页</button>

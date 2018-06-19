@@ -53,7 +53,7 @@ export default {
     rightToolbar
   },
   mounted(){
-    window.addEventListener('scroll', this.handleScroll)
+    // window.addEventListener('scroll', this.handleScroll)
   },
   methods:{
     handleScroll () {
