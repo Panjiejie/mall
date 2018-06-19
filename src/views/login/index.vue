@@ -73,7 +73,7 @@
    #main{
         width: 1200px;
         height: 100%;
-        margin: 0 auto;
+        margin: 0 auto 100px;
         /* background: blue; */
         /* background-color: red; */
     }
