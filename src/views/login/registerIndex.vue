@@ -8,9 +8,9 @@
             <span class="userName" :class="{isshow:isshowUserNameWarn}">{{userName}}</span>
           </div>
           <div class="form-item">
-            <label for="#verification-code">验证码:</label>
+            <label for="#verification-code" >验证码:</label>
             <input type="text" placeholder="短信验证码">
-            <!-- <a>发送验证码</a> -->
+            <a>发送验证码</a>
             <span class="userName" :class="{isshow:isshowUserNameWarn}">{{verificationCode}}</span>
           </div>
           <P>
@@ -44,10 +44,16 @@ export default {
  #formInfo{
         width: 600px;
         margin: 100px auto 0;
+        .form-item{
+          width: 600px;
+          margin: 0 auto;
+        }
         label{
           display: inline-block;
           font-size: 14px;
           margin-right: 20px;
+          // width: 200px;
+          text-align: right;
         }
         input{
             display:inline-block;
@@ -55,7 +61,7 @@ export default {
             height: 44px;
             line-height: 44px;
             padding-left: 20px;
-            margin: 0 auto;
+            // margin: 0 auto;
             font-size: 14px;
             border: 1px solid rgb(221,221,221);
             outline: none;
