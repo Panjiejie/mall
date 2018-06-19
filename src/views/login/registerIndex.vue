@@ -10,9 +10,9 @@
           <div class="form-item">
             <label for="#verification-code" >验证码:</label>
             <input type="text" placeholder="短信验证码">
-            <a>发送验证码</a>
             <span class="userName" :class="{isshow:isshowUserNameWarn}">{{verificationCode}}</span>
           </div>
+            <a>发送验证码</a>
           <P>
             <el-radio v-model="radio" label="1">已阅读并同意</el-radio><span @click="dialogVisible=true;">《用户服务协议》</span>
           </P>
@@ -201,10 +201,13 @@ export default {
           }
         }
         a{
+          display: inline-block;
           color: rgb(241,91,8);
           font-size: 14px;
           position: relative;
-          left: -80px;
+          // right: 184px;
+          right: -184px;
+          top: -50px;
         }
     }
     #agreement{

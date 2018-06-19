@@ -1,7 +1,7 @@
 <template>
     <div id='register'>
         <p>新用户注册
-            <span>已有账号,<router-link to="">立即登录</router-link></span>
+            <span>已有账号,<router-link to="../loginPassword">立即登录</router-link></span>
         </p>
         <el-steps :active='active' simple @down='change(data)'>
             <el-step title="验证手机" ></el-step>
@@ -41,7 +41,7 @@ export default {
 <style lang="less" scoped>
 #register{
     width: 1200px;
-    height: 580px;
+    height: 600px;
     padding:  20px 40px;
     margin: 20px 0;
     background: #fff;

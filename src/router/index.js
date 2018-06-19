@@ -36,6 +36,13 @@ import registerSecond from 'views/login/registerSecond.vue'//注册第二个页�
 import registerThird from 'views/login/registerThird.vue'//注册第三个页面
 import registerLast from 'views/login/registerLast.vue'//注册第四个页面
 import userAgreement from 'views/login/userAgreement.vue'//注册用户协议页面
+import loginPassword from 'views/login/loginPassword.vue'//账号密码登录页面
+import loginByPhonenumber from 'views/login/loginByPhonenumber.vue'//手机验证码登录页面
+import resetPassword from 'views/login/resetPassword.vue'//找回密码页面
+import resetPasswordFirst from 'views/login/resetPassword/resetPasswordFirst.vue'//找回密码页面
+import resetPasswordSecond from 'views/login/resetPassword/resetPasswordSecond.vue'//找回密码页面
+import resetPasswordThird from 'views/login/resetPassword/resetPasswordThird.vue'//找回密码页面
+import resetPasswordLast from 'views/login/resetPassword/resetPasswordLast.vue'//找回密码页面
 Vue.use(Router)
 
 export default new Router({
@@ -173,7 +180,7 @@ export default new Router({
       path: '/goodsDetail',
       component: goodsDetail
     },
-    { //商品详情
+    { //z注册登录
       path: '/login',
       component: login,
       children:[
@@ -202,6 +209,36 @@ export default new Router({
         {//用户协议
           path:'userAgreement',
           component:userAgreement
+         },
+         {//账号密码登录
+           path:'loginPassword',
+           component:loginPassword
+         },
+         {//手机号码登录
+           path:'loginByPhonenumber',
+           component:loginByPhonenumber
+         },
+         {
+           path:'resetPassword',//重置密码
+           component:resetPassword,
+           children:[
+            {
+              path:'',
+              component:resetPasswordFirst
+            },
+             {
+               path:'resetPasswordSecond',
+               component:resetPasswordSecond
+             },
+             {
+               path:'resetPasswordThird',
+               component:resetPasswordThird
+             },
+             {
+               path:'resetPasswordLast',
+               component:resetPasswordLast
+             }
+           ]
          }
       ]
     },
