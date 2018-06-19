@@ -6,11 +6,12 @@
             <input type="text" id='phonenumber' placeholder="请输入手机号码">
         </div>
         <div class="form-item">
-            <label for="#verification-code">验证码：</label>
-            <input type="text" id='verification-code' placeholder="请输入验证码">
+            <label for="#verification-code" style="position:relative;left:50px;">验证码：</label>
+            <input type="text" id='verification-code' placeholder="请输入验证码" style="position:relative;left:40px;">
+            <a @click="sendVerificationCode">发送验证码</a>
         </div>
         <div class="errInfo">验证码错误</div>
-        <button>登录</button>
+        <button @click="toHome">登录</button>
         <p class="clearfix">
             <router-link to="register/registerIndex">新用户注册</router-link>
         </p>
@@ -35,6 +36,15 @@
 
    },
    methods:{
+       sendVerificationCode(){//发送验证码
+        this.$message({
+            message:'验证码已发送，请注意查收！',
+            type:'success'
+        })
+       },
+       toHome(){
+           this.$router.push('/')
+       }
    },
    components: {
 
@@ -92,6 +102,14 @@
             border: 1px solid rgb(221,221,221);
             margin-left: 20px;
             outline: none;
+        }
+        a{
+            position: relative;
+            left: -50px;
+            color: rgb(241,94,8);
+        }
+        a:hover{
+            color: rgb(241,94,8);
         }
     }
     button{

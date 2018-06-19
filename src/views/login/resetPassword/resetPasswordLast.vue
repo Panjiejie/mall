@@ -26,6 +26,9 @@ export default {
                 }
             },1000)
         }
+    },
+    mounted(){
+            bus.$emit('changeSteps', 4);
     }
 }
 </script>

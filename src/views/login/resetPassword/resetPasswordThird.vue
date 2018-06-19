@@ -30,11 +30,13 @@ export default {
     },
     methods:{
         toLast(){
-            bus.$emit('changeSteps', 4);
+            // bus.$emit('changeSteps', 4);
             this.$router.push('resetPasswordLast');
         }
     },
-    mounted(){},
+    mounted(){
+            bus.$emit('changeSteps', 3);
+    },
 }
 </script>
 <style lang="less" scoped>

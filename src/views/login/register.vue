@@ -41,7 +41,7 @@ export default {
 <style lang="less" scoped>
 #register{
     width: 1200px;
-    height: 600px;
+    min-height: 600px;
     padding:  20px 40px;
     margin: 20px 0;
     background: #fff;

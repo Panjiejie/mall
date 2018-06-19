@@ -90,8 +90,8 @@
         }
         input{
             width: 400px;
-            height: 40px;
-            line-height: 40px;
+            height: 50px;
+            line-height: 50px;
             padding-left: 20px;
             border: 1px solid rgb(221,221,221);
             margin-left: 20px;
@@ -100,8 +100,8 @@
     }
     button{
         width: 400px;
-        height: 40px;
-        line-height: 40px;
+        height: 50px;
+        line-height: 50px;
         background: rgb(241,94,8);
         color: #fff;
         font-size: 14px;

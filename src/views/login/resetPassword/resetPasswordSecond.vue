@@ -37,11 +37,14 @@ export default {
     },
     methods:{
         toThird(){
-            bus.$emit('changeSteps', 3);
+            // bus.$emit('changeSteps', 3);
             this.$router.push('resetPasswordThird');
         }
     },
-    mounted(){},
+    mounted(){
+            bus.$emit('changeSteps', 2);
+
+    },
 }
 </script>
 <style lang="less" scoped>

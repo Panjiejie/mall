@@ -3,13 +3,15 @@
         <div class="reset-line clearfix">
             <span class="tips">用户名称:</span>
             <div class="reset-line-right">
-                <input type="text" placeholder="手机号码/用户名称">
+                <input type="text" placeholder="手机号码/用户名称" v-model="phoneNumber">
+                <!-- <span class="warnInfos">请输入正确的用户名或手机号</span> -->
             </div>
         </div>
         <div class="reset-line clearfix">
             <span class="tips">验证码:</span>
             <div class="reset-line-right">
-                <input type="text" placeholder="输入图形验证码">
+                <input type="text" placeholder="输入图形验证码" v-model="verificationCode">
+                <!-- <br><span class="warnInfos">验证码错误</span> -->
             </div>
         </div>
         <div class="reset-line clearfix">
@@ -34,16 +36,28 @@ export default {
     name:'resetPasswordFirst',
     data(){
         return{
-            img:img
+            img:img,
+            phoneNumber:'',
+            verificationCode:'',
+            isshowUserNumWarn:false,
         }
     },
     methods:{
         toSecond(){
-            bus.$emit('changeSteps', 2);
             this.$router.push('resetPassword/resetPasswordSecond');
+        },
+        phonenumValidate(){//手机号码验证
+             if(this.phoneNumber!='' && this.phoneNumber.length<21){
+                this.isshowUserNumWarn=false;
+                }else {
+                this.isshowUserNumWarn=true;
+             }
         }
     },
-    mounted(){},
+    mounted(){
+            bus.$emit('changeSteps', 1);
+
+    },
 }
 </script>
 <style lang="less" scoped>
@@ -68,6 +82,7 @@ export default {
         .notips{
             opacity: 0;
         }
+        
         .reset-line-right{
             float: left;
             width: 50%;
@@ -88,6 +103,14 @@ export default {
                 height: 57px;
                 float: left;
             }
+            .warnInfos{
+            float: none;
+            line-height: 14px;
+            color: #ff2040;
+            position: relative;
+            top: 12px;
+            font-size: 13px;
+        }
             button{
                 float: left;
                 width: 400px;

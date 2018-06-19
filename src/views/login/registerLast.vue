@@ -3,7 +3,7 @@
         <img src="../../assets/index/circle_success.png" alt="">
         <p>恭喜注册成功</p>
         <div>请妥善保管您的账户信息</div>
-        <button>0{{time}}秒后进入首页</button>
+        <button @click="toHome">0{{time}}秒后进入首页</button>
     </div>
 </template>
 <script>
@@ -25,6 +25,9 @@ export default {
                     this.$router.push('/')
                 }
             },1000)
+        },
+        toHome(){
+            this.$router.push('/')
         }
     }
 }

@@ -4,17 +4,17 @@
         <form id='formInfo'>
           <div class="form-item">
             <label for="#phone">手机号:</label>
-            <input type="text" id='phone' placeholder="输入手机号码">
-            <span class="userName" :class="{isshow:isshowUserNameWarn}">{{userName}}</span>
+            <input type="text" id='phone' placeholder="输入手机号码" v-model="phoneNumber" @blur="numValidate">
+            <span class="userName" :class="{isshow:isshowUserNumWarn}">请输入正确的手机号码</span>
           </div>
           <div class="form-item">
             <label for="#verification-code" >验证码:</label>
-            <input type="text" placeholder="短信验证码">
-            <span class="userName" :class="{isshow:isshowUserNameWarn}">{{verificationCode}}</span>
+            <input type="text" placeholder="短信验证码" v-model="verificationCode" @blur="verificationCodeValidate">
+            <span class="userName" :class="{isshow:isshowVerificationWarn}">验证码错误</span>
           </div>
-            <a>发送验证码</a>
+            <a @click='sendVerificationCode'>发送验证码</a>
           <P>
-            <el-radio v-model="radio" label="1">已阅读并同意</el-radio><span @click="dialogVisible=true;">《用户服务协议》</span>
+            <el-radio v-model="radio" label="1">已阅读并同意</el-radio><span @click="dialogVisible=true;" style='opacity:1;'>《用户服务协议》</span>
           </P>
        <button @click="toSecond">下一步</button>
        </form>
@@ -119,17 +119,20 @@ export default {
     name:'registerIndex',
     data(){
        return{
-         userName:'333',
-         verificationCode:'请输入正确的验证码',
-         isshowUserNameWarn:true,
+         phoneNumber:'',
+         verificationCode:'',
+         isshowUserNumWarn:false,
+         isshowVerificationWarn:false,
          radio:'',
          dialogVisible:false
        }
     },
      methods: {
       toSecond(){
-        bus.$emit('changeSteps', 2);
-        this.$router.push('registerSecond')
+        if(!this.isshowUserNumWarn && !this.isshowVerificationWarn && this.radio){
+            bus.$emit('changeSteps', 2);
+            this.$router.push('registerSecond')
+        }
       },
       handleClose(done) {
         this.$confirm('确认关闭？')
@@ -137,11 +140,41 @@ export default {
             done();
           })
           .catch(_ => {});
+      },
+      sendVerificationCode(){//发送验证码
+        this.$message({
+          message: '验证码已发送！',
+          type: 'success'
+        });
+      },
+      numValidate(){//手机号码验证
+        let myreg=/^[1][3,4,5,7,8][0-9]{9}$/; 
+        if(!myreg.test(this.phoneNumber)){
+          this.isshowUserNumWarn=true;
+        }else {
+          this.isshowUserNumWarn=false;
+        }
+        // return true;
+      },
+      verificationCodeValidate(){//验证码验证
+      // console.log(this.verificationCode==2)
+        if(this.verificationCode!='2'){
+          this.isshowVerificationWarn=true;
+        }else {
+          this.isshowVerificationWarn=false;
+        }
+      },
+      allValidate(){
+        
       }
+      
     }
 }
 </script>
 <style scoped lang='less'>
+.isshow{
+  opacity: 1 !important;
+}
  #formInfo{
         width: 600px;
         margin: 100px auto 0;
@@ -160,6 +193,7 @@ export default {
             display:inline-block;
             width: 400px;
             height: 44px;
+            background: #fff;
             line-height: 44px;
             padding-left: 20px;
             // margin: 0 auto;
@@ -169,6 +203,7 @@ export default {
         }
         span{
             display: block;
+            opacity: 0;
             width: 400px;
             text-align: left;
             margin: 0 auto; 
