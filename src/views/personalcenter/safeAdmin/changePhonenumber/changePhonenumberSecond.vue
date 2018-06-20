@@ -10,13 +10,13 @@
                 </el-steps>
                 <div class="num">
                     <label for="num">手机号码：</label>
-                    <input type="text" id="num" placeholder="输入新的手机号码">
+                    <input type="text" id="num" placeholder="输入新的手机号码" v-model='phoneNumber'>
                 </div>
                 <div class="verification-code">
                     <label for="code">验证码：</label>
-                    <input type="text" id="code" placeholder="短信验证码">
-                    <a href="" class="send-code">发送验证码</a>
-                    <span>60S后重发</span>
+                    <input type="text" id="code" placeholder="短信验证码" v-model='verificationCode'>
+                    <a @click="sendVerificationCode" class="send-code">发送验证码</a>
+                    <span :class="{isshow:isshow}">{{second}}S后重发</span>
                 </div>
                 <button id="next" @click="toSuccess">下一步</button>
             </div>
@@ -39,6 +39,10 @@ export default {
             active:1,
             // space:200,
             alignCenter:true,
+            phoneNumber:'',//手机号码
+            verificationCode:'',//验证码
+            second:60,
+            isshow:false,
             form:{
                 name:''
             }
@@ -47,7 +51,22 @@ export default {
     methods:{
         toSuccess(){
             this.$router.push('changeSuccess')
-        }
+        },
+        sendVerificationCode(){//发送验证码
+            this.$message({
+                message:'验证码已发送，请注意查收！',
+                type:'success'
+            })
+            this.isshow=true;
+            var inter=setInterval(()=>{
+                this.second--;
+                if(this.second==0){
+                this.isshow=false;
+                this.second=60;
+                window.clearInterval(inter);
+            }
+            },1000)
+        },
     }
 }
 </script>
@@ -125,6 +144,12 @@ export default {
 }
 .verification-code span{
     color: #999;
+    opacity: 0;
+    width: 68px;
+    display: inline-block
+}
+.isshow{
+    opacity: 1 !important;
 }
 #next{
     width: 160px;
@@ -133,6 +158,7 @@ export default {
     color: #fff;
     border: 1px solid rgb(244,91,8);
     outline: none;
+    font-size: 14px;
 }
 .el-step__main .is-success{
     color: rgb(244,91,8);

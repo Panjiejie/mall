@@ -12,9 +12,9 @@
                         <div class="clearfix item-content">
                             <div   @mouseenter="enter(val)" class="item" v-for="(val , index) in item.goodslist" :key="val.key">
                                 <img :src="val.src" alt="">
-                                <h5>{{val.title}}</h5> 
-                                <h5>{{val.price}}</h5>
-                                <span class="close" :class="{show:val.isshow}" @click="closegoods(index , item.goodslist)">×</span>
+                                <h5 style='line-height:30px;font-size:14px;text-align:left;'>{{val.title}}</h5> 
+                                <h5 style='text-align:left;font-size:14px;color:#ff2040;'>￥{{val.price}}</h5>
+                                <span class="close" :class="{show:val.isshow}" @click="closegoods(index , item.goodslist)"></span>
                             </div>
                         </div>
                     </div>
@@ -22,6 +22,18 @@
                 
             </Timeline>
         </div>
+        <!-- 删除商品dialog -->
+        <el-dialog
+            title=""
+            :visible.sync="dialogVisible"
+            width="560px"
+            :center='true'>
+            <div id='dialog_delete' style='text-align:center;'>您确定要删除该商品记录吗？</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="ensureDelete()">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -31,15 +43,20 @@ export default {
     data(){
         return{
             useraccount:"12345632",
+            dialogVisible:false,
             num:"18689207260",
+            deleteGoods:{
+                index:'',
+                list:''
+            },
             footpointList:[
                 {date:"2018.06.05",goodslist:[
+                    {src:imgurl,title:"NIKE 拖鞋",price:'28',isshow:false},
                     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
                     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
                     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
                     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'292',isshow:false},
                     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
                    
                 ]},
@@ -77,16 +94,30 @@ export default {
                 //val为删除商品的下标
                 //list为 当前商品所在的数组
                 //实际中还需要向后台发送删除请求
-                console.log(val);
-                list.splice(val,1);
+                this.dialogVisible=true;
+                this.deleteGoods.index=val;
+                this.deleteGoods.list=list;
             },
             deleteAll(){
                 this.footpointList.forEach(item=>item.goodslist=[])
-            }
+            },
+            ensureDelete(){//确定删除某一个商品
+                this.dialogVisible=false;
+                this.deleteGoods.list.splice(this.deleteGoods.index,1);
+                this.deleteGoods.list='';
+                this.deleteGoods.index='';
+            },
     }
 }
 </script>
+<style>
+#dialog_delete{
+    text-align: center;
+}
+</style>
+
 <style scoped>
+
 p{
     text-align: left;
 }
@@ -117,13 +148,13 @@ p{
 .title{
         width: 990px;
         height: 44px;
-        /* background: blueviolet; */
-        background: rgb(240,240,240);
+        background:url(../../../assets/common/shadow.png);
         line-height:44px;
         text-align: left;
         padding-left: 24px;
         font-size: 16px;
         border-top:2px solid rgb(241,91,8);
+        border-bottom:1px solid rgb(221,221,221);
         padding-right: 40px;
 }
 .title a{
@@ -142,12 +173,13 @@ p{
     font-size: 14px;
 }
 .item img{
-    width: 200px;
+    width: 190px;
     height: 200px;
+    /* background: red; */
 }
 
-item-content{
-    float: left;
+.item-content{
+    /* float: left; */
     /* width: 880px; */
     height: auto;
 }
@@ -155,12 +187,13 @@ item-content{
     float: left;
     width: 220px;
     height: 295px;
+    padding: 15px 15px 0;
     list-style: none;
     position: relative;
     border: 1px solid transparent;
 }
 .item:hover{
-    border: 1px solid #999;
+    border: 1px solid rgb(221,221,221);
 }
 .close{
     position: absolute;
@@ -168,9 +201,9 @@ item-content{
     right: 0;
     width: 28px;
     height: 28px;
-    background: rgb(241,91,8);
+    background:url(../../../assets/common/delete_fp.png);
     color: #fff;
-    border-bottom-left-radius:50%; 
+    /* border-bottom-left-radius:50%;  */
     display: none;
 }
 .show{

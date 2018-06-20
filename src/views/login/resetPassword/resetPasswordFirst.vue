@@ -46,7 +46,7 @@ export default {
         toSecond(){
             this.$router.push('resetPassword/resetPasswordSecond');
         },
-        phonenumValidate(){//手机号码验证
+        phonenumValidate(){//账号验证
              if(this.phoneNumber!='' && this.phoneNumber.length<21){
                 this.isshowUserNumWarn=false;
                 }else {

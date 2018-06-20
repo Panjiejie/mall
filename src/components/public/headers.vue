@@ -21,7 +21,7 @@
               <router-link  class="hover" to="/nav/personalCenter/personalSetting" slot='reference'>张三的歌</router-link>
             </el-popover>
           </li>
-          <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/nav/personalCenter/personalSetting">{{loginIn}}</router-link></li>
+          <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/login/loginPassword">{{loginIn}}</router-link></li>
           <li><span class="ver-line"></span><router-link to="/login/register/registerIndex">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
           <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->

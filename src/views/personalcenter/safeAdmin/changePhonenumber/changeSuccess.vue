@@ -4,7 +4,7 @@
         <div class="bottom">
             <div class="change-content">
                 <div class="img-content">
-                    <img src="../../../../assets/common/kefu.png" style="width:62px;height:62px;margin-top:62px;" alt="">   
+                    <img src="../../../../assets/index/circle_success.png" style="margin-top:78px;" alt="">   
                 </div>
                 <h3>手机号码更换成功</h3>
                 <div class="subtitle">

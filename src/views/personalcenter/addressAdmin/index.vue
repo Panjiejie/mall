@@ -1,8 +1,8 @@
 <template>
     <div class="content">
         <div class="title">
-            安全管理 <span>(地址最多<span class="red">10</span>条，还能保存<span class="red">7</span>条)</span>
-            <a href=""> +新增地址</a>
+            收货地址 <span>(地址最多<span class="red">10</span>条，还能保存<span class="red">{{rest}}</span>条)</span>
+            <a class="orange" @click="dialogVisible=true"> + 新增地址</a>
         </div>
         <div class="contentbox">
                 <div class="section" v-for="item in 2" :key="item.key">
@@ -27,22 +27,128 @@
                     <div class="btncontent">
                         <input type="button" value="默认地址">
                         <div class="btngroup">
-                            <a href="">编辑</a>
-                            <a href="">删除</a>
+                            <a @click="editAddressDialog=true">编辑</a>
+                            <a @click="deleteAddress=true">删除</a>
                         </div>
                     </div>
                 </div>
-            
         </div>
+        <!-- 新增地址dialog -->
+        <el-dialog
+            title="新增地址"
+            :visible.sync="dialogVisible"
+            width="730px"
+            :center=true>
+            <div class="addcontent">
+                <div class="addline clearfix">
+                    <span >所在地区：</span>
+                    <v-distpicker :province="selected.province" :city="selected.city" :area="selected.area" ></v-distpicker>
+                </div>
+                <div class="addline">
+                    <span >详细地址:</span>
+                    <textarea placeholder="街道，门牌号等" v-model='addNewAddress.detailAddress'></textarea>
+                </div>
+                <div class="addline clearfix">
+                    <div class="half">
+                        <span >收货人:</span><input type="text" v-model="addNewAddress.consignee">
+                    </div>
+                    <div class="half">
+                        <span>手机号码:</span><input type="text" v-model="addNewAddress.phonenum">
+                    </div>
+                </div>
+                <div class="addline">
+                    <el-checkbox  id='isdefault' v-model="addNewAddress.isDefault">设为默认</el-checkbox>
+                </div>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addAdress">确 定</el-button>
+            </span>
+        </el-dialog>
+          <!-- 删除地址dialog -->
+        <el-dialog
+            title="删除"
+            :visible.sync="deleteAddress"
+            width="30%"
+            :center=true>
+            <span>这是一段信息</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="deleteAddress = false">取 消</el-button>
+                <el-button type="primary" @click="deleteAddress = false">确 定</el-button>
+            </span>
+        </el-dialog>
+          <!-- 编辑地址dialog -->
+          <el-dialog
+            title="编辑地址"
+            :visible.sync="editAddressDialog"
+            width="730px"
+            :center=true>
+            <div class="addcontent">
+                <div class="addline clearfix">
+                    <span >所在地区：</span>
+                    <v-distpicker :province="editselected.province" :city="editselected.city" :area="editselected.area" ></v-distpicker>
+                </div>
+                <div class="addline">
+                    <span >详细地址:</span>
+                    <textarea placeholder="街道，门牌号等" v-model='editAddress.detailAddress'></textarea>
+                </div>
+                <div class="addline clearfix">
+                    <div class="half">
+                        <span >收货人:</span><input type="text" v-model="editAddress.consignee">
+                    </div>
+                    <div class="half">
+                        <span>手机号码:</span><input type="text" v-model="editAddress.phonenum">
+                    </div>
+                </div>
+                <div class="addline">
+                    <el-checkbox  class='isdefault' v-model="editAddress.isDefault">设为默认</el-checkbox>
+                </div>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="editAddressDialog = false">取 消</el-button>
+                <el-button type="primary" @click="editAddressDialog=false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
+import VDistpicker from 'v-distpicker'
 export default {
-    name:'personalSetting',
+    name:'addressAdmin',
+    components:{
+        VDistpicker
+    },
     data(){
         return{
             useraccount:"12345632",
-            num:"18689207260"
+            num:"18689207260",
+            rest:3,//剩余可添加地址
+            checked:false,//新增地址是否设为默认
+            dialogVisible:false,//显示隐藏添加地址对话框
+            deleteAddress:false,//显示隐藏删除地址对话框
+            editAddressDialog:false,//显示隐藏编辑地址对话框
+            selected:{
+                province:'广东省',
+                city:'深圳市',
+                area:'福田区'
+            },
+            addNewAddress:{//新增地址
+                detailAddress:'',
+                consignee:'',
+                phonenum:'',
+                isDefault:false,
+            },
+            editselected:{//编辑地址省市区
+                province:'广东省',
+                city:'深圳市',
+                area:'福田区'
+            },
+            editAddress:{//编辑地址
+                detailAddress:'',
+                consignee:'',
+                phonenum:'',
+                isDefault:false,
+            }
         }
     },
     filters:{
@@ -52,10 +158,69 @@ export default {
             return val;
             
         }
+    },
+    methods:{
+        addAdress(){
+            console.group(this.selected)
+            console.group(this.addNewAddress)
+            this.dialogVisible=false;
+        },
     }
 }
 </script>
-<style scoped>
+<style>
+.distpicker-address-wrapper select{
+    width: 187px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #999;
+}
+.distpicker-address-wrapper{
+    width: 580px;
+    float: left;
+}
+.addline{
+    margin: 16px 0;
+}
+.addline>span,.addline>.half>span{
+    float: left;
+    width: 90px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #333;
+}
+.half{
+    width: 50%;
+    float: left;
+}
+.half>input{
+    width: 230px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 14px;
+    color: #999;
+    border: 1px solid rgb(221,221,221);
+    outline: none;
+}
+.addline textarea{
+    width: 570px;
+    height: 90px;
+    padding: 14px;
+    color: #999;
+    font-size: 14px;
+    resize: none;
+    border: 1px solid rgb(221,221,221)
+}
+.isdefault{
+    margin-left: 90px;
+    height: 40px;
+    line-height: 40px;
+}
+</style>
+
+<style scoped lang='less'>
 .red{
     color: rgb(255,64,32)
 }
@@ -67,13 +232,13 @@ export default {
 .title{
         width: 990px;
         height: 44px;
-        /* background: blueviolet; */
-        /* background: rgb(240,240,240); */
+        background: url(../../../assets/common/shadow.png);
         line-height:44px;
         text-align: left;
         padding-left: 24px;
         font-size: 16px;
         border-top:2px solid rgb(241,91,8);
+        border-bottom:1px solid rgb(221,221,221);
         padding-right: 40px;
 }
 .title a{
@@ -151,8 +316,26 @@ export default {
     font-size: 14px;
     color: rgb(34,108,145);
     display: inline-block;
-    margin:20px  16px 0 0;
+    margin:20px  4px 0 0;
 }
+  #addcontent  .addline{
+        height: 72px;
+        line-height: 72px;
+    }
+    #addcontent  .title{
+            float: left;
+            width: 90px;
+            color: red
+        }
+    #addcontent   textarea{
+            width: 570px;
+            height: 90px;
+            padding: 14px;
+            color: #999;
+            font-size: 14px;
+            resize: none;
+        }
+
 </style>
 
 

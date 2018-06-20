@@ -7,15 +7,13 @@
     </div>
 </template>
 <script>
+import {bus} from '../../../bus.js'
 export default {
     name:'resetPasswordLast',
     data(){
         return{
             time:3
         }
-    },
-    mounted(){
-        this.a();
     },
     methods:{
         a(){
@@ -29,6 +27,7 @@ export default {
     },
     mounted(){
             bus.$emit('changeSteps', 4);
+            this.a();
     }
 }
 </script>

@@ -12,12 +12,14 @@ import _ from 'lodash'
 import store from './store'
 // import store from './store'
 import './element-variables.scss'
+import Distpicker from 'v-distpicker'
 
 Vue.prototype._ = _
 Vue.use(VueAwesomeSwiper) //轮播
 Vue.use(iView);
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.component('v-distpicker', Distpicker)
 // Vue.use(store)s
 /* eslint-disable no-new */
 new Vue({

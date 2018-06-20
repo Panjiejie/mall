@@ -8,12 +8,12 @@
                 <el-step title="步骤 2"></el-step>
                 <el-step title="步骤 3"></el-step>
                 </el-steps>
-                <div class="number">已绑定的手机：180****2323</div>
+                <div class="number">已绑定的手机：{{num | numfilter}}</div>
                 <div class="verification-code">
                     <label for="code">验证码：</label>
                     <input type="text" id="code" placeholder="短信验证码">
-                    <a href="" class="send-code">发送验证码</a>
-                    <span>60S后重发</span>
+                    <a  @click='sendVerificationCode' class="send-code">发送验证码</a>
+                    <span :class="{isshow:isshow}">{{second}}S后重发</span>
                 </div>
                 <button id="next" @click="toSecondStep">下一步</button>
             </div>
@@ -35,15 +35,46 @@ export default {
         return{
             active:0,
             // space:200,
+            num:'18689207260',
             alignCenter:true,
+            second:60,
+            isshow:false,
             form:{
                 name:''
             }
         }
     },
+    mounted(){
+        
+    },
     methods:{
         toSecondStep(){
             this.$router.push('changePhonenumberSecond')
+        },
+        sendVerificationCode(){//发送验证码
+            this.$message({
+                message:'验证码已发送，请注意查收！',
+                type:'success'
+            })
+            this.isshow=true;
+            var inter=setInterval(()=>{
+                this.second--;
+                if(this.second==0){
+                this.isshow=false;
+                this.second=60;
+                window.clearInterval(inter);
+            }
+            },1000)
+            
+            
+        },
+    },
+    filters:{
+        numfilter(val){
+            var reg = /^(\d{3})\d*(\d{4})$/;
+            val=val.replace(reg, "$1****$2");
+            return val;
+            
         }
     }
 }
@@ -117,6 +148,12 @@ export default {
 }
 .verification-code span{
     color: #999;
+    opacity: 0;
+    display: inline-block;
+    width: 78px;
+}
+.isshow{
+    opacity: 1 !important;
 }
 #next{
     width: 160px;

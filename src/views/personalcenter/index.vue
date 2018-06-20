@@ -17,8 +17,8 @@
                         <li><router-link to="myOrder">我的订单</router-link></li>
                         <li class="title"><span>收藏的商品</span></li>
                         <li><router-link to="myFavorite">收藏的商品</router-link></li>
-                        <li class="title"><span>帮助中心</span></li>
-                        <li><router-link to="safeAdmin">平台客服</router-link></li>
+                        <!-- <li class="title"><span>帮助中心</span></li> -->
+                        <!-- <li><router-link to="safeAdmin">平台客服</router-link></li> -->
                     </ul>
                 </div>
                 <!-- 右侧 -->

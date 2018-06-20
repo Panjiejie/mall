@@ -4,7 +4,7 @@
         <div class="contentbox">
             <div class="content-title">您当前的账号{{useraccount}}</div>
             <div class="line">
-                <img src="../../../assets/common/wechat.png" alt="">
+                <img src="../../../assets/common/green_g.png" alt="">
                 <div class="btncontent">
                     <h4>登录密码</h4>
                     <div class="textinfos">
@@ -14,13 +14,13 @@
                 </div>
             </div>
             <div class="line">
-                <img src="../../../assets/common/kefu.png" alt="">
+                <img src="../../../assets/common/phone_yellow.png" alt="">
                 <div class="btncontent lastcontent">
                     <h4>安全手机 {{num | numfilter}}</h4>
                     <div class="textinfos">
                         安全手机可以用于登录账号，重置密码或其他安全验证
                     </div>
-                    <input type="button" value="更换" @click="changePhonenumber">
+                    <input type="button" value="更换" @click="changePhonenumber" style='right:-23px;'>
                     <!-- <router-link to="changePhonenumber">更换</router-link> -->
                 </div>
             </div>
@@ -38,17 +38,17 @@
         <el-dialog  id="el-dialog" title="修改密码" :visible.sync="passwordDialog" :width="dialogWidth" center>
             <el-form :model="form">
                 <el-form-item label="原密码" :label-width="formLabelWidth">
-                <el-input v-model="form.name" auto-complete="off" placeholder="请输入原密码"></el-input>
+                <el-input v-model="form.oldPassword" auto-complete="off" placeholder="请输入原密码" @blur="oldPasswordValidate"></el-input>
                 </el-form-item>
                 <el-form-item label="新密码" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" auto-complete="off" placeholder="设置6-20位登录密码"></el-input>
+                    <el-input v-model="form.newPassword" auto-complete="off" placeholder="设置6-20位登录密码" @blur="newPasswordValidate"></el-input>
                 </el-form-item>
                 <el-form-item label="再次输入" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" auto-complete="off" placeholder="请再次输入登录密码"></el-input>
+                    <el-input v-model="form.newPasswordTwo" auto-complete="off" placeholder="请再次输入登录密码" @blur="isPasswordEqual"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="editPassword">取 消</el-button>
+                <el-button @click="cancleEditPassword">取 消</el-button>
                 <el-button type="primary" @click="editPassword">确 定</el-button>
             </div>
         </el-dialog>
@@ -64,14 +64,9 @@ export default {
             num:"18689207260",
             passwordDialog:false,//修改密码对话框控制
             form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+                oldPassword: '',
+                newPassword: '',
+                newPasswordTwo: '',
                 },
             formLabelWidth:'120px',
             dialogWidth:'564px'
@@ -79,22 +74,61 @@ export default {
     },
     methods:{
         editPassword() {//修改密码
+          if(this.newPasswordValidate() && this.isPasswordEqual()){
+            this.passwordDialog=false;
+            this.passwordDialog=false;
+            this.$message({
+                type: 'success',
+                message: '修改成功!'
+            });
+        }else{
+            this.$message({
+                        message:'请输入格式正确的有效信息',
+                        type:'warn'
+                    })
+        }
+        
+      },
+      cancleEditPassword(){
+        // 取消修改密码
         this.passwordDialog=false;
-
-        // 成功
-        // this.$message({
-        //     type: 'success',
-        //     message: '修改成功!'
-        //   });
-        // 取消修改
         this.$message({
             type: 'info',
             message: '已取消修改'
           }); 
       },
-      changePhonenumber(){//修改手机号码
-        this.$router.push('changePhonenumber')
-      }
+      changePhonenumber(){//进入修改手机号码页面
+            this.$router.push('changePhonenumber')
+      },
+      oldPasswordValidate(){//旧密码验证
+        this.$message('旧密码验证')
+      },
+      newPasswordValidate(){
+           let reg=/^[a-zA-Z\d]{6,32}$/;
+            if(!reg.test(this.form.newPassword)){
+                if(this.form.newPassword!=''){
+                    this.$message({
+                        message:'请输入格式正确的密码',
+                        type:'warn'
+                    })
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+      },
+      isPasswordEqual(){
+          if(this.form.newPassword!=this.form.newPasswordTwo && this.form.newPassword!='' && this.form.newPasswordTwo!=''){
+              this.$message({
+                        message:'两次输入密码不一致，请重新输入',
+                        type:'warn'
+                    });
+              this.form.newPasswordTwo='';
+              return true;
+          }else{
+              return false;
+          }
+      },
 
     },
     filters:{
@@ -152,13 +186,14 @@ export default {
 .title{
         width: 990px;
         height: 44px;
-        background: blueviolet;
+        background: url(../../../assets/common/shadow.png);
         /* background: rgb(240,240,240); */
         line-height:44px;
         text-align: left;
         padding-left: 24px;
         font-size: 16px;
-        border-top:2px solid rgb(241,91,8)
+        border-top:2px solid rgb(241,91,8);
+        border-bottom: 1px solid rgb(221,221,221);
 }
 .contentbox{
     width: 990px;
@@ -179,8 +214,7 @@ export default {
 }
 .line img{
     float: left;
-    width: 50px;
-    height: 110px;
+    margin-top: 35px;
 }
 .btncontent{
     float: left;

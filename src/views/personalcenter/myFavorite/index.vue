@@ -13,11 +13,23 @@
                                     <h5 style="height:30px;line-height:30px;">{{val.title}}</h5>
                                     <h5><span class="price-logo red">￥</span><span class="red" style="font-size:16px;">{{val.price}}</span></h5>
                                 </div>
-                                <span class="close" @click="removeGoods(index)" :class="{show:val.isshow}">×</span>
+                                <span class="close" @click="removeGoods(index)" :class="{show:val.isshow}"></span>
                             </div>
                         </div>
              </div>      
         </div>
+        <!-- 删除商品dialog -->
+        <el-dialog
+            title=""
+            :visible.sync="dialogVisible"
+            width="560px"
+            :center='true'>
+            <div id='dialog_delete' style='text-align:center;'>您确定要删除该商品记录吗？</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="ensureDelete()">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -28,6 +40,8 @@ export default {
         return{
             useraccount:"12345632",
             num:"18689207260",
+            deleteIndex:'',
+            dialogVisible:false,
             footpointList:[
                     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
                     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
@@ -57,7 +71,13 @@ export default {
                 item.isshow = true;
             },
         removeGoods(val){
-            this.footpointList.splice(val,1)
+           this.dialogVisible=true;
+           this.deleteIndex=val;
+        },
+        ensureDelete(){
+            this.dialogVisible=false;
+            this.footpointList.splice(this.deleteIndex,1)
+            this.deleteIndex='';
         },
         deleteAll(){
             this.footpointList=[];
@@ -90,12 +110,13 @@ p{
         width: 990px;
         height: 44px;
         /* background: blueviolet; */
-        background: rgb(240,240,240);
+        background: url(../../../assets/common/shadow.png);
         line-height:44px;
         text-align: left;
         padding-left: 24px;
         font-size: 16px;
         border-top:2px solid rgb(241,91,8);
+        border-bottom: 1px solid rgb(221,221,221);
         padding-right: 40px;
 }
 .title a{
@@ -128,6 +149,7 @@ p{
     width: 200px;
     height: 270px;
     margin: 38px 37.5px 0 0;
+    /* padding: 15px 15px 0; */
     list-style: none;
     position: relative;
     border: 1px solid rgb(221,221,221);
@@ -138,9 +160,9 @@ p{
     right: 0;
     width: 28px;
     height: 28px;
-    background: rgb(241,91,8);
-    color: #fff;
-    border-bottom-left-radius:50%; 
+    background:url(../../../assets/common/delete_fp.png);
+    /* color: #fff; */
+    /* border-bottom-left-radius:50%;  */
     display: none;
 }
 .show{

@@ -4,7 +4,7 @@
         <div class="contentbox">
             <div class="editinfos">
                 <div class="photobox">
-
+                    <img :src="photoDefault" alt="" style='width:100%;height:100%;border-radius:50%;'>
                 </div>
                 <div class="editphoto" @click='editPhoto'>修改头像</div>
                 <!-- <div class="line clearfix"> -->
@@ -13,7 +13,7 @@
                 <!-- </div> -->
                 <div class="line clearfix">
                     <span class="infotitle">用户名：</span>
-                    <span class="infos"><el-input v-model="userName"  id="username" placeholder="请输入用户名" disabled="true"></el-input>
+                    <span class="infos"><el-input v-model="userName"  id="username" placeholder="请输入用户名" disabled></el-input>
 </span>
                 </div>
                 <!-- <div class="line clearfix">
@@ -55,43 +55,20 @@
     </div>
 </template>
 <script>
+import photoDefault from '../../../assets/common/photoDefault.png'
 export default {
     name:'personalSetting',
     data(){
         return{
             userName:"张三",
             sex:"1",
-            pickerOptions1: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-          shortcuts: [{
-            text: '今天',
-            onClick(picker) {
-              picker.$emit('pick', new Date());
-            }
-          }, {
-            text: '昨天',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit('pick', date);
-            }
-          }, {
-            text: '一周前',
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', date);
-            }
-          }]
-        },
-        value1: '',
-        value2: '',
-        dialogWidth:'560px',//弹出框宽度
-        updataPhotoDialog:false,
-        imageUrl:''//头像
-      };
+            photoDefault:photoDefault,
+            value1: '',
+            value2: '',
+            dialogWidth:'560px',//弹出框宽度
+            updataPhotoDialog:false,
+            imageUrl:''//头像
+        };
         
     },
     methods:{
@@ -100,6 +77,7 @@ export default {
             },
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
+            this.photoDefault=this.imageUrl;
             this.$message({
             type: 'success',
             message: '修改成功!'
@@ -173,13 +151,14 @@ export default {
 .title{
         width: 990px;
         height: 44px;
-        background: blueviolet;
+        background:url(../../../assets/common/shadow.png);
         /* background: rgb(240,240,240); */
         line-height:44px;
         text-align: left;
         padding-left: 24px;
         font-size: 16px;
-        border-top:2px solid rgb(241,91,8)
+        border-top:2px solid rgb(241,91,8);
+        border-bottom: 1px solid rgb(221,221,221);
 }
 .contentbox{
     width: 990px;
@@ -190,7 +169,7 @@ export default {
 .photobox{
     width: 120px;
     height: 120px;
-    background: yellowgreen;
+    /* background: yellowgreen; */
     border: 1px solid #999;
     border-radius: 50%;
     margin: 0 auto 22px;
