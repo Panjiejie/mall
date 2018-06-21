@@ -20,7 +20,8 @@ import changePhonenumber from 'views/personalcenter/safeAdmin/changePhonenumber/
 import changePhonenumberSecond from 'views/personalcenter/safeAdmin/changePhonenumber/changePhonenumberSecond.vue'
 import changeSuccess from 'views/personalcenter/safeAdmin/changePhonenumber/changeSuccess.vue'
 import waitingSend from 'views/personalcenter/myOrder/waitingSend/index.vue'
-import waitingSendDetail from 'views/personalcenter/myOrder/waitingSend/detail.vue'
+import waitingSendDetail from 'views/personalcenter/myOrder/waitingSend/detail.vue'//待发货详情页面
+import waitingReceiveDetail from 'views/personalcenter/myOrder/waitingReceived/waitingReceivedDetail.vue'//待收货详情页面
 import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/afterSaleDetail.vue'//售后详情
 import applyForAfterSales from 'views/personalcenter/myOrder/applyForAfterSales/index.vue'//申请售后第一步页面
 import applyForAfterSaleSuccess from 'views/personalcenter/myOrder/applyForAfterSales/applyForAfterSaleSuccess.vue'//申请售后成功页面
@@ -168,6 +169,10 @@ export default new Router({
             {//我的订单 待发货 内部详情页面
               path:'waitingSendDetail',
               component:waitingSendDetail
+            },
+            {//我的订单 待收货内部详情页面
+              path:'waitingReceiveDetail',
+              component:waitingReceiveDetail
             },
             {//我的订单 售后服务页面
               path:'afterSaleDetail',

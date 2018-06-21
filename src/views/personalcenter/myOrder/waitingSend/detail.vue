@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="bottom">
-            <!-- <innerBottom></innerBottom> -->
+            <innerBottom></innerBottom>
         </div>
     </div>
 </template>

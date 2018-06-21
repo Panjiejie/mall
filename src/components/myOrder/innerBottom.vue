@@ -91,6 +91,7 @@ export default {
         font-size: 14px;
         color: #333;
     }
+    
     #table-header{
         width: 930px;
         height: 40px;
