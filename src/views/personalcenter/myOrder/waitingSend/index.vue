@@ -13,7 +13,7 @@ export default {
     },
     data(){
         return{
-            isshowLogistics:false,
+            isshowLogistics:true,
             orderStatus:'待发货'
         }
     },

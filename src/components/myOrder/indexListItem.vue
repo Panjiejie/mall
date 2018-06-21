@@ -45,7 +45,7 @@ export default {
             this.$router.push('waitingSendDetail')
         },
       toafterSale(){
-          this.$router.push('afterSaleDetail')
+          this.$router.push('applyForAfterSales')
       },
       toLogistics(){
           alert('这是物流信息')
@@ -117,6 +117,7 @@ export default {
 }
 .blue{
     color: rgb(83,133,162);
+    cursor: pointer;
 }
 .operation{
     float: left;

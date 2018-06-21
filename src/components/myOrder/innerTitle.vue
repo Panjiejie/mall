@@ -29,7 +29,7 @@ export default {
     },
     methods:{
         toAfterSale(){
-            this.$router.push('afterSaleDetail')
+            this.$router.push('applyForAfterSales')
         }
     },
 

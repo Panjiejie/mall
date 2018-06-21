@@ -8,7 +8,7 @@
                 <!-- 左侧 -->
                 <div class="innerleft">
                     <ul class="list">
-                        <li class="title"><span >我的账户</span></li>
+                        <!-- <li class="title"><span >我的账户</span></li>
                         <li><router-link to="personalSetting">个人设置</router-link></li>
                         <li><router-link to="safeAdmin">安全管理</router-link></li>
                         <li><router-link to="addressAdmin">地址管理</router-link></li>
@@ -16,9 +16,10 @@
                         <li class="title"><span>交易管理</span></li>
                         <li><router-link to="myOrder">我的订单</router-link></li>
                         <li class="title"><span>收藏的商品</span></li>
-                        <li><router-link to="myFavorite">收藏的商品</router-link></li>
+                        <li><router-link to="myFavorite">收藏的商品</router-link></li> -->
                         <!-- <li class="title"><span>帮助中心</span></li> -->
                         <!-- <li><router-link to="safeAdmin">平台客服</router-link></li> -->
+                        <li  @click="toPages(item)" v-for="item in list" :key='item.key' :class="{istitle:item.istitle,isorange:item.ischeck}"><router-link :to="item.toWhere">{{item.text}}</router-link></li>
                     </ul>
                 </div>
                 <!-- 右侧 -->
@@ -34,10 +35,27 @@ export default {
     name:'personalcenter',
     data(){
         return{
-
+            list:[
+                {text:'我的账户',istitle:true,ischeck:false,toWhere:''},
+                {text:'个人设置',istitle:false,ischeck:false,toWhere:'personalSetting'},
+                {text:'安全管理',istitle:false,ischeck:false,toWhere:'safeAdmin'},
+                {text:'地址管理',istitle:false,ischeck:false,toWhere:'addressAdmin'},
+                {text:'我的足迹',istitle:false,ischeck:false,toWhere:'myFootpoint'},
+                {text:'交易管理',istitle:true,ischeck:false,toWhere:''},
+                {text:'我的订单',istitle:false,ischeck:false,toWhere:'myOrder'},
+                {text:'我的收藏',istitle:true,ischeck:false,toWhere:''},
+                {text:'收藏的商品',istitle:false,ischeck:false,toWhere:'myFavorite'},
+            ]
         }
     },
-    methods:{}
+    methods:{
+        toPages(item){
+            if(!item.istitle){
+                this.list.forEach(e=>e.ischeck=false);
+                item.ischeck=true;
+            }
+        }
+    }
 }
 </script>
 <style scoped>
@@ -91,12 +109,15 @@ export default {
 li a{
     color: black;
 }
-.list .title{
-    font-size: 18px;
-    font-weight: 400;
+.istitle{
+    font-size: 18px !important;
+    font-weight: 800 !important;
     /* padding: 7px 0; */
-    height: 52px;
-    line-height: 52px;
+    height: 52px !important;
+    line-height: 52px !important;
+}
+.isorange{
+    color: rgb(242,91,8) !important;
 }
 </style>
 

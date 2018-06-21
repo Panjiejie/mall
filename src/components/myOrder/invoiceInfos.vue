@@ -5,13 +5,34 @@
             <p><span>发票类型：</span>大中国</p>
             <p><span>发票内容：</span>18689207260</p>
             <p><span>发票抬头：</span>我们都有一个家名字叫中国，兄弟姐妹都很多</p>
-            <button>修改信息</button>
+            <button @click="dialogVisible=true">修改信息</button>
         </div>
+        <!-- 发票 -->
+        <el-dialog
+        title="发票信息"
+        :visible.sync="dialogVisible"
+        width="760px"
+        :center="true">
+        <invoice></invoice>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+        </el-dialog>
     </div>
 </template>
 <script>
+import invoice from './invoice.vue'
 export default {
-    name:'consigneeInfo'
+    name:'consigneeInfo',
+    components:{
+        invoice
+    },
+    data(){
+        return{
+            dialogVisible:false
+        }
+    },
 }
 </script>
 <style scoped>

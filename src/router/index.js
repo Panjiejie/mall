@@ -21,7 +21,9 @@ import changePhonenumberSecond from 'views/personalcenter/safeAdmin/changePhonen
 import changeSuccess from 'views/personalcenter/safeAdmin/changePhonenumber/changeSuccess.vue'
 import waitingSend from 'views/personalcenter/myOrder/waitingSend/index.vue'
 import waitingSendDetail from 'views/personalcenter/myOrder/waitingSend/detail.vue'
-import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/detail.vue'//售后详情
+import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/afterSaleDetail.vue'//售后详情
+import applyForAfterSales from 'views/personalcenter/myOrder/applyForAfterSales/index.vue'//申请售后第一步页面
+import applyForAfterSaleSuccess from 'views/personalcenter/myOrder/applyForAfterSales/applyForAfterSaleSuccess.vue'//申请售后成功页面
 import seckill from 'components/public/seckill.vue' //秒杀
 import shoppingCart from 'views/nav/shoppingCart' //购物车
 import configureRecipient from 'views/nav/shoppingCart/configureRecipient.vue' //购物车收货信息
@@ -171,6 +173,14 @@ export default new Router({
               path:'afterSaleDetail',
               component:afterSaleDetail,
               meta:{auth:true},
+            },
+            {//申请售后页面
+              path:'applyForAfterSales',
+              component:applyForAfterSales
+            },
+            {//申请售后成功页面
+              path:'applyForAfterSaleSuccess',
+              component:applyForAfterSaleSuccess
             }
           ]
         }
