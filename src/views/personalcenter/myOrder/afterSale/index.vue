@@ -32,17 +32,26 @@
             </div>             
         </div>
         <!-- 退货对话框 -->
-        <el-dialog title="退货地址" :visible.sync="dialogFormVisible">
+        <el-dialog title="退货地址"  :width="'560px'" :visible.sync="dialogFormVisible" :center="true">
             <el-form :model="form">
                 <el-form-item label="姓名:" :label-width="formLabelWidth">
-                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                    <el-input v-model="form.name" auto-complete="off" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="电话:" :label-width="formLabelWidth">
-                    <el-input v-model="form.num" auto-complete="off"></el-input>
+                    <el-input v-model="form.num" auto-complete="off" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="地址:" :label-width="formLabelWidth">
+                    <el-input v-model="form.address" auto-complete="off" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="快递公司:" :label-width="formLabelWidth">
+                    <el-input v-model="form.expressCompany" auto-complete="off" placeholder="请输入快递公司"></el-input>
+                </el-form-item>
+                <el-form-item label="快递单号:" :label-width="formLabelWidth">
+                    <el-input v-model="form.courierNumber" auto-complete="off" placeholder="请输入快递单号"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <!-- <el-button @click="dialogFormVisible = false">取 消</el-button> -->
                 <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
             </div>
         </el-dialog>
@@ -61,10 +70,13 @@ export default {
             imgUrl:imgUrl,
             dialogFormVisible:false,
             form: {//请退货对话框信息
-                name: '',
-                num: '',
+                name: 'zs',
+                num: '123456789098',
+                address:'广东省深圳市福田区。。。。',
+                expressCompany:'',//快递公司
+                courierNumber:''//快递单号
                 },
-            formLabelWidth: '80px',
+            formLabelWidth: '120px',
         }
     },
     methods:{
