@@ -1,5 +1,6 @@
 <template>
     <div id="aftersale-detail">
+        <!-- 我的订单 售后详情 -->
          <div class="content">
             <div class="title-content">
                 <div class="imgcontent">

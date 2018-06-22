@@ -1,11 +1,11 @@
 <template>
     <div class="waitreceive-detail">
-        <!-- 待收货详情 -->
+        <!--  -->
         <div class="content">
             <div class="title-content">
                 <div class="imgcontent">
-                    <img src="../../../../assets/common/waiting-received.png" alt=""> 
-                    <p>等待收货</p>  
+                    <img src="../../../../assets/index/circle_success.png" alt=""> 
+                    <p>交易完成</p>  
                 </div>
                 <div class="infoscontent">
                     <div class="info">
@@ -21,7 +21,7 @@
         <div id="receive-body">
             <!-- 步骤条 -->
             <div class="steps">
-                <el-steps :active="2" align-center>
+                <el-steps :active="5" align-center>
                     <el-step title="提交订单" description="这是一段很长很长很长的描述性文字"></el-step>
                     <el-step title="商品出库" description="这是一段很长很长很长的描述性文字"></el-step>
                     <el-step title="商品签收" description="这是一段很长很长很长的描述性文字"></el-step>
@@ -133,7 +133,7 @@
 import imgUrl from '../../../../assets/common/logo.png'
 import invoice from '../../../../components/myOrder/invoice'
 export default {
-    name:'waitingReceivedDetail',
+    name:'completeOrderDetail',
     components:{
         invoice
     },

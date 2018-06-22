@@ -1,6 +1,41 @@
 <template>
     <div id="aftersale">
-        <innerTitle :none="none" :statusMsg="statusMsg"></innerTitle>
+        <!-- 我的订单售后查看详情 -->
+        <!-- 交易关闭状态 -->
+        <div class="content" v-if="status">
+            <div class="title-content">
+                <div class="imgcontent">
+                    <img src="../../../../assets/index/close.png" alt=""> 
+                    <p>交易关闭</p>  
+                </div>
+                <div class="infoscontent">
+                    <div class="info">
+                        <span class="title">订单编号：</span>622326482494
+                    </div>
+                    <div class="info">
+                        <span class="title">订单编号：</span>622326482494
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 售后中状态title -->
+        <div class="content" v-else>
+            <div class="title-content">
+                <div class="imgcontent">
+                    <img src="../../../../assets/index/aftersale.png" alt=""> 
+                    <p>售后中</p>  
+                </div>
+                <div class="infoscontent">
+                    <div class="info">
+                        <span class="title">订单编号：</span>622326482494
+                    </div>
+                    <div class="info">
+                        <span class="title">订单编号：</span>622326482494
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <innerTitle :none="none" :statusMsg="statusMsg"></innerTitle> -->
         <!-- <innerBottom></innerBottom> -->
         <div class="bottom">
             
@@ -39,6 +74,7 @@
 </template>
 <script>
 import imgUrl from '../../../../assets/common/logo.png'
+import closelogo from '../../../../assets/index/circle_success.png'
 import innerTitle from '../../../../components/myOrder/innerTitle'
 import consigneeInfo from '../../../../components/myOrder/consigneeInfo'
 import payment from '../../../../components/myOrder/payment'
@@ -56,7 +92,7 @@ export default {
     data(){
         return{
             none:true,
-            statusMsg:'售后中',
+            status:false,//根据交易为关闭还是售后中状态 判断显示那个title
             tableList:[
                 {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
                 {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
@@ -67,6 +103,56 @@ export default {
 }
 </script>
 <style scoped>
+.title-content{
+    width: 990px;
+    height: 100px;
+    padding:20px 30px;
+    background: #fff;
+    position: relative;
+    margin-bottom:22px ;
+    border:1px solid rgb(221,221,221)
+}
+.imgcontent{
+    float: left;
+    width: 60px;
+    height: 100px;
+}
+img{
+    width: 30px;
+    height: 30px;
+}
+p{
+    color: rgb(244,91,8);
+    font-size: 14px;
+}
+.infoscontent{
+    width: 410px;
+    height: 100px;
+    color: black;
+    float: left;
+    text-align: left;
+    margin-left: 100px;
+}
+.title{
+    color: #999;
+    font-size: 12px;
+}
+.toAfterSale{
+    width: 90px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid #ff2040;
+    color: #ff2040;
+    outline: none;
+    position: absolute;
+    top: 32px;
+    right: 30px;
+}
+.info{
+    height: 30px;
+    line-height: 30px;
+}
+
 #aftersale{
     width: 990px;
 }

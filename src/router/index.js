@@ -22,7 +22,10 @@ import changeSuccess from 'views/personalcenter/safeAdmin/changePhonenumber/chan
 import waitingSend from 'views/personalcenter/myOrder/waitingSend/index.vue'
 import waitingSendDetail from 'views/personalcenter/myOrder/waitingSend/detail.vue'//待发货详情页面
 import waitingReceiveDetail from 'views/personalcenter/myOrder/waitingReceived/waitingReceivedDetail.vue'//待收货详情页面
-import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/afterSaleDetail.vue'//售后详情
+
+import completeOrderDetail from 'views/personalcenter/myOrder/completedOrder/completeOrderDetail.vue'//已完成订单详情页面
+import lookAfterSaleDetail from 'views/personalcenter/myOrder/afterSale/detail.vue'//我的订单售后=》查看详情
+import afterSaleDetail from 'views/personalcenter/myOrder/afterSale/afterSaleDetail.vue'//我的订单售后=》售后详情
 import applyForAfterSales from 'views/personalcenter/myOrder/applyForAfterSales/index.vue'//申请售后第一步页面
 import applyForAfterSaleSuccess from 'views/personalcenter/myOrder/applyForAfterSales/applyForAfterSaleSuccess.vue'//申请售后成功页面
 import seckill from 'components/public/seckill.vue' //秒杀
@@ -174,9 +177,18 @@ export default new Router({
               path:'waitingReceiveDetail',
               component:waitingReceiveDetail
             },
+            {//我的订单 已完成订单内部详情页面
+              path:'completeOrderDetail',
+              component:completeOrderDetail
+            },
             {//我的订单 售后服务页面
               path:'afterSaleDetail',
               component:afterSaleDetail,
+              meta:{auth:true},
+            },
+            {//我的订单 查看售后详情服务页面
+              path:'lookAfterSaleDetail',
+              component:lookAfterSaleDetail,
               meta:{auth:true},
             },
             {//申请售后页面
