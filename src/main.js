@@ -13,15 +13,28 @@ import store from './store'
 // import store from './store'
 import './element-variables.scss'
 import Distpicker from 'v-distpicker'
+import axios from 'axios';
 
+Vue.prototype.axios=axios;
 Vue.prototype._ = _
 Vue.use(VueAwesomeSwiper) //轮播
 Vue.use(iView);
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(axios)
 Vue.component('v-distpicker', Distpicker)
 // Vue.use(store)s
 /* eslint-disable no-new */
+axios.defaults.baseURL = 'http://192.168.1.177:3002';  
+// axios.defaults.timeout=1000,  
+// axios.defaults.headers={
+//   'SOURCE':'11',
+//   'CREDENTIALS':'0',
+//   'TERMINAL':'0',
+//   'INDEX':'20180101010101'
+// } 
+
+
 new Vue({
   el: '#app',
   router,

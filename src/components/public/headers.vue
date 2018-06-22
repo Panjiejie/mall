@@ -25,7 +25,7 @@
           <li><span class="ver-line"></span><router-link to="/login/register/registerIndex">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
           <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->
-          <!-- <li><span class="ver-line"></span><router-link to="/">手机APP</router-link></li> -->
+          <!-- <li ><span class="ver-line"></span><router-link to="/">手机APP</router-link></li> -->
           <li class="cart-content shopping-cart-btn">
               <!-- <span class="ver-line"></span> -->
               <el-popover
@@ -68,7 +68,6 @@
         <div class="navbar">
           <ul>
             <li v-for='item in navList' :key='item.key' @click="chooseNav(item)">
-              <!-- <span class="circle"></span> -->
               <router-link :to="item.pathTo" :class="{navbarchoose:item.isChoose}">{{item.text}}</router-link>
             </li>
           </ul>
@@ -77,36 +76,6 @@
           <input type="text">
           <button><img src="../../assets/common/search.png" alt="" style="width:16px;height:16px;"></button>
         </div>
-          <!-- 个人中心小三角和下拉框 -->
-    <!-- <div class="triangle" :class='{isTriangle:personalCenter.isTriangle}'></div> -->
-    <!-- <div class="personal-center" :class='{isshow:isshow}' @mouseleave='isoutPersonalCenter'>
-      <ul>
-        <li><a href="">个人中心</a></li>
-        <li><a href="">商品收藏</a></li>
-        <li><a href="">安全设置</a></li>
-        <li><a href="">退出登录</a></li>
-        <li class="triangle"></li>
-      </ul>
-    </div> -->
-    <!-- 购物车 -->
-    <!-- <div class="shopping-cart">
-      <ul>
-        <li v-for="item in shoppingCartList" :key='item.key'>
-          <img :src="item.Filepath" alt="">
-          <div class="cartlist-right">
-             <h4 class="cartgoods-title">{{item.title}}</h4>
-              <div class="price">
-                <span>￥{{item.price}}</span> x{{item.num}}
-              </div>
-          </div>
-        </li>
-      </ul>
-      <div class="cart-footer">
-        <p class="goods-amount"> 共{{totalsAmount}}件商品</p>
-        <p class="totalprice">共计:<span>￥{{totalsMoney}}</span></p>
-        <button>去购物车</button>
-      </div>
-    </div> -->
     </div>
     </div>
   </div>
