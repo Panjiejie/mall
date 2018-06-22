@@ -49,6 +49,8 @@ import resetPasswordFirst from 'views/login/resetPassword/resetPasswordFirst.vue
 import resetPasswordSecond from 'views/login/resetPassword/resetPasswordSecond.vue'//找回密码页面
 import resetPasswordThird from 'views/login/resetPassword/resetPasswordThird.vue'//找回密码页面
 import resetPasswordLast from 'views/login/resetPassword/resetPasswordLast.vue'//找回密码页面
+// import { WSAENETRESET } from 'constants';
+import test from 'components/public/test.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -269,5 +271,9 @@ export default new Router({
          }
       ]
     },
+    {
+      path:'/test',
+      component:test
+    }
   ]
 })
