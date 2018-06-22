@@ -23,16 +23,10 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(axios)
 Vue.component('v-distpicker', Distpicker)
-// Vue.use(store)s
+// Vue.use(store)
 /* eslint-disable no-new */
 axios.defaults.baseURL = 'http://192.168.1.177:3002';  
-// axios.defaults.timeout=1000,  
-// axios.defaults.headers={
-//   'SOURCE':'11',
-//   'CREDENTIALS':'0',
-//   'TERMINAL':'0',
-//   'INDEX':'20180101010101'
-// } 
+
 
 
 new Vue({
