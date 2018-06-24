@@ -3,28 +3,7 @@
         <headers id='index-header'></headers>
         <router-view></router-view>
         <footers></footers>
-        <!-- 右下角工具条 -->
-        <div id='toolbar' :class="{isshow:isshow}" >
-          <a  href="#index-header" class="toolbar-item">
-            <img src="../../assets/common/return.png" alt="">
-            <p>TOP</p>
-          </a>
-           <a  href="#index-header" class="toolbar-item">
-            <img src="../../assets/common/return.png" alt="">
-            <p>TOP</p>
-          </a>
-           <a  href="#index-header" class="toolbar-item">
-            <img src="../../assets/common/return.png" alt="">
-            <p>TOP</p>
-          </a>
-        </div>
-        <!-- 左侧工具条 -->
-        <div class="left-toolbar clearfix">
-          <a href="">秒杀专区
-            <img src="../../assets/index/nav-header.png" alt="">
-          </a>
-          <a :href="item.jump" v-for="item in list" :key="item.key">{{item.text}}</a>
-        </div>
+       
     </div>
 </template>
 
