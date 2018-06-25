@@ -3,13 +3,13 @@
         <h3>用户登录</h3>
         <div class="form-item">
             <label for="#username">用户名:</label>
-            <input type="text" id='username' placeholder="请输入用户名">
+            <input type="text" id='username' placeholder="请输入用户名" v-model="username">
         </div>
         <div class="form-item">
             <label for="#password">密码：</label>
-            <input type="password" id='password' placeholder="请输入密码">
+            <input type="password" id='password' placeholder="请输入密码" v-model="password">
         </div>
-        <div class="errInfo">用户名称或密码错误</div>
+        <div class="errInfo" :class="{isshow:isshow}">用户名称或密码错误</div>
         <button>登录</button>
         <p>
             <span @click="resetPassword">忘记密码？</span>
@@ -31,7 +31,9 @@
    },
    data() {
      return {
-
+         username:'',
+         password:'',
+         isshow:false,
      }
 
    },
@@ -73,6 +75,7 @@
         padding-left: 156px;
         font-size: 14px;
         color: #ff2040;
+        opacity: 0;
     }
     .form-item{
         width: 600px;
@@ -96,6 +99,9 @@
             border: 1px solid rgb(221,221,221);
             margin-left: 20px;
             outline: none;
+        }
+        .isshow{
+            opacity: 1; 
         }
     }
     button{

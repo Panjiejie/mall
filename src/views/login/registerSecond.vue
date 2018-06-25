@@ -26,7 +26,7 @@
         <el-dialog  id="el-dialog" title="修改头像" :visible.sync="updataPhotoDialog" :width="dialogWidth" center>
             <el-upload
                     class="avatar-uploader"
-                    action="http://120.78.49.234/ImgUploadApi/api/ImgUpload/ImgPost"
+                    action="http://192.168.1.153:3000/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess">
                     <img v-if="photo" :src="photo" class="avatar">
@@ -46,10 +46,12 @@ export default {
     data(){
         return{
             photoDefault:photoDefault,
+            userPhoneNum:'',
             photo:'',
             userName:'',
             password:'',
             passwordTwo:'',
+            userImg:'',//用户头像
             isshowUserNameWarn:false,
             isshowPasswordWarn:false,
             isshowPasswordTwoWarn:false,
@@ -58,11 +60,41 @@ export default {
             usernameInfo:'请输入6-20位字母开头且仅含字母和数字的用户名'
         }
     },
+    created(){
+        this.userPhoneNum=sessionStorage.getItem('userPhoneNumber');
+    },
     methods:{
         toThird(){
+            console.log(!this.isshowUserNameWarn && !this.isshowPasswordWarn && !this.isshowPasswordTwoWarn)
             if(!this.isshowUserNameWarn && !this.isshowPasswordWarn && !this.isshowPasswordTwoWarn){
-                bus.$emit('changeSteps', 3);
-                this.$router.push('registerThird')
+                 this.axios.post("/User/UserInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "UserInfo",
+                    LoginUser:'0',
+                    UserAccount:this.userName,
+                    UserPasswd:this.password,
+                    // UserAvatar:this.userImg,
+                    UserMobile:this.userPhoneNum,
+                    OldImgUrl:this.userImg
+                    })
+                    .then(
+                    response => {
+                        console.log("请求成功");
+                        console.log(response);
+                       
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+
+                
+                // bus.$emit('changeSteps', 3);
+                // this.$router.push('registerThird')
             }
         },
         userNameValidate(){//用户名验证
@@ -98,11 +130,15 @@ export default {
         },
         handleAvatarSuccess(res, file) {
             this.photo = URL.createObjectURL(file.raw);
+            console.log(this.photo)
             this.photoDefault=this.photo;
-            this.$message({
-            type: 'success',
-            message: '修改成功!'
-          });
+            console.log(res)
+            this.userImg=res.data;
+            
+        //     this.$message({
+        //     type: 'success',
+        //     message: '修改成功!'
+        //   });
           setTimeout(()=>{this.updataPhotoDialog=false;},2000)
             },
     }

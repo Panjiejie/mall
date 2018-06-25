@@ -8,23 +8,30 @@ export default {
     methods:{
 
     textapi(){
-        let obj='[["Status","Sort","StockSum","Sum","Num"],["1","0","1","10","1"]]';
-        let self=this;
-      self.axios.post('/Mall/MallCommodityInfo', {
-            SOURCE: "22",
-            CREDENTIALS: "0",
-            TERMINAL: "0",
-            INDEX: "20170713170325",
-            METHOD: "MallCommodityInfo",
-            UserMobile: encodeURI('18689207260') 
-          }).then(response => {  
-                        console.log("请求成功");  
-                        console.log(response);  
-                    },  
-                    response => {  
-                        console.log("请求失败");  
-                        console.log(response);  
-                    })
+        let a='美妆';
+
+         let obj = '[["Status","Sort","StockSum","IndustryNameTwo","Sum","Num"],["1","0","0","'+a+'","1","9"]]';
+      this.axios
+        .post("/Mall/MallCommodityInfo", {
+          SOURCE: "22",
+          CREDENTIALS: "0",
+          TERMINAL: "0",
+          INDEX: "20170713170325",
+          METHOD: "MallCommodityInfo",
+          DATA:encodeURI(obj)
+        })
+        .then(
+          response => {
+            // let ClassifyName=response.data.DATA[0].ClassifyName;
+            // for(leti=0;i<ClassifyName.length;i++){
+
+            // }
+          },
+          response => {
+            console.log("请求失败");
+            console.log(response);
+          }
+        );
     }
     }
 }

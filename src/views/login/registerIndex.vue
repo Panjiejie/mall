@@ -5,18 +5,18 @@
           <div class="form-item">
             <label for="#phone">手机号:</label>
             <input type="text" id='phone' placeholder="输入手机号码" v-model="phoneNumber" @blur="numValidate">
-            <span class="userName" :class="{isshow:isshowUserNumWarn}">请输入正确的手机号码</span>
+            <span class="userName" :class="{isshow:isshowUserNumWarn}">{{userNumWarn}}</span>
           </div>
           <div class="form-item">
             <label for="#verification-code" >验证码:</label>
-            <input type="text" placeholder="短信验证码" v-model="verificationCode" @blur="verificationCodeValidate">
-            <span class="userName" :class="{isshow:isshowVerificationWarn}">验证码错误</span>
+            <input type="text" placeholder="短信验证码" v-model="verificationCode" @blur="verificationCodeValidate" @enter='verificationCodeInit'>
+            <span class="userName" :class="{isshow:isshowVerificationWarn}">{{verificationCodeInfo}}</span>
           </div>
             <a @click='sendVerificationCode'>发送验证码</a>
           <P>
             <el-radio v-model="radio" label="1">已阅读并同意</el-radio><span @click="dialogVisible=true;" style='opacity:1;'>《用户服务协议》</span>
           </P>
-       <button @click="toSecond">下一步</button>
+       <button @click="toSecond" >下一步</button>
        </form>
        <!-- 用户协议对话框 -->
           <el-dialog
@@ -124,14 +124,24 @@ export default {
          isshowUserNumWarn:false,
          isshowVerificationWarn:false,
          radio:'',
-         dialogVisible:false
+         dialogVisible:false,
+         userNumWarn:'请输入正确的手机号码!',
+         verificationCodeInfo:'验证码错误',
+         allvalidate:false
        }
+    },
+    mounted(){
+      bus.$on('changeSteps', (text) => {
+            console.log('这是接受的数据'+text);
+            this.active=text;
+            })
     },
      methods: {
       toSecond(){
         if(!this.isshowUserNumWarn && !this.isshowVerificationWarn && this.radio){
             bus.$emit('changeSteps', 2);
-            this.$router.push('registerSecond')
+            sessionStorage.setItem('userPhoneNumber',this.phoneNumber)
+            this.$router.push('registerSecond');
         }
       },
       handleClose(done) {
@@ -142,10 +152,33 @@ export default {
           .catch(_ => {});
       },
       sendVerificationCode(){//发送验证码
-        this.$message({
-          message: '验证码已发送！',
-          type: 'success'
-        });
+        // let obj = '[["Status","Sort","StockSum","IndustryNameTwo","Sum","Num"],["1","0","0","'+a+'","1","9"]]';
+        this.axios
+        .post("/UserRegister/AccoutProving", {
+          SOURCE: "22",
+          CREDENTIALS: "0",
+          TERMINAL: "0",
+          INDEX: "20170713170325",
+          METHOD: "AccountProving",
+          UserMobile:encodeURI(`${this.phoneNumber}`)
+        })
+        .then(
+          response => {
+            if(response.data.DATA[0].result){
+              this.$message({
+              message: '验证码已发送！',
+              type: 'success'
+              });
+            }else{
+              this.userNumWran='手机号码已注册!';
+              this.isshowUserNumWarn=true;
+              }
+          },
+          response => {
+            console.log("请求失败");
+            console.log(response);
+          }
+        );
       },
       numValidate(){//手机号码验证
         let myreg=/^[1][3,4,5,7,8][0-9]{9}$/; 
@@ -154,14 +187,42 @@ export default {
         }else {
           this.isshowUserNumWarn=false;
         }
-        // return true;
+      },
+      verificationCodeInit(){
+            this.verificationCodeInfo='验证码错误';
+            this.isshowVerificationWarn=false;
       },
       verificationCodeValidate(){//验证码验证
-      // console.log(this.verificationCode==2)
-        if(this.verificationCode!='2'){
-          this.isshowVerificationWarn=true;
-        }else {
-          this.isshowVerificationWarn=false;
+        if(this.verificationCode!=''){
+              let obj = '[["UserMobile","VerificationCode"],["'+this.phoneNumber+'","'+this.verificationCode+'"]]';
+              console.log(obj)
+            this.axios.post("/Code/VerifyAuthCode", {
+              SOURCE: "22",
+              CREDENTIALS: "0",
+              TERMINAL: "0",
+              INDEX: "20170713170325",
+              METHOD: "VerifyAuthCode",
+              UserMobile:this.phoneNumber,
+              VerificationCode:this.verificationCode
+            })
+            .then(
+              response => {
+                let code=response.data.DATA[0].Code;
+                console.log(code);
+                if(code=='1'){
+                    // this.isshowVerificationWarn=true;
+                }else if(code=='2'){
+                  this.isshowVerificationWarn=true;
+                }else if(code=='4'){
+                  this.verificationCodeInfo='验证码超时';
+                  this.isshowVerificationWarn=true;
+                }
+              },
+              response => {
+                console.log("请求失败");
+                console.log(response);
+              }
+            );
         }
       },
       allValidate(){
