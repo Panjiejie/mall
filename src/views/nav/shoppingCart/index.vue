@@ -236,20 +236,36 @@ export default {
       ]
     };
   },
-  mounted: function() {
-    this.cartInit();
+  mounted() {
+    // this.cartInit();
+  },
+  watch:{
+    checked(newval,oldval){
+      //  console.log('oldval--------->'+oldval)
+      //  console.log('newval--------->'+newval)
+       if(newval){
+         this.cartList.forEach(e=>e.ischecked=true)
+       }else{
+         this.cartList.forEach(e=>e.ischecked=false)
+       }
+    }
   },
   computed: {
     cartLists(){
          this.cartList.forEach(item=>{
-            item.subtotal=item.price*item.amount;
+            // item.subtotal='0';
+            item.subtotal=item.price*item.amount*1;
+            // this.totalPrice='0';
             this.totalPrice+=item.subtotal*1;
             if(item.ischecked){
+                // this.havechoose='0';
                 this.havechoose+=item.amount*1;
                 this.chooseList.push(item);
             }
         });
+        // this.realPay='0';
         this.realPay=this.totalPrice-this.discount;
+        // this.totalGoods='0';
         this.totalGoods=this.cartList.length;
         return this.cartList;
     }
@@ -269,7 +285,10 @@ export default {
     },
     toConfigureRecipient(){
       this.$router.push('../nav/configureRecipient')
-    }
+    },
+    // amountChange(amount,val){
+    //   amount=val;
+    // }
   }
 };
 </script>

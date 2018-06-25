@@ -23,7 +23,9 @@
             <div class="common-right">
                 <ul>
                     <li v-for="item in list" :key="item.id" @click="toGoodsDetail">
-                        <img :src="item.src" style="width:200px;height:200px;" alt="">
+                        <div class="img__content">
+                            <img :src="item.src" style="width:200px;height:200px;" alt="">  
+                        </div>
                         <h5>{{item.name}}</h5>
                         <h6>{{item.subtitle}}</h6>
                         <div>
@@ -67,6 +69,15 @@ export default {
 }
 </script>
 <style scoped>
+.img__content{
+    overflow: hidden;
+}
+.img__content img{
+    transition: all 0.6s;
+}
+.img__content img:hover{
+    transform: scale(1.2);
+}
 .content{
     width: 1200px;
     /* height: 383px; */

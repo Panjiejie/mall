@@ -75,8 +75,12 @@ export default {
         }
     },
     mounted(){
-    window.addEventListener('scroll', this.handleScroll)
-
+      // if(this.handleScroll){
+        window.addEventListener('scroll', this.handleScroll)
+      // }
+    },
+    destroyed(){
+      window.removeEventListener('scroll',this.handleScroll)
     },
     methods:{
          handleScroll () {
@@ -102,14 +106,16 @@ export default {
   width: 80px;
   height: 240px;
   /* border: 1px solid rgb(221,221,221); */
-  display: none;
+  /* display: none; */
+  opacity: 0;
   position: fixed;
   top: 300px;
   right: 1px;
   z-index: 99999;
 }
 .isshow{
-  display: block !important;
+  /* display: block !important; */
+  opacity: 1 !important;
 }
 .toolbar-item{
   display: block;

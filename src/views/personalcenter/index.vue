@@ -19,7 +19,7 @@
                         <li><router-link to="myFavorite">收藏的商品</router-link></li> -->
                         <!-- <li class="title"><span>帮助中心</span></li> -->
                         <!-- <li><router-link to="safeAdmin">平台客服</router-link></li> -->
-                        <li  @click="toPages(item)" v-for="item in list" :key='item.key' :class="{istitle:item.istitle,isorange:item.ischeck}"><router-link :to="item.toWhere">{{item.text}}</router-link></li>
+                        <li  v-for="item in list" :key='item.key' :class="{istitle:item.istitle,isShowBorder:item.ischeck}"><a  @click="toPages(item)" :class="{isorange:item.ischeck}" :to="item.toWhere">{{item.text}}</a></li>
                     </ul>
                 </div>
                 <!-- 右侧 -->
@@ -42,7 +42,7 @@ export default {
                 {text:'地址管理',istitle:false,ischeck:false,toWhere:'addressAdmin'},
                 {text:'我的足迹',istitle:false,ischeck:false,toWhere:'myFootpoint'},
                 {text:'交易管理',istitle:true,ischeck:false,toWhere:''},
-                {text:'我的订单',istitle:false,ischeck:false,toWhere:'myOrder'},
+                {text:'我的订单',istitle:false,ischeck:true,toWhere:'myOrder'},
                 {text:'我的收藏',istitle:true,ischeck:false,toWhere:''},
                 {text:'收藏的商品',istitle:false,ischeck:false,toWhere:'myFavorite'},
             ]
@@ -50,9 +50,11 @@ export default {
     },
     methods:{
         toPages(item){
+            // alert("1")
             if(!item.istitle){
-                this.list.forEach(e=>e.ischeck=false);
+                this.list.forEach(e => e.ischeck=false);
                 item.ischeck=true;
+                this.$router.push(item.toWhere)
             }
         }
     }
@@ -95,6 +97,9 @@ export default {
     border: 1px solid #e4e7ed;
 }
 /* 左侧列表 */
+.isShowBorder{
+    border-left: 2px solid rgb(242,91,8);
+}
 .list{
     text-align: center;
     margin-top: 20px;

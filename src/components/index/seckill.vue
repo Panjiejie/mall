@@ -24,7 +24,9 @@
             <div class="seckill-right">
                 <ul class="clearfix"> 
                     <li @click="toSeckillDetailPage" v-for='i in 4' :key="i.key">
-                        <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
+                        <div class="img__content">
+                            <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">   
+                        </div>
                         <h5>pt950铂金钻石结婚对戒</h5>
                         <div>
                             <span class="price"><span class="mlogo">¥</span>2258</span>
@@ -76,6 +78,15 @@ export default {
     margin: 0 auto;
     text-align: left;
     margin-bottom:18px; 
+}
+.img__content{
+    overflow: hidden;
+}
+.img__content img{
+    transition: all 0.6s;
+}
+.img__content img:hover{
+    transform: scale(1.2);
 }
 .line{
     display: inline-block;

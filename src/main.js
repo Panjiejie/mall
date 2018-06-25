@@ -21,7 +21,7 @@ Vue.use(VueAwesomeSwiper) //轮播
 Vue.use(iView);
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-Vue.use(axios)
+// Vue.use(axios)
 Vue.component('v-distpicker', Distpicker)
 // Vue.use(store)
 /* eslint-disable no-new */

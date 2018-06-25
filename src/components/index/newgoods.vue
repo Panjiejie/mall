@@ -16,7 +16,9 @@
             <div class="seckill-right">
                 <ul class="clearfix">
                     <li v-for='i in 3' :key="i.key" @click="toGoodsDetail">
-                        <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">
+                        <div class="img__content">
+                            <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">   
+                        </div>
                         <h5>pt950铂金钻石结婚对戒</h5>
                         <div>
                             <span class="price"><span class="mlogo">¥</span>2258</span>
@@ -56,6 +58,15 @@ export default {
 }
 </script>
 <style scoped>
+.img__content{
+    overflow: hidden;
+}
+.img__content img{
+    transition: all 0.6s;
+}
+.img__content img:hover{
+    transform: scale(1.2);
+}
 .content{
     width: 1200px;
     height: 383px;
