@@ -9,6 +9,7 @@
        <common-list :commonname="commonname2"></common-list>
        <common-list :commonname="commonname3"></common-list>
        <common-list :commonname="commonname4"></common-list>
+       <common-list :commonname="commonname5"></common-list>
         <!-- 右下角工具条 -->
         <div id='toolbar' :class="{isshow:isshow}" >
           <a  href="#index-header" class="toolbar-item">
@@ -56,10 +57,11 @@ export default {
     mounted(){},
     data(){
         return{
-            commonname1:"珠宝",
+            commonname1:"奶粉",
             commonname2:"酒类",
-            commonname3:"服饰",
-            commonname4:"母婴",
+            commonname3:"食品",
+            commonname4:"美妆",
+            commonname5:"其它",
             commonList:[
                 {}
             ],

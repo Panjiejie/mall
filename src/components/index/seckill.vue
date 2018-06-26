@@ -5,7 +5,7 @@
             <span class="maintitle">限时秒杀</span>
             <span class="subhead">每日好物 限量秒杀</span>
             <!-- <a class="morebrand" href="/haitao">查看全部> </a> -->
-            <router-link class="morebrand" to="nav/seckill">查看全部> </router-link>
+            <!-- <router-link class="morebrand" to="nav/seckill">查看全部> </router-link> -->
         </div>
         <div class="brands">
             <div class="seckill-left">

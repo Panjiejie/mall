@@ -4,8 +4,8 @@
             <span class="line"></span>
             <span class="maintitle">新品上架</span>
             <div class="morebrand">
-                <span style='position:relative;left:6px;'><img src="../../assets/index/lt.png" alt=""></span>
-                <span><img src="../../assets/index/gt.png" alt=""></span>
+                <span @click='toFirstPage' style='position:relative;left:6px;'><img src="../../assets/index/lt.png" alt=""></span>
+                <span @click='toLastPage'><img src="../../assets/index/gt.png" alt=""></span>
             </div>
         </div>
         <div class="brands clearfix">
@@ -15,17 +15,17 @@
             </div>
             <div class="seckill-right">
                 <ul class="clearfix">
-                    <li v-for='i in 3' :key="i.key" @click="toGoodsDetail">
+                    <li v-for='i in list' :key="i.key" @click="toGoodsDetail">
                         <div class="img__content">
-                            <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">   
+                            <img :src="i.FilePath" style="width:200px;height:200px;" alt="">   
                         </div>
                         <h5>pt950铂金钻石结婚对戒</h5>
                         <div>
-                            <span class="price"><span class="mlogo">¥</span>2258</span>
+                            <span class="price"><span class="mlogo">¥</span>{{i.price}}</span>
                         </div>
                         <div class="seckill-btn">立即购买</div>
                     </li>
-                    <li class="last">
+                    <li class="last" :class="{isshow:isshow}">
                         <h2>浏览更多新品</h2>
                         <h4>Browse more new products</h4>
                         <p class="lines"></p>
@@ -43,16 +43,61 @@ export default {
     // props:[list],
     data(){
         return{
+            isshow:false,
             list:[
-                {name:"ck制造商",price:"25元起"},
-                {name:"22制造商",price:"49元起"},
-                {name:"33制造商",price:"59元起"}
             ]
         }
+    },
+    mounted(){
+        this.toFirstPage();
     },
     methods:{
         toGoodsDetail(){
             this.$router.push('nav/goodsDetail')
+        },
+        toFirstPage(){
+            this.isshow=false;
+            this.requestGoods(1,4);
+           
+        },
+        toLastPage(){
+            this.isshow=true;
+            this.requestGoods(2,3);
+        },
+        requestGoods(sum,num){
+             let obj = '[["Status","Sort","StockSum","Sum","Num"],["1","0","0","'+sum+'","'+num+'"]]';
+             this.axios.post("/Mall/MallCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "MallCommodityInfo",
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                    // console.log(response)
+                    let data=response.data.DATA[0];
+                    // console.log(data.FilePath);
+                    this.list.length=0;
+                    for(let i=0,len=data.FilePath.length;i<len;i++){
+                        let FilePath=data.FilePath[i].split(',');
+                        FilePath=FilePath[0]+FilePath[1];
+                        this.list.push({
+                        title:data.CommodityName[i],
+                        FilePath:FilePath,
+                        BrandName:data.BrandName[i],
+                        price:data.SupplyMoney[i]
+                    })
+                    }
+                    
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
         }
     }
 }
@@ -218,6 +263,10 @@ export default {
 }
 .seckill-right .last{
     padding-top:90px ;
+    display: none;
+}
+.isshow{
+    display: block !important;
 }
 .seckill-right .last .line{
     width: 36px;
