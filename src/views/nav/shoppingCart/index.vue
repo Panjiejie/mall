@@ -94,9 +94,9 @@ export default {
       checked: false, //全选checkbox
       // havechoose: 0, //已选商品数量
       // totalGoods: 0, //购物车商品总数
-      totalPrice: 0, //购物车商品总价
-      discount: "12", //活动优惠
-      realPay: 0, //实际应付金额
+      // totalPrice: 0, //购物车商品总价
+      discount: 12, //活动优惠
+      // realPay: 0, //实际应付金额
       chooseList: [], //已选择商品
       swiperList: [
         [
@@ -237,7 +237,6 @@ export default {
     };
   },
   mounted() {
-    // this.cartInit();
   },
   watch:{
     checked(newval,oldval){
@@ -251,39 +250,45 @@ export default {
     }
   },
   computed: {
-    totalGoods:function(){
-      //已选商品总数
-      let num='';
+    totalGoods:{
+     get(){
+      let num=0;
+      this.cartList.forEach(e=>{
+          num+=parseInt(e.amount);
+      })
+       return num;
+     }
+    },
+    havechoose:{
+     get(){
+        //已选商品数量
+      let num = 0;
       this.cartList.forEach(e=>{
         if(e.ischecked){
-          num+=1
+          num+=parseInt(e.amount);
         }
-        return num;
       })
+      return num;
+     }
     },
-    havechoose:function(){
-      //已选商品数量
-      let num;
-      this.cartList.forEach(e=>{
+    totalPrice:{
+      get(){
+        let num =0;
+        this.cartList.forEach(e=>{
         if(e.ischecked){
-          num+=e.amount;
+          num+=parseInt(e.amount)*parseInt(e.price);
         }
       })
+      return num;
+      }
     },
+    realPay:{
+      get(){
+        return this.totalPrice - this.discount > 0 ? this.totalPrice - this.discount : 0
+      }
+    }
   },
   methods: {
-    cartInit() {
-      this.cartList.forEach(item => {
-        item.subtotal = item.price * item.amount;
-        this.totalPrice += item.subtotal;
-        this.totalGoods+=item.amount;
-        if (item.ischecked) {
-          this.havechoose += item.amount*1;
-        //   this.chooseList.push(item);
-        }
-      });
-      this.realPay = this.totalPrice - this.discount;
-    },
     toConfigureRecipient(){
       this.$router.push('../nav/configureRecipient')
     },
