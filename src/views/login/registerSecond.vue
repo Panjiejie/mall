@@ -21,12 +21,12 @@
             <input type="password" id='password-two' placeholder="请再次输入登录密码" @blur="passwordTwoValidate" v-model="passwordTwo" >
             <span class="userName" :class="{isshow:isshowPasswordTwoWarn}">两次密码输入不一致，请重新输入！</span>
           </div>
-       <button @click="toThird">下一步</button>
+       <button @click="toThird($event)">下一步</button>
          <!-- 修改头像 -->
         <el-dialog  id="el-dialog" title="修改头像" :visible.sync="updataPhotoDialog" :width="dialogWidth" center>
             <el-upload
                     class="avatar-uploader"
-                    action="http://120.78.49.234:3000/upload"
+                    action="http://120.78.49.234:3002/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess">
                     <img v-if="photo" :src="photo" class="avatar">
@@ -64,8 +64,9 @@ export default {
         this.userPhoneNum=sessionStorage.getItem('userPhoneNumber');
     },
     methods:{
-        toThird(){
-            debugger;
+        toThird(e){
+            // debugger;
+            e.preventDefault();
             console.log(!this.isshowUserNameWarn && !this.isshowPasswordWarn && !this.isshowPasswordTwoWarn)
             if(!this.isshowUserNameWarn && !this.isshowPasswordWarn && !this.isshowPasswordTwoWarn){
                

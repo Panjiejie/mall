@@ -202,6 +202,7 @@ export default {
       // if(this.detailmsg.length==0){
  //請求行業具體信息
        let obj = '[["Status","Sort","StockSum","IndustryNameOne","Sum","Num"],["1","0","0","'+val.text+'","1","9"]]';
+       console.log(obj)
       this.axios.post("/Mall/MallCommodityInfo", {
           SOURCE: "22",
           CREDENTIALS: "0",
@@ -223,7 +224,8 @@ export default {
                 title:data.CommodityName[i],
                 FilePath:FilePath,
                 BrandName:data.BrandName[i],
-                price:data.SupplyMoney[i]
+                price:data.SupplyMoney[i],
+                AttributeGroup:data.AttributeGroup[i]
               })
             }
               

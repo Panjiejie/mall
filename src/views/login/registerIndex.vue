@@ -16,7 +16,7 @@
           <P>
             <el-radio v-model="radio" label="1">已阅读并同意</el-radio><span @click="dialogVisible=true;" style='opacity:1;'>《用户服务协议》</span>
           </P>
-       <button @click="toSecond" >下一步</button>
+       <button @click="toSecond($event)" >下一步</button>
        </form>
        <!-- 用户协议对话框 -->
           <el-dialog
@@ -137,7 +137,8 @@ export default {
             })
     },
      methods: {
-      toSecond(){
+      toSecond(e){
+        e.preventDefault();
         if(!this.isshowUserNumWarn && !this.isshowVerificationWarn && this.radio){
             bus.$emit('changeSteps', 2);
             sessionStorage.setItem('userPhoneNumber',this.phoneNumber)

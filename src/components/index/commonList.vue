@@ -8,11 +8,6 @@
             <a class="morebrand" href="/haitao">查看全部&gt;</a>
             <div class="navlist">
                 <span><a href="">手链 /</a></span>
-                <span><a href="">手链 /</a></span>
-                <span><a href="">手链 /</a></span>
-                <span><a href="">手链 /</a></span>
-                <span><a href="">手链 /</a></span>
-                <span><a href="">手链 /</a></span>
             </div>
         </div>
         <div class="brands">
@@ -22,12 +17,12 @@
             </div>
             <div class="common-right">
                 <ul>
-                    <li v-for="item in list" :key="item.id" @click="toGoodsDetail">
+                    <li v-for="item in list" :key="item.id" @click="toGoodsDetail(item)">
                         <div class="img__content">
                             <img :src="item.FilePath" style="width:200px;height:200px;" alt="">  
                         </div>
-                        <h5>{{item.name}}</h5>
-                        <h6>{{item.subtitle}}</h6>
+                        <h5>{{item.title}}</h5>
+                        <h6>{{item.BrandName}}</h6>
                         <div>
                             <span class="price"><span class="mlogo">¥</span> {{item.price}}</span>
                         </div>
@@ -49,28 +44,23 @@ export default {
     props:['commonname'],
     data(){
         return{
-            list:[
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-            ],
+            list:[],
+            IndustryNameTwo:[],
+            AttributeGroup:''
         }
     },
     mounted(){
-        this.requestGoods(8,1)
+        this.requestGoods(1,8);
+        this.requestIndustryNameTwo();
     },
     methods:{
-        toGoodsDetail(){
-            this.$router.push('nav/goodsdetail')
+        toGoodsDetail(item){
+            this.AttributeGroup=item.AttributeGroup;
+            this.$router.push({path:`nav/goodsdetail/${this.AttributeGroup}`})
         },
         requestGoods(sum,num){
-            let obj = '[["Status","Sort","IndustryNameOne",StockSum","Sum","Num"],["1","0","'+this.commonname+'","0","'+sum+'","'+num+'"]]';
-            console.log(obj)
+            let obj = '[["Status","Sort","IndustryNameOne","StockSum","Sum","Num"],["1","0","'+this.commonname+'","0","'+sum+'","'+num+'"]]';
+            // console.log(obj)
              this.axios.post("/Mall/MallCommodityInfo", {
                 SOURCE: "22",
                 CREDENTIALS: "0",
@@ -92,7 +82,8 @@ export default {
                         title:data.CommodityName[i],
                         FilePath:FilePath,
                         BrandName:data.BrandName[i],
-                        price:data.SupplyMoney[i]
+                        price:data.SupplyMoney[i],
+                        AttributeGroup:data.AttributeGroup[i]
                     })
                     }
                     
@@ -103,7 +94,43 @@ export default {
                     console.log(response);
                 }
                 );
-        }
+        },
+        requestIndustryNameTwo(){
+                 let obj = '[["Status","IndustryName"],["1","'+this.commonname+'"]]';
+                // console.log(obj)
+                this.axios.post("/Mall/MallIndustryNameInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "MallIndustryNameInfo",
+                    DATA:encodeURI(obj)
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        // let data=response.data.DATA[0];
+                        // // console.log(data.FilePath);
+                        // this.list.length=0;
+                        // for(let i=0,len=data.FilePath.length;i<len;i++){
+                        //     let FilePath=data.FilePath[i].split(',');
+                        //     FilePath=FilePath[0]+FilePath[1];
+                        //     this.list.push({
+                        //     title:data.CommodityName[i],
+                        //     FilePath:FilePath,
+                        //     BrandName:data.BrandName[i],
+                        //     price:data.SupplyMoney[i]
+                        // })
+                        // }
+                        
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
     }
 }
 </script>

@@ -12,7 +12,7 @@
             <input type="password" id='password-two' placeholder="请再次输入提现密码" v-model="passwordTwo" @blur="passwordTwoValidate" >
             <span class="userName" :class="{isshow:isshowPasswordTwoInfo}">两次输入密码不一致，请重新输入！</span>
           </div>
-        <button @click="toLast">完成注册</button>
+        <button @click="toLast($event)">完成注册</button>
        </form>
     </div>
 </template>
@@ -35,8 +35,9 @@ export default {
         console.log(this.userInfo)
     },
     methods:{
-        toLast(){
-            debugger;
+        toLast(e){
+            // debugger;
+            e.preventDefault();
             if(!this.isshowPasswordInfo && !this.isshowPasswordTwoInfo && this.password!='' && this.passwordTwo!=''){
                    let obj = '[["UserAccount","UserPasswd","UserMobile","PayPasswd"],["'+this.userInfo.UserAccount+'","'+this.userInfo.UserPasswd+'","'+this.userInfo.UserMobile+'","'+this.password+'"]]';
                    console.log(obj)
@@ -44,23 +45,27 @@ export default {
                    this.axios.post("/UserInfo/UserInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
-                    TERMINAL: "0",
+                    TERMINAL: "1",
                     INDEX: "20170713170325",
                     METHOD: "UserInfo",
-                    DATA:encodeURI(obj),
+                    LoginUser:'2',
+                    UserAccount:this.userInfo.UserAccount,
+                    UserPasswd:this.userInfo.UserPasswd,
+                    UserMobile:this.userInfo.UserMobile,
+                    PayPasswd:this.password,
                     OldImgUrl:this.userInfo.OldImgUrl
                     })
                     .then(
                     response => {
-                        if(response.data.DATA[0].result){
-                        this.$message({
-                        message: '验证码已发送！',
-                        type: 'success'
-                        });
-                        }else{
-                        this.userNumWran='手机号码已注册!';
-                        this.isshowUserNumWarn=true;
-                        }
+                        // if(response.data.DATA[0].Result){
+                        // this.$message({
+                        // message: '验证码已发送！',
+                        // type: 'success'
+                        // });
+                        // }else{
+                        // this.userNumWran='手机号码已注册!';
+                        // this.isshowUserNumWarn=true;
+                        // }
                     },
                     response => {
                         console.log("请求失败");
@@ -69,7 +74,7 @@ export default {
                     );
 
 
-                bus.$emit('changeSteps',4)
+                // bus.$emit('changeSteps',4)
                 //  this.$router.push('registerLast')
             }else{
                 this.$message({

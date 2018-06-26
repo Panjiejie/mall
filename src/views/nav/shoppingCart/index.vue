@@ -28,7 +28,7 @@
                         <span>￥{{item.price}}</span>
                     </div>
                     <div class="amount">
-                        <el-input-number v-model="item.amount"  :min="1"  label="描述文字"></el-input-number>
+                        <el-input-number v-model="item.amount"  :min="1" @change='amountChange(item)' label="描述文字"></el-input-number>
                     </div>
                     <div class="subtotal">
                         ￥{{item.subtotal}}
@@ -292,9 +292,9 @@ export default {
     toConfigureRecipient(){
       this.$router.push('../nav/configureRecipient')
     },
-    // amountChange(amount,val){
-    //   amount=val;
-    // }
+    amountChange(item){
+      item.subtotal=item.amount*item.price
+    }
   }
 };
 </script>

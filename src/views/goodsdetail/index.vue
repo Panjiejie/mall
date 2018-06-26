@@ -5,8 +5,8 @@
                 <ul>
                     <li> <router-link to="/">首页</router-link>&gt;</li>
                     <li><router-link to="toBrands">品牌</router-link>&gt;</li>
-                    <li><router-link to="toBrandDetail">耐克</router-link>&gt;</li>
-                    <li>耐克NIKE BENASSI SOLARSOFT</li>
+                    <li><router-link to="toBrandDetail">{{BrandName}}</router-link>&gt;</li>
+                    <li>{{CommodityName}}</li>
                 </ul>
             </div>
             <!-- 商品详情左侧-->
@@ -18,7 +18,7 @@
                         </div>
                         <div class="minibox">
                             <ul>
-                                <li @mouseenter="enter(item)" v-for="item in imglist" :key="item.key">
+                                <li @mouseenter="enter(item)" v-for="item in imglists" :key="item.key">
                                     <img :src="item.src" alt="">
                                 </li>
                             </ul>
@@ -37,7 +37,7 @@
 
                 <!-- 商品详情右侧 -->
                 <div class="rightside">
-                    <div class="title">我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多</div>
+                    <div class="title">{{CommodityName}}</div>
                     <div class="subtitle">[官方授权，正品保障] 超值预售火热进行中</div>
                     <!-- 中间图文部分 -->
                     <div class="textinfo">
@@ -60,18 +60,18 @@
                                 </div>
                                 <div class="text-content">
                                     <div class="line">
-                                        <span class="ptitle" style="margin-right:36px;">秒杀价</span>
+                                        <span class="ptitle" style="margin-right:36px;">价格：</span>
                                         <span class="seckill-money">￥
-                                            <span style="font-size:30px;">255.00</span>
+                                            <span style="font-size:30px;">{{price}}</span>
                                         </span>
-                                        <span class="oldermoney">￥298.00</span>
+                                        <!-- <span class="oldermoney">￥298.00</span> -->
                                     </div>
-                                    <div class="otherline">
+                                    <!-- <div class="otherline">
                                         <span class="ptitle">运费</span>
                                         <span class="yunfei">运费10块</span>
-                                    </div>
+                                    </div> -->
                                     <div class="otherline" style="margin-bottom:16px;">
-                                        <span class="ptitle">服务</span>
+                                        <span class="ptitle">服务:</span>
                                         <span class="yunfei">无忧货到付款 正品汇正品认证</span>
                                     </div>
                                 </div>
@@ -133,7 +133,9 @@
                     <div class="bcbody">
                         <div class="bcbody-content">
                             <ul>
-                                <li v-for="i in 5" :key="i.key"></li>
+                                <li v-for="i in adds" :key="i.key">
+                                  <img :src="i.src" alt="" style="width:100%;">
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -175,8 +177,17 @@ export default {
   },
   data() {
     return {
-      brandname: "耐克(NIKE)",
+      AttributeGroup:'',
+      BrandName: "耐克(NIKE)",//品牌名
+      CommodityName:'222222',//商品名
       inputNumber: 1, //商品数量计数器
+      price:'',
+      FilePath:[],
+      defaultCommodityAttribute:{//默认选择参数
+        AttributeGroup:'',
+        AttributeName:'',
+        AttributeValue:''
+    },
       chooleSizeList: [
         {
           label: 42,
@@ -267,14 +278,13 @@ export default {
       ],
       bigImg: imgurl, //左侧大图src
       heart: heart, //收藏小心心图标src
-      imglist: [
-        { src: imgurl },
-        { src: imgurl1 },
-        { src: imgurl },
-        { src: imgurl1 },
-        { src: imgurl }
-      ]
+      imglists: [],
+      adds:[]
     };
+  },
+  created(){
+    this.AttributeGroup=this.$route.params.id;
+    this.pageInit();
   },
   methods: {
     enter(value) {
@@ -312,6 +322,55 @@ export default {
     },
     toGoodsDetail(){
       this.$router.push('goodsdetail')
+    },
+    pageInit(){
+         let obj = '[["UserAccount","AttributeGroup"],["test001","'+this.AttributeGroup+'"]]';
+            // console.log(obj)
+             this.axios.post("/Mall/GetMallCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "GetMallCommodityInfo",
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                    // console.log(response);
+                    let data=response.data.DATA[0];
+                    this.BrandName=data.CommodityAttribute[0].AttributeGroup[0];//品牌名
+                    this.CommodityName=data.CommodityAttribute[0].AttributeValue[0];//商品名
+                    let FilePath=data.CommodityInfo[0].FilePath[0];
+                    FilePath=FilePath.split(',');
+                    let firstGoodsInfo=data.CommodityInfo[0];
+                    // console.log(FilePath)
+                    this.bigImg=FilePath[0]+FilePath[1];
+
+                    for(let i=1;i<FilePath.length;i++){
+                        this.imglists.push({//左侧商品图
+                          src:FilePath[0]+FilePath[i]
+                        })
+                    }
+                    //价格
+                    this.price=firstGoodsInfo.SupplyMoney[0];
+                    //默认选择商品参数
+                    this.defaultCommodityAttribute=data.CommodityAttribute;
+                    //图文详情图片
+                    // console.log(firstGoodsInfo.CommodityProfile[0].split(','));
+                    let picContents=[];
+                    picContents=firstGoodsInfo.CommodityProfile[0].split(',');
+                    for(let i=1;i<picContents.length;i++){
+                      this.adds.push({
+                        src:picContents[0]+picContents[1]
+                      })
+                    }
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
     }
   }
 };
@@ -384,8 +443,9 @@ export default {
   border-top: 3px solid #f45b08;
   text-align: center;
   line-height: 44px;
-  background: #f2f2f2;
+  background: url(../../assets/common/shadow.png);
   font-size: 14px;
+  border-bottom: 1px solid rgb(221,221,221);
 }
 .introduce {
   width: 900;
@@ -604,7 +664,7 @@ export default {
 }
 .textinfo {
   width: 100%;
-  min-height: 220px;
+  min-height: 176px;
   background: #f5f5f5;
 }
 /* 选择参数 */

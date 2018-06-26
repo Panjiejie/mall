@@ -3,13 +3,13 @@
        <banner></banner>
        <!-- <brandingbusiness></brandingbusiness> -->
        <service></service>
-       <seckill></seckill>
+       <seckill id='seckill'></seckill>
        <newgoods></newgoods>
-       <common-list :commonname="commonname1"></common-list>
-       <common-list :commonname="commonname2"></common-list>
-       <common-list :commonname="commonname3"></common-list>
-       <common-list :commonname="commonname4"></common-list>
-       <common-list :commonname="commonname5"></common-list>
+       <common-list :commonname="commonname1" id='c_1'></common-list>
+       <common-list :commonname="commonname2" id='c_2'></common-list>
+       <common-list :commonname="commonname3" id='c_3'></common-list>
+       <common-list :commonname="commonname4" id='c_4'></common-list>
+       <common-list :commonname="commonname5" id='c_5'></common-list>
         <!-- 右下角工具条 -->
         <div id='toolbar' :class="{isshow:isshow}" >
           <a  href="#index-header" class="toolbar-item">
@@ -27,7 +27,7 @@
         </div>
         <!-- 左侧工具条 -->
         <div class="left-toolbar clearfix">
-          <a href="">秒杀专区
+          <a href="#seckill">秒杀专区
             <img src="../../assets/index/nav-header.png" alt="">
           </a>
           <a :href="item.jump" v-for="item in list" :key="item.key">{{item.text}}</a>
@@ -67,12 +67,11 @@ export default {
             ],
             isshow:false,//工具条是否显示
             list:[
-            {text:'秒杀专区',jump:'1'},
-            {text:'秒杀专区',jump:'1'},
-            {text:'秒杀专区',jump:'1'},
-            {text:'秒杀专区',jump:'1'},
-            {text:'秒杀专区',jump:'1'},
-            {text:'秒杀专区',jump:'1'},
+            {text:'奶粉',jump:'#c_1'},
+            {text:'酒类',jump:'#c_2'},
+            {text:'食品',jump:'#c_3'},
+            {text:'美妆',jump:'#c_4'},
+            {text:'其它',jump:'#c_5'},
         ]
         }
     },
@@ -88,8 +87,8 @@ export default {
          handleScroll () {
                   var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                   var offsetTop = document.querySelector('#toolbar').offsetTop
-                  console.log(`scrollTop----->${scrollTop}`)
-                  console.log(`offsetTop----->${offsetTop}`)
+                  // console.log(`scrollTop----->${scrollTop}`)
+                  // console.log(`offsetTop----->${offsetTop}`)
                   if (scrollTop>1000) {
                     this.isshow=true;
                     // confirm("111")

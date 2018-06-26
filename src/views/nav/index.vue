@@ -38,8 +38,8 @@ export default {
     handleScroll () {
                   var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
                   var offsetTop = document.querySelector('#toolbar').offsetTop
-                  console.log(`scrollTop----->${scrollTop}`)
-                  console.log(`offsetTop----->${offsetTop}`)
+                  // console.log(`scrollTop----->${scrollTop}`)
+                  // console.log(`offsetTop----->${offsetTop}`)
                   if (scrollTop>1000) {
                     this.isshow=true;
                     // confirm("111")

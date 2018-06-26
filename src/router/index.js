@@ -85,7 +85,7 @@ export default new Router({
           component:Newretail
         },
         { //商品详情
-          path: 'goodsDetail',
+          path: 'goodsDetail/:id',
           component: goodsDetail
         },
         {//秒杀主页面
