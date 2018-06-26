@@ -2,7 +2,7 @@
     <div id="banner" @mouseleave="leave">
            <div id="banner-nav" >
                <ul class="slidebar" >
-                   <li v-for="item in navLeft" :class="{isorange:item.isShow}" :key="item.key" @mouseenter="enter(item)" >
+                   <li v-for="item in navLeft" :class="{isorange:item.isShow}" :key="item.key"  @mouseenter="enter(item)" >
                        {{item.text}}<span>&gt;</span>
                    </li>
                    <!-- <li @mouseenter="brands()" :class="{isorange:isShow}" >
@@ -17,7 +17,7 @@
                             <img :src="item.FilePath" alt="">
                             <div class="goods-detail">
                                 <h4>{{item.title}}</h4>
-                                <!-- <p>{{item.subtitle}}</p> -->
+                                <p class="brandName">{{item.BrandName}}</p>
                                 <p class="price">￥{{item.price}}</p>
                             </div>
                         </li>
@@ -199,7 +199,7 @@ export default {
       this.isBrands = false; //隐藏品牌内容
       this.isActive = true; //显示当前内容
       console.log(val);
-      if(this.detailmsg.length==0){
+      // if(this.detailmsg.length==0){
  //請求行業具體信息
        let obj = '[["Status","Sort","StockSum","IndustryNameOne","Sum","Num"],["1","0","0","'+val.text+'","1","9"]]';
       this.axios
@@ -213,15 +213,17 @@ export default {
         })
         .then(
           response => {
-            console.log(response)
+            // console.log(response)
             let data=response.data.DATA[0];
             // console.log(data.FilePath);
+            this.detailmsg.length=0;
             for(let i=0,len=data.FilePath.length;i<len;i++){
-              let FilePath=data.FilePath[i].split(',');
-                  FilePath=FilePath[0]+FilePath[1];
+                let FilePath=data.FilePath[i].split(',');
+                FilePath=FilePath[0]+FilePath[1];
                 this.detailmsg.push({
                 title:data.CommodityName[i],
                 FilePath:FilePath,
+                BrandName:data.BrandName[i],
                 price:data.SupplyMoney[i]
               })
             }
@@ -233,7 +235,7 @@ export default {
             console.log(response);
           }
         );
-      }
+      // }
      
     },
     leave() {
@@ -355,6 +357,7 @@ export default {
 .second-mnue h4 {
   font-size: 14px;
   text-indent: 14px;
+  text-align: left;
 }
 .second-mnue p {
   color: #999;
@@ -364,7 +367,11 @@ export default {
   height: 20px;
   line-height: 20px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 800;
+  margin: 10px 0 0 12px;
+}
+.brandName{
+  margin: 6px 0 0 12px;
 }
 /* 品牌 */
 .tab-title {

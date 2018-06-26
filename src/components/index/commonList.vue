@@ -50,20 +50,58 @@ export default {
     data(){
         return{
             list:[
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
-                {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
+                // {name:"pt950铂金钻石结婚对戒",subtitle:"预约赠限量巧克力",price:"2500",src:imgurl},
             ],
         }
+    },
+    mounted(){
+        this.requestGoods(8,1)
     },
     methods:{
         toGoodsDetail(){
             this.$router.push('nav/goodsdetail')
+        },
+        requestGoods(sum,num){
+            let obj = '[["Status","Sort","IndustryNameOne",StockSum","Sum","Num"],["1","0","'+this.commonname+'","0","'+sum+'","'+num+'"]]';
+             this.axios.post("/Mall/MallCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "MallCommodityInfo",
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                    // console.log(response)
+                    let data=response.data.DATA[0];
+                    // console.log(data.FilePath);
+                    this.list.length=0;
+                    for(let i=0,len=data.FilePath.length;i<len;i++){
+                        let FilePath=data.FilePath[i].split(',');
+                        FilePath=FilePath[0]+FilePath[1];
+                        this.list.push({
+                        title:data.CommodityName[i],
+                        FilePath:FilePath,
+                        BrandName:data.BrandName[i],
+                        price:data.SupplyMoney[i]
+                    })
+                    }
+                    
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
         }
     }
 }
