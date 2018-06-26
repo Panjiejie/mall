@@ -202,8 +202,7 @@ export default {
       // if(this.detailmsg.length==0){
  //請求行業具體信息
        let obj = '[["Status","Sort","StockSum","IndustryNameOne","Sum","Num"],["1","0","0","'+val.text+'","1","9"]]';
-      this.axios
-        .post("/Mall/MallCommodityInfo", {
+      this.axios.post("/Mall/MallCommodityInfo", {
           SOURCE: "22",
           CREDENTIALS: "0",
           TERMINAL: "0",

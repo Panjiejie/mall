@@ -66,7 +66,7 @@ export default {
         },
         requestGoods(sum,num){
              let obj = '[["Status","Sort","StockSum","Sum","Num"],["1","0","0","'+sum+'","'+num+'"]]';
-            this.axios.post("/Mall/MallCommodityInfo", {
+             this.axios.post("/Mall/MallCommodityInfo", {
                 SOURCE: "22",
                 CREDENTIALS: "0",
                 TERMINAL: "0",
