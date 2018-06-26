@@ -24,7 +24,7 @@
                 <ul>
                     <li v-for="item in list" :key="item.id" @click="toGoodsDetail">
                         <div class="img__content">
-                            <img :src="item.src" style="width:200px;height:200px;" alt="">  
+                            <img :src="item.FilePath" style="width:200px;height:200px;" alt="">  
                         </div>
                         <h5>{{item.name}}</h5>
                         <h6>{{item.subtitle}}</h6>
@@ -70,6 +70,7 @@ export default {
         },
         requestGoods(sum,num){
             let obj = '[["Status","Sort","IndustryNameOne",StockSum","Sum","Num"],["1","0","'+this.commonname+'","0","'+sum+'","'+num+'"]]';
+            console.log(obj)
              this.axios.post("/Mall/MallCommodityInfo", {
                 SOURCE: "22",
                 CREDENTIALS: "0",
