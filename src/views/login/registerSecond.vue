@@ -26,7 +26,7 @@
         <el-dialog  id="el-dialog" title="修改头像" :visible.sync="updataPhotoDialog" :width="dialogWidth" center>
             <el-upload
                     class="avatar-uploader"
-                    action="http://192.168.1.153:3000/upload"
+                    action="http://120.78.49.234:3000/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess">
                     <img v-if="photo" :src="photo" class="avatar">
@@ -65,36 +65,22 @@ export default {
     },
     methods:{
         toThird(){
+            debugger;
             console.log(!this.isshowUserNameWarn && !this.isshowPasswordWarn && !this.isshowPasswordTwoWarn)
             if(!this.isshowUserNameWarn && !this.isshowPasswordWarn && !this.isshowPasswordTwoWarn){
-                 this.axios.post("/User/UserInfo", {
-                    SOURCE: "22",
-                    CREDENTIALS: "0",
-                    TERMINAL: "0",
-                    INDEX: "20170713170325",
-                    METHOD: "UserInfo",
-                    LoginUser:'0',
+               
+
+                let userInfo={
                     UserAccount:this.userName,
                     UserPasswd:this.password,
-                    // UserAvatar:this.userImg,
                     UserMobile:this.userPhoneNum,
                     OldImgUrl:this.userImg
-                    })
-                    .then(
-                    response => {
-                        console.log("请求成功");
-                        console.log(response);
-                       
-                    },
-                    response => {
-                        console.log("请求失败");
-                        console.log(response);
-                    }
-                    );
+                }
+                userInfo=JSON.stringify(userInfo);
+                sessionStorage.setItem('userInfo',`${userInfo}` )
 
-                
-                // bus.$emit('changeSteps', 3);
-                // this.$router.push('registerThird')
+                bus.$emit('changeSteps', 3);
+                this.$router.push('registerThird')
             }
         },
         userNameValidate(){//用户名验证

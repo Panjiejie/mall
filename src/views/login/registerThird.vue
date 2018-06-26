@@ -25,14 +25,52 @@ export default {
             password:'',
             passwordTwo:'',
             isshowPasswordInfo:false,
-            isshowPasswordTwoInfo:false
+            isshowPasswordTwoInfo:false,
+            userInfo:{},
         }
+    },
+    mounted(){
+        let userInfo=sessionStorage.getItem('userInfo');
+        this.userInfo=JSON.parse(userInfo)
+        console.log(this.userInfo)
     },
     methods:{
         toLast(){
+            debugger;
             if(!this.isshowPasswordInfo && !this.isshowPasswordTwoInfo && this.password!='' && this.passwordTwo!=''){
-                 bus.$emit('changeSteps',4)
-                 this.$router.push('registerLast')
+                   let obj = '[["UserAccount","UserPasswd","UserMobile","PayPasswd"],["'+this.userInfo.UserAccount+'","'+this.userInfo.UserPasswd+'","'+this.userInfo.UserMobile+'","'+this.password+'"]]';
+                   console.log(obj)
+                   
+                   this.axios.post("/UserInfo/UserInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "UserInfo",
+                    DATA:encodeURI(obj),
+                    OldImgUrl:this.userInfo.OldImgUrl
+                    })
+                    .then(
+                    response => {
+                        if(response.data.DATA[0].result){
+                        this.$message({
+                        message: '验证码已发送！',
+                        type: 'success'
+                        });
+                        }else{
+                        this.userNumWran='手机号码已注册!';
+                        this.isshowUserNumWarn=true;
+                        }
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+
+
+                bus.$emit('changeSteps',4)
+                //  this.$router.push('registerLast')
             }else{
                 this.$message({
                     message:'请补全信息',

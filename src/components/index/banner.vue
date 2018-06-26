@@ -14,10 +14,10 @@
                     <p>分类推荐</p>
                     <ul class="second-mnue clearfix">
                         <li class="clearfix" v-for="item in detailmsg" :key="item.key" @click="toGoodsDetail">
-                            <img :src="item.Filepath" alt="">
+                            <img :src="item.FilePath" alt="">
                             <div class="goods-detail">
                                 <h4>{{item.title}}</h4>
-                                <p>{{item.subtitle}}</p>
+                                <!-- <p>{{item.subtitle}}</p> -->
                                 <p class="price">￥{{item.price}}</p>
                             </div>
                         </li>
@@ -161,37 +161,35 @@ export default {
   },
   methods: {
     initBanner() {
-        this.navLeftInit();
+        // this.navLeftInit();
     },
-    navLeftInit() {
-      // let obj='[["Status","Sort","StockSum","Sum","Num"],["1","0","1","10","1"]]';
-      let obj = '[["UserAccount","Status"],["test001","0"]]';
-      
-    //   let self = this;
-      this.axios
-        .post("/Mall/MallIndustryNameInfo", {
-          SOURCE: "22",
-          CREDENTIALS: "0",
-          TERMINAL: "0",
-          INDEX: "20170713170325",
-          METHOD: "MallIndustryNameInfo",
-          DATA: encodeURI(obj)
-        })
-        .then(
-          response => {
-            console.log("请求成功");
-            console.log(response);
-            let IndustryName=response.data.DATA[0].IndustryName;
-            for(let i=0;i<IndustryName.length;i++){
-                this.navLeft.push({isShow:false,industryName:IndustryName[i]});
-            }
-          },
-          response => {
-            console.log("请求失败");
-            console.log(response);
-          }
-        );
-    },
+    // navLeftInit() {
+    //   // let obj='[["Status","Sort","StockSum","Sum","Num"],["1","0","1","10","1"]]';
+    //   let obj = '[["UserAccount","Status"],["test001","0"]]';
+    //   this.axios
+    //     .post("/Mall/MallIndustryNameInfo", {
+    //       SOURCE: "22",
+    //       CREDENTIALS: "0",
+    //       TERMINAL: "0",
+    //       INDEX: "20170713170325",
+    //       METHOD: "MallIndustryNameInfo",
+    //       DATA: encodeURI(obj)
+    //     })
+    //     .then(
+    //       response => {
+    //         console.log("请求成功");
+    //         console.log(response);
+    //         let IndustryName=response.data.DATA[0].IndustryName;
+    //         for(let i=0;i<IndustryName.length;i++){
+    //             this.navLefts.push({isShow:false,industryName:IndustryName[i]});
+    //         }
+    //       },
+    //       response => {
+    //         console.log("请求失败");
+    //         console.log(response);
+    //       }
+    //     );
+    // },
     enter(val) {
       //nav li鼠标移入事件
       this.vals = val;
@@ -215,10 +213,20 @@ export default {
         })
         .then(
           response => {
-            // let ClassifyName=response.data.DATA[0].ClassifyName;
-            // for(leti=0;i<ClassifyName.length;i++){
-
-            // }
+            console.log(response)
+            let data=response.data.DATA[0];
+            // console.log(data.FilePath);
+            for(let i=0,len=data.FilePath.length;i<len;i++){
+              let FilePath=data.FilePath[i].split(',');
+                  FilePath=FilePath[0]+FilePath[1];
+                this.detailmsg.push({
+                title:data.CommodityName[i],
+                FilePath:FilePath,
+                price:data.SupplyMoney[i]
+              })
+            }
+              
+            
           },
           response => {
             console.log("请求失败");

@@ -14,7 +14,7 @@
             </div>
             <!-- table-body -->
             <div class="c-body">
-                <div class="c-body-line" v-for='item in cartLists' :key='item.key'>
+                <div class="c-body-line" v-for='item in cartList' :key='item.key'>
                     <div class="checkbox">
                         <el-checkbox v-model="item.ischecked"></el-checkbox>
                     </div>
@@ -92,8 +92,8 @@ export default {
   data() {
     return {
       checked: false, //全选checkbox
-      havechoose: 0, //已选商品数量
-      totalGoods: 0, //购物车商品总数
+      // havechoose: 0, //已选商品数量
+      // totalGoods: 0, //购物车商品总数
       totalPrice: 0, //购物车商品总价
       discount: "12", //活动优惠
       realPay: 0, //实际应付金额
@@ -251,24 +251,25 @@ export default {
     }
   },
   computed: {
-    cartLists(){
-         this.cartList.forEach(item=>{
-            // item.subtotal='0';
-            item.subtotal=item.price*item.amount*1;
-            // this.totalPrice='0';
-            this.totalPrice+=item.subtotal*1;
-            if(item.ischecked){
-                // this.havechoose='0';
-                this.havechoose+=item.amount*1;
-                this.chooseList.push(item);
-            }
-        });
-        // this.realPay='0';
-        this.realPay=this.totalPrice-this.discount;
-        // this.totalGoods='0';
-        this.totalGoods=this.cartList.length;
-        return this.cartList;
-    }
+    totalGoods:function(){
+      //已选商品总数
+      let num='';
+      this.cartList.forEach(e=>{
+        if(e.ischecked){
+          num+=1
+        }
+        return num;
+      })
+    },
+    havechoose:function(){
+      //已选商品数量
+      let num;
+      this.cartList.forEach(e=>{
+        if(e.ischecked){
+          num+=e.amount;
+        }
+      })
+    },
   },
   methods: {
     cartInit() {
