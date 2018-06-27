@@ -2,7 +2,7 @@
     <div class="content">
         <div class="title">安全管理</div>
         <div class="contentbox">
-            <div class="content-title">您当前的账号{{useraccount}}</div>
+            <div class="content-title">您当前的账号{{UserAccount}}</div>
             <div class="line">
                 <img src="../../../assets/common/green_g.png" alt="">
                 <div class="btncontent">
@@ -38,13 +38,13 @@
         <el-dialog  id="el-dialog" title="修改密码" :visible.sync="passwordDialog" :width="dialogWidth" center>
             <el-form :model="form">
                 <el-form-item label="原密码" :label-width="formLabelWidth">
-                <el-input v-model="form.oldPassword" auto-complete="off" placeholder="请输入原密码" @blur="oldPasswordValidate"></el-input>
+                <el-input v-model="form.oldPassword" auto-complete="off" placeholder="请输入原密码" :type="str" @blur="oldPasswordValidate"></el-input>
                 </el-form-item>
                 <el-form-item label="新密码" :label-width="formLabelWidth">
-                    <el-input v-model="form.newPassword" auto-complete="off" placeholder="设置6-20位登录密码" @blur="newPasswordValidate"></el-input>
+                    <el-input v-model="form.newPassword" auto-complete="off" placeholder="设置6-20位登录密码" :type="str" @blur="newPasswordValidate"></el-input>
                 </el-form-item>
                 <el-form-item label="再次输入" :label-width="formLabelWidth">
-                    <el-input v-model="form.newPasswordTwo" auto-complete="off" placeholder="请再次输入登录密码" @blur="isPasswordEqual"></el-input>
+                    <el-input v-model="form.newPasswordTwo" auto-complete="off" placeholder="请再次输入登录密码" :type="str" @blur="isPasswordEqual"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -60,7 +60,8 @@ export default {
     name:'personalSetting',
     data(){
         return{
-            useraccount:"12345632",
+            UserAccount:"",
+            str:'text',
             num:"18689207260",
             passwordDialog:false,//修改密码对话框控制
             form: {
@@ -69,18 +70,54 @@ export default {
                 newPasswordTwo: '',
                 },
             formLabelWidth:'120px',
-            dialogWidth:'564px'
+            dialogWidth:'564px',
+            isPasswordEqualValue:false,
+            newPasswordValidateValue:false
         }
+    },
+    created(){
+        this.UserAccount=localStorage.getItem('UserAccount');
+        this.num=localStorage.getItem('UserMobile');
     },
     methods:{
         editPassword() {//修改密码
-          if(this.newPasswordValidate() && this.isPasswordEqual()){
-            this.passwordDialog=false;
-            this.passwordDialog=false;
-            this.$message({
-                type: 'success',
-                message: '修改成功!'
-            });
+        console.log(this.newPasswordValidateValue +'newPasswordValidateValue')
+        console.log(this.isPasswordEqualValue+'isPasswordEqualValue')
+          if(this.newPasswordValidateValue && this.isPasswordEqualValue){
+               this.axios.post("/UserPassword/MallUpdatePasswd", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "MallUpdatePasswd",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    Passwd:this.form.oldPassword,
+                    NewPasswd:this.form.newPasswordTwo
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        // if(response.data.DATA[0].Code){
+                        //     // let UserAccount=response.data.DATA[0].UserAccount;
+                        //     localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
+                        //     localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
+                        //     localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
+                        //     localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
+                        //     this.$router.push('/');
+                        // }
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+            // this.passwordDialog=false;
+            // this.passwordDialog=false;
+            // this.$message({
+            //     type: 'success',
+            //     message: '修改成功!'
+            // });
         }else{
             this.$message({
                         message:'请输入格式正确的有效信息',
@@ -101,19 +138,20 @@ export default {
             this.$router.push('changePhonenumber')
       },
       oldPasswordValidate(){//旧密码验证
-        this.$message('旧密码验证')
+        // this.$message('旧密码验证')
       },
       newPasswordValidate(){
-           let reg=/^[a-zA-Z\d]{6,32}$/;
-            if(!reg.test(this.form.newPassword)){
+        //    let reg=/^[a-zA-Z\d]{6,32}$/;
+            // if(!reg.test(this.form.newPassword)){
+                if(false){
                 if(this.form.newPassword!=''){
                     this.$message({
                         message:'请输入格式正确的密码',
                         type:'warn'
                     })
-                    return true;
+                     this.newPasswordValidateValue=false;
                 }else{
-                    return false;
+                    this.newPasswordValidateValue=true;
                 }
             }
       },
@@ -124,9 +162,9 @@ export default {
                         type:'warn'
                     });
               this.form.newPasswordTwo='';
-              return true;
+              this.isPasswordEqualValue=false;
           }else{
-              return false;
+              this.isPasswordEqualValue=true;
           }
       },
 

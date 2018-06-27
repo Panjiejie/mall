@@ -3,7 +3,7 @@
     <div id="header">
       <div class="main">
         <ul>
-          <li>
+          <li :class="{isshowUserAccount:isshowUserAccount}" >
               <span class="ver-line"></span>
               <el-popover
                 placement="bottom"
@@ -11,17 +11,17 @@
                 trigger="hover">
                 <div class="personal-center">
                   <ul>
-                    <li><a href="">个人中心</a></li>
-                    <li><a href="">商品收藏</a></li>
-                    <li><a href="">安全设置</a></li>
-                    <li><a href="">退出登录</a></li>
+                    <li><router-link to="/nav/personalCenter/personalSetting">个人中心</router-link></li>
+                    <li><router-link to="/nav/personalCenter/myFavorite">商品收藏</router-link></li>
+                    <li><router-link to="/nav/personalCenter/safeAdmin">安全设置</router-link></li>
+                    <li><a @click="logOut">退出登录</a></li>
                     <li class="triangle"></li>
                   </ul>
                 </div>
-              <router-link  class="hover" to="/nav/personalCenter/personalSetting" slot='reference'>张三的歌</router-link>
+              <router-link  class="hover" to="/nav/personalCenter/personalSetting" slot='reference'>{{UserAccount}}</router-link>
             </el-popover>
           </li>
-          <li @mouseenter="isshowPersonalCenter"><span class="ver-line"></span><router-link to="/login/loginPassword">{{loginIn}}</router-link></li>
+          <li :class="{isshowLogin:isshowLogin}" ><span class="ver-line"></span><router-link to="/login/loginPassword">{{loginIn}}</router-link></li>
           <li><span class="ver-line"></span><router-link to="/login/register/registerIndex">免费注册</router-link></li>
           <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
           <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->
@@ -88,8 +88,11 @@ export default {
   data () {  
     return {  
       //  cartMsg:0,//购物车bage
+       UserAccount:'',
        loginIn:'请先登录',
        isshow:false,
+       isshowLogin:false,
+       isshowUserAccount:false,
        totalCartMoney:0,//购物车总价
        totalCartAmount:0,//购物车商品总数
        navList:[
@@ -129,20 +132,26 @@ export default {
      toHome(){
        this.$router.push('/')
      },
-     isshowPersonalCenter(){
-       this.isshow=true;
-
-     },
-     isoutPersonalCenter(){
-       this.isshow=false;
-     },
     chooseNav(item){//导航条样式点击跳转+粗和下边框
       this.navList.forEach(es=>es.isChoose=false);
       item.isChoose=true;
+    },
+    logOut(){
+      //退出登录
+      localStorage.clear();
+      this.$router.push('/');
+      this.isshowLogin=false;
+      this.isshowUserAccount=true;
     }
   },  
   mounted(){  
-      
+    
+        this.UserAccount=localStorage.getItem('UserAccount');
+        if(this.UserAccount){//如果已登录 则不显示清登录
+        this.isshowLogin=true;
+        }else{
+          this.isshowUserAccount=true;
+        }
   }  
   
 }  
@@ -150,6 +159,9 @@ export default {
   
 <!-- Add "scoped" attribute to limit CSS to this component only -->  
 <style scoped>
+.isshowLogin,.isshowUserAccount{
+  display: none !important;
+}
 #content{
   position: relative;
 }

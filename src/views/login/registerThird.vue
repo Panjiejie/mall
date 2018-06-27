@@ -57,15 +57,13 @@ export default {
                     })
                     .then(
                     response => {
-                        // if(response.data.DATA[0].Result){
-                        // this.$message({
-                        // message: '验证码已发送！',
-                        // type: 'success'
-                        // });
-                        // }else{
-                        // this.userNumWran='手机号码已注册!';
-                        // this.isshowUserNumWarn=true;
-                        // }
+                        if(response.data.DATA[0].Result=='1'){
+                        bus.$emit('changeSteps',4)
+                        this.$router.push('registerLast')
+                        }else if((response.data.DATA[0].Result=='0')){
+                        this.userNumWran='手机号码已注册!';
+                        this.isshowUserNumWarn=true;
+                        }
                     },
                     response => {
                         console.log("请求失败");
@@ -74,8 +72,7 @@ export default {
                     );
 
 
-                // bus.$emit('changeSteps',4)
-                //  this.$router.push('registerLast')
+                
             }else{
                 this.$message({
                     message:'请补全信息',

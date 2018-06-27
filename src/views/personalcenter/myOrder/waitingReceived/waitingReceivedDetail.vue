@@ -229,6 +229,7 @@ p{
                 position: absolute;
                 top: 12px;
                 right: 20px;
+                background: #fff;
             }
         }
 }

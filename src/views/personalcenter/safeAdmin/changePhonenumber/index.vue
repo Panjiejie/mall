@@ -39,32 +39,61 @@ export default {
             alignCenter:true,
             second:60,
             isshow:false,
+            UserAccount:'',
             form:{
                 name:''
             }
         }
     },
     mounted(){
-        
+        this.num=localStorage.getItem('UserMobile')
+        this.UserAccount=localStorage.getItem('UserAccount')
     },
     methods:{
         toSecondStep(){
             this.$router.push('changePhonenumberSecond')
         },
         sendVerificationCode(){//发送验证码
-            this.$message({
-                message:'验证码已发送，请注意查收！',
-                type:'success'
-            })
-            this.isshow=true;
-            var inter=setInterval(()=>{
-                this.second--;
-                if(this.second==0){
-                this.isshow=false;
-                this.second=60;
-                window.clearInterval(inter);
-            }
-            },1000)
+             this.axios.post("/UserInfo/ProvingAccout", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "AccountProving",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    UserMobile:this.num
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        // if(response.data.DATA[0].Code){
+                        //     // let UserAccount=response.data.DATA[0].UserAccount;
+                        //     localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
+                        //     localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
+                        //     localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
+                        //     localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
+                        //     this.$router.push('/');
+                        // }
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+            // this.$message({
+            //     message:'验证码已发送，请注意查收！',
+            //     type:'success'
+            // })
+            // this.isshow=true;
+            // var inter=setInterval(()=>{
+            //     this.second--;
+            //     if(this.second==0){
+            //     this.isshow=false;
+            //     this.second=60;
+            //     window.clearInterval(inter);
+            // }
+            // },1000)
             
             
         },

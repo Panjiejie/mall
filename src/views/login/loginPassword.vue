@@ -10,9 +10,9 @@
             <input type="password" id='password' placeholder="请输入密码" v-model="password">
         </div>
         <div class="errInfo" :class="{isshow:isshow}">用户名称或密码错误</div>
-        <button>登录</button>
+        <button @click="login($event)">登录</button>
         <p>
-            <span @click="resetPassword">忘记密码？</span>
+            <span @click="resetPassword" style='cursor:pointer'>忘记密码？</span>
             <router-link to="register/registerIndex">新用户注册</router-link>
         </p>
         <div class="otherway">
@@ -40,6 +40,41 @@
    methods:{
        resetPassword(){
            this.$router.push('resetPassword')
+            // let obj = '[["UserAccount","UserPasswd","UserMobile","PayPasswd"],["'+this.userInfo.UserAccount+'","'+this.userInfo.UserPasswd+'","'+this.userInfo.UserMobile+'","'+this.password+'"]]';
+            //  console.log(obj)
+                  
+       },
+       login(e){
+           e.preventDefault();
+            
+                   this.axios.post("/UserLogin/UserLogin", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "UserLogin",
+                    LoginUser:'2',
+                    UserAccount:this.username,
+                    UserPasswd:this.password,
+                    UserMobile:'18689207260'
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        if(response.data.DATA[0].Code){
+                            // let UserAccount=response.data.DATA[0].UserAccount;
+                            localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
+                            localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
+                            localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
+                            localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
+                            this.$router.push('/');
+                        }
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
        }
    },
    components: {

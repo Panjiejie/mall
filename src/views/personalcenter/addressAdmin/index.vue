@@ -151,6 +151,9 @@ export default {
             }
         }
     },
+    created(){
+        this.PageInit();
+    },
     filters:{
         numfilter(val){
             var reg = /^(\d{3})\d*(\d{4})$/;
@@ -164,6 +167,35 @@ export default {
             console.group(this.selected)
             console.group(this.addNewAddress)
             this.dialogVisible=false;
+        },
+        PageInit(){
+            this.useraccount=localStorage.getItem('UserAccount');
+             this.axios.post("/Address/SelectAddressInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "SelectAddressInfo",
+                    LoginUser:'2',
+                    UserAccount:this.useraccount,
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        // if(response.data.DATA[0].Code){
+                        //     // let UserAccount=response.data.DATA[0].UserAccount;
+                        //     localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
+                        //     localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
+                        //     localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
+                        //     localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
+                        //     this.$router.push('/');
+                        // }
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
         },
     }
 }
@@ -311,6 +343,7 @@ export default {
     border: 1px solid rgb(241,91,8);
     color: rgb(241,91,8);
     outline: none;
+    background: #fff;
 }
 .btncontent a{
     font-size: 14px;

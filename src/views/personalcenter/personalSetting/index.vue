@@ -40,9 +40,9 @@
         </div>
          <!-- 修改头像 -->
         <el-dialog  id="el-dialog" title="修改头像" :visible.sync="updataPhotoDialog" :width="dialogWidth" center>
-            <el-upload
+            <!-- <el-upload
                     class="avatar-uploader"
-                    action="http://120.78.49.234/ImgUploadApi/api/ImgUpload/ImgPost"
+                    action="http://120.78.49.234:3002/UserInfo/ChangeUserAvatar"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -50,7 +50,7 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     <div class="warn-info">支持大小不超过5m的jpg、png图片</div>
                     <div class="btn"></div>
-            </el-upload>
+            </el-upload> -->
         </el-dialog>
     </div>
 </template>
@@ -71,6 +71,10 @@ export default {
         };
         
     },
+    created(){
+        this.userName=localStorage.getItem('UserAccount');
+        this.photoDefault=localStorage.getItem('UserAvatar')
+    },
     methods:{
         editPhoto(){
             this.updataPhotoDialog=true;
@@ -85,7 +89,7 @@ export default {
           setTimeout(()=>{this.updataPhotoDialog=false;},2000)
             },
         beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/jpeg';
+                const isJPG = file.type === 'image/jpeg' || 'image/png';
                 const isLt5M = file.size / 1024 / 1024 < 5;
 
                 if (!isJPG) {

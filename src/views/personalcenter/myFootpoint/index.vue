@@ -80,7 +80,33 @@ export default {
             
         }
     },
+    mounted(){
+        this.init();
+    },
     methods:{
+        init(){
+              this.useraccount=localStorage.getItem('UserAccount');
+              this.axios.post("/Browse/FavoriteCommodity", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "FavoriteCommodity",
+                    LoginUser:'2',
+                    Status:'1',
+                    UserAccount:this.useraccount,
+                    CommodityNumber:'1234567'
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
         enter(vals){//鼠标进入 显示关闭按钮事件
                 this.footpointList.forEach(item=>{
                     item.goodslist.forEach(val=>{

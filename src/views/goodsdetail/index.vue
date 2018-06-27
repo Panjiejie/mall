@@ -80,19 +80,19 @@
                     </div>
                     <!-- 选择参数部分 -->
                     <div class="choose-params">
-                        <!-- <div class="choose-color choose-line clearfix" >
+                        <div class="choose-color choose-line clearfix" >
                             <span class="ptitle">选择颜色</span>
                             <ul class="clearfix">
                                 <li v-for="item in chooseImgList" :key="item.key" @click="chooseColorClick(item)"><img :src="item.imgsrc" :class="{imggray:item.isgray,imgorange:item.isorange}" alt=""></li>
                             </ul>
                             
-                        </div> -->
-                        <div class="choose-size" v-for='i in 4' :key='i.key'>
-                            <span class="ptitle">选择尺码</span>
-                            <ul class="sizefather">
-                                <li :class="{sizecontent:item.isgray,size_orange:item.isorange}" v-for="item in chooleSizeList" :key="item.key" @click="chooseSizeClick(item)">{{item.label}}</li>
-                            </ul>
                         </div>
+                        <!-- <div class="choose-size" v-for='item in chooleSizeList' :key='item.key'>
+                            <span class="ptitle">ww</span>
+                            <ul class="sizefather">
+                                <li :class="{sizecontent:item.isgray,size_orange:item.isorange}"  @click="chooseSizeClick(item)">{{item.label}}</li>
+                            </ul>
+                        </div> -->
                         <div class="mount-choose">
                             <span class="ptitle">选择数量</span>
                             <div class="input-number">
@@ -177,17 +177,25 @@ export default {
   },
   data() {
     return {
-      AttributeGroup:'',
+      AttributeGroup:'',//传参商品属性
       BrandName: "",//品牌名
       CommodityName:'',//商品名
       inputNumber: 1, //商品数量计数器
       price:'',
       FilePath:[],
-      defaultCommodityAttribute:{//默认选择参数
+      bigImg: imgurl, //左侧大图src
+      heart: heart, //收藏小心心图标src
+      imglists: [],//左侧五个商品图
+      adds:[],//图文详情广告图
+      UserAccount:'',
+      CommodityNumber:'',
+      Status:0,//收藏1 浏览0
+      defaultCommodityAttribute:{//首屏加载 默认选择参数
         AttributeGroup:'',
         AttributeName:'',
         AttributeValue:''
     },
+      chooseParams:[],
       chooleSizeList: [
         {
           label: 42,
@@ -276,27 +284,53 @@ export default {
           src: imgurl
         }
       ],
-      bigImg: imgurl, //左侧大图src
-      heart: heart, //收藏小心心图标src
-      imglists: [],
-      adds:[]
     };
   },
   created(){
     this.AttributeGroup=this.$route.params.id;
     this.pageInit();
+    this.UserAccount=sessionStorage.getItem('UserAccount');
+  },
+  destroyed(){
+    if(this.UserAccount){
+      this.destroyedEvent(this.Status);
+    }
   },
   methods: {
     enter(value) {
       //左侧点击换图片事件
       this.bigImg = value.src;
     },
+    destroyedEvent(Status){//收藏  浏览埋点
+             this.axios.post("/Mall/BrowseCommodity", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "BrowseCommodity",
+                UserAccount:this.UserAccount,
+                Status:Status,
+                CommodityNumber:this.CommodityNumber,
+                // DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                   
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                }
+                );
+    },
     changeHeart() {
       //收藏事件
       if (this.heart == redHeart) {
         this.heart = heart;
+        this.Status=0;
       } else if (this.heart == heart) {
         this.heart = redHeart;
+        this.Status=1;
       }
     },
     chooseSizeClick(item) {
@@ -353,8 +387,33 @@ export default {
                     }
                     //价格
                     this.price=firstGoodsInfo.SupplyMoney[0];
+                    //商品码
+                    this.CommodityNumber=firstGoodsInfo.CommodityNumber[0];
                     //默认选择商品参数
                     this.defaultCommodityAttribute=data.CommodityAttribute;
+                    //选择参数选项配置
+                    // this.chooseParams
+                    let params=data.Attribute;
+                    for(let i=0,len=params.length;i<len;i++){
+                        // let keys;
+                        
+                        // for(var key in params[i]){
+                        //    if(key!='CommodityNumber'){
+                        //       params[i][key].forEach(e=>{
+                        //       e={param:e,isgray:true,isorange:false}
+                        //       console.log(e)
+                        //       this.chooseParams.push(JSON.stringify({key:key,value:e}))
+                        //     });
+                        //    }
+                        //   // console.log(params[i][key])
+                        // }
+                        
+                        // this.chooseParams.forEach(e=>{
+                        //   this.$set(e, `isgray`, true);
+                        //   this.$set(e, `isorange`, true);
+                        // })
+                        // console.log(this.chooseParams+'---------*************')
+                    }
                     //图文详情图片
                     // console.log(firstGoodsInfo.CommodityProfile[0].split(','));
                     let picContents=[];

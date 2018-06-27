@@ -88,7 +88,8 @@ export default {
       },
         toLogistics(){
           alert('这是物流信息')
-      }
+      },
+      
     }
 }
 </script>

@@ -58,7 +58,29 @@ export default {
       },
         toLogistics(){
           alert('这是物流信息')
-      }
+      },
+       init(){
+            this.UserAccount=localStorage.getItem('UserAccount');
+              this.axios.post("/Order/MallOrderInfoTable", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "MallOrderInfoTable",
+                    LoginUser:'2',
+                    Status:'5',
+                    UserAccount:this.UserAccount,
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        }
     }
 }
 </script>

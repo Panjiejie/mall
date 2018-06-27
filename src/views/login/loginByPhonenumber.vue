@@ -3,14 +3,14 @@
         <h3>用户登录</h3>
         <div class="form-item">
             <label for="#phonenumber">手机号码:</label>
-            <input type="text" id='phonenumber' placeholder="请输入手机号码">
+            <input type="text" id='phonenumber' placeholder="请输入手机号码" v-model="UserMobile">
         </div>
         <div class="form-item">
             <label for="#verification-code" style="position:relative;left:50px;">验证码：</label>
-            <input type="text" id='verification-code' placeholder="请输入验证码" style="position:relative;left:40px;">
+            <input type="text" id='verification-code' placeholder="请输入验证码" style="position:relative;left:40px;" v-model="verificationCode">
             <a @click="sendVerificationCode">发送验证码</a>
         </div>
-        <div class="errInfo">验证码错误</div>
+        <div class="errInfo" :class="{isshow:isshow}" style='opacity:0;'>验证码错误</div>
         <button @click="toHome">登录</button>
         <p class="clearfix">
             <router-link to="register/registerIndex">新用户注册</router-link>
@@ -31,19 +31,74 @@
    },
    data() {
      return {
-
+         UserMobile:'',
+         verificationCode:'',
+         isshow:false,
      }
 
    },
    methods:{
        sendVerificationCode(){//发送验证码
-        this.$message({
-            message:'验证码已发送，请注意查收！',
-            type:'success'
-        })
+            // let obj = '[["UserAccount","UserPasswd","UserMobile","PayPasswd"],["'+this.userInfo.UserAccount+'","'+this.userInfo.UserPasswd+'","'+this.userInfo.UserMobile+'","'+this.password+'"]]';
+                //    console.log(obj)
+                   
+                   this.axios.post("/UserLogin/SendLoginSMS", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "SendLoginSMS",
+                    LoginUser:'2',
+                    UserMobile:this.UserMobile,
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        if(response.data.RETURNCODE=='200'){
+                            this.$message({
+                                message:'验证码已发送，请注意查收！',
+                                type:'success'
+                            })
+                        }
+                     },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+
+        
        },
        toHome(){
-           this.$router.push('/')
+                this.axios.post("/UserLogin/MobileLogin", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "MobileLogin",
+                    LoginUser:'2',
+                    UserMobile:this.UserMobile,
+                    Verification:this.verificationCode
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        if(response.data.DATA[0].Code=='1'){
+                            localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
+                            localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
+                            localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
+                               this.$router.push('/')
+                        }else{
+                            this.isshow=true;
+                        }
+                       
+                     },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        
        }
    },
    components: {
@@ -60,6 +115,9 @@
     margin: 20px auto ;
     background: #fff;
     // background: blueviolet;
+    .isshow{
+        opacity: 0 !important;
+    }
     h3{
         font-size: 18px;
         color: #999;
