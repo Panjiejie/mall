@@ -80,14 +80,14 @@
                     </div>
                     <!-- 选择参数部分 -->
                     <div class="choose-params">
-                        <div class="choose-color choose-line clearfix">
+                        <!-- <div class="choose-color choose-line clearfix" >
                             <span class="ptitle">选择颜色</span>
                             <ul class="clearfix">
                                 <li v-for="item in chooseImgList" :key="item.key" @click="chooseColorClick(item)"><img :src="item.imgsrc" :class="{imggray:item.isgray,imgorange:item.isorange}" alt=""></li>
                             </ul>
                             
-                        </div>
-                        <div class="choose-size">
+                        </div> -->
+                        <div class="choose-size" v-for='i in 4' :key='i.key'>
                             <span class="ptitle">选择尺码</span>
                             <ul class="sizefather">
                                 <li :class="{sizecontent:item.isgray,size_orange:item.isorange}" v-for="item in chooleSizeList" :key="item.key" @click="chooseSizeClick(item)">{{item.label}}</li>
@@ -178,8 +178,8 @@ export default {
   data() {
     return {
       AttributeGroup:'',
-      BrandName: "耐克(NIKE)",//品牌名
-      CommodityName:'222222',//商品名
+      BrandName: "",//品牌名
+      CommodityName:'',//商品名
       inputNumber: 1, //商品数量计数器
       price:'',
       FilePath:[],
@@ -203,7 +203,7 @@ export default {
           label: 44,
           isgray: true,
           isorange: false
-        }
+        },
       ],
       chooseImgList:[
           {imgsrc:imgurl,isgray:true,isorange:false},
