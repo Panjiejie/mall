@@ -15,11 +15,11 @@
             </div>
             <div class="seckill-right">
                 <ul class="clearfix">
-                    <li v-for='i in list' :key="i.key" @click="toGoodsDetail">
+                    <li v-for='i in list' :key="i.key" @click="toGoodsDetail(i.AttributeGroup)">
                         <div class="img__content">
                             <img :src="i.FilePath" style="width:200px;height:200px;" alt="">   
                         </div>
-                        <h5>pt950铂金钻石结婚对戒</h5>
+                        <h5>{{i.title}}</h5>
                         <div>
                             <span class="price"><span class="mlogo">¥</span>{{i.price}}</span>
                         </div>
@@ -52,8 +52,8 @@ export default {
         this.toFirstPage();
     },
     methods:{
-        toGoodsDetail(){
-            this.$router.push('nav/goodsDetail')
+        toGoodsDetail(item){
+            this.$router.push({path:`nav/goodsDetail/${item}`})
         },
         toFirstPage(){
             this.isshow=false;
@@ -87,7 +87,8 @@ export default {
                         title:data.CommodityName[i],
                         FilePath:FilePath,
                         BrandName:data.BrandName[i],
-                        price:data.SupplyMoney[i]
+                        price:data.SupplyMoney[i],
+                        AttributeGroup:data.AttributeGroup[i]
                     })
                     }
                     

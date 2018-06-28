@@ -5,24 +5,25 @@
        <service></service>
        <seckill id='seckill'></seckill>
        <newgoods></newgoods>
-       <common-list :commonname="commonname1" id='c_1'></common-list>
-       <common-list :commonname="commonname2" id='c_2'></common-list>
-       <common-list :commonname="commonname3" id='c_3'></common-list>
-       <common-list :commonname="commonname4" id='c_4'></common-list>
-       <common-list :commonname="commonname5" id='c_5'></common-list>
+       <common-list :common="commonname1" id='c_1'></common-list>
+       <common-list :common="commonname2" id='c_2'></common-list>
+       <common-list :common="commonname3" id='c_3'></common-list>
+       <common-list :common="commonname4" id='c_4'></common-list>
+       <common-list :common="commonname5" id='c_5'></common-list>
+       <common-list :common="commonname6" id='c_6'></common-list>
         <!-- 右下角工具条 -->
         <div id='toolbar' :class="{isshow:isshow}" >
           <a  href="#index-header" class="toolbar-item">
             <img src="../../assets/common/return.png" alt="">
             <p>TOP</p>
           </a>
-           <a  href="#index-header" class="toolbar-item">
-            <img src="../../assets/common/return.png" alt="">
-            <p>TOP</p>
+           <a  href="#index-header" class="toolbar-item toolbar-item-2">
+            <img src="../../assets/index/index_downloadApp.png" alt="">
+            <p>APP下载</p>
           </a>
-           <a  href="#index-header" class="toolbar-item">
-            <img src="../../assets/common/return.png" alt="">
-            <p>TOP</p>
+           <a  href="#index-header" class="toolbar-item toolbar-item-2">
+            <img src="../../assets/index/index_kefu.png" alt="">
+            <p>联系客服</p>
           </a>
         </div>
         <!-- 左侧工具条 -->
@@ -57,11 +58,12 @@ export default {
     mounted(){},
     data(){
         return{
-            commonname1:"奶粉",
-            commonname2:"酒类",
-            commonname3:"食品",
-            commonname4:"美妆",
-            commonname5:"其它",
+            commonname1:{brand:'奶粉',list:['1段','2段','3段','4段']},
+            commonname2:{brand:'酒类',list:['白酒','红酒','黄酒','保健酒','啤酒']},
+            commonname3:{brand:'食品',list:['休闲零食','坚果炒货','肉干熟食','蜜饯果干','茶叶','饼干糕点','进口食品','有机食品','保健食品','粮油速食']},
+            commonname4:{brand:'美妆',list:['面部护肤','身体护理','美容护肤','口腔护理','彩妆香水','男士护理','洗发护发']},
+            commonname5:{brand:'珠宝',list:['手链','戒指','吊坠','情侣对','项链','套链','手镯','脚镯']},
+            commonname6:{brand:'其它',list:['其它']},
             commonList:[
                 {}
             ],
@@ -71,7 +73,8 @@ export default {
             {text:'酒类',jump:'#c_2'},
             {text:'食品',jump:'#c_3'},
             {text:'美妆',jump:'#c_4'},
-            {text:'其它',jump:'#c_5'},
+            {text:'珠宝',jump:'#c_5'},
+            {text:'其它',jump:'#c_6'},
         ]
         }
     },
@@ -124,7 +127,7 @@ export default {
   height: 80px;
   padding-top: 17px;
   font-size: 14px;
-  border: 1px solid rgb(221,221,221);
+  /* border: 1px solid rgb(221,221,221); */
   border-top: none;
 }
 /* #toolbar .toolbar-item:first-child{
@@ -137,7 +140,13 @@ export default {
   background: rgb(244,91,8);
   color: #fff;
   font-weight: bold;
-  border: none;
+  /* border: 1px solid #999; */
+}
+#toolbar .toolbar-item-2{
+  background: #fff;
+  color: #999;
+  border: 1px solid #999;
+  border-top: none;
 }
 /* 左侧工具条 */
 .left-toolbar{

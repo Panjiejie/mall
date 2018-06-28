@@ -1,5 +1,5 @@
 <template>
-    <div class="item-content" @click="toGoodsDetail">
+    <div class="item-content img__content" @click="toGoodsDetail(itemParams.AttributeGroup)">
         <img :src="itemParams.src" style="width:200px;height:200px;" alt="">
         <h5>{{itemParams.title}}</h5>
         <h6>{{itemParams.subtitle}}</h6>
@@ -19,13 +19,22 @@ export default {
     };
   },
   methods:{
-      toGoodsDetail(){
-          this.$router.push('goodsDetail')
+      toGoodsDetail(val){
+          this.$router.push({path:`../../goodsDetail/${val}`});
       }
   }
 };
 </script>
 <style scoped>
+.img__content{
+    overflow: hidden;
+}
+.img__content img{
+    transition: all 0.6s;
+}
+.img__content img:hover{
+    transform: scale(1.2);
+}
 .item-content{
     width: 230px;
     height: 340px;

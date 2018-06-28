@@ -13,7 +13,7 @@
                 <div class="banner-detail" v-bind:class="{ active: isActive }">
                     <p>分类推荐</p>
                     <ul class="second-mnue clearfix">
-                        <li class="clearfix" v-for="item in detailmsg" :key="item.key" @click="toGoodsDetail">
+                        <li class="clearfix" v-for="item in detailmsg" :key="item.key" @click="toGoodsDetail(item.AttributeGroup)">
                             <img :src="item.FilePath" alt="">
                             <div class="goods-detail">
                                 <h4>{{item.title}}</h4>
@@ -225,7 +225,7 @@ export default {
                 FilePath:FilePath,
                 BrandName:data.BrandName[i],
                 price:data.SupplyMoney[i],
-                AttributeGroup:data.AttributeGroup[i]
+                AttributeGroup:data.AttributeGroup[i],
               })
             }
               
@@ -258,8 +258,8 @@ export default {
     toBrands() {
       this.$router.push("nav/toBrands");
     },
-    toGoodsDetail() {
-      this.$router.push("nav/goodsdetail");
+    toGoodsDetail(item) {
+      this.$router.push({path:`nav/goodsdetail/${item}`});
     }
   }
 };

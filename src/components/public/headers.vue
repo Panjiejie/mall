@@ -96,11 +96,14 @@ export default {
        totalCartMoney:0,//购物车总价
        totalCartAmount:0,//购物车商品总数
        navList:[
-         {text:'商城',isChoose:true,pathTo:'/nav'},
+        //  {text:'商城',isChoose:true,pathTo:'/nav'},
         //  {text:'海淘',isChoose:false,pathTo:'/nav/haitao'},
-         {text:'商品导购',isChoose:false,pathTo:'/nav/goodsguide'},
-         {text:'新零售',isChoose:false,pathTo:'/nav/newretail'},
-         {text:'数据服务',isChoose:false,pathTo:'/nav/dataserver'}
+        //  {text:'商品导购',isChoose:false,pathTo:'/nav/goodsguide'},
+        //  {text:'新零售',isChoose:false,pathTo:'/nav/newretail'},
+        //  {text:'数据服务',isChoose:false,pathTo:'/nav/dataserver'} 
+        //  {text:'商品导购',isChoose:false,pathTo:''},
+        //  {text:'新零售',isChoose:false,pathTo:''},
+        //  {text:'数据服务',isChoose:false,pathTo:''}
        ],
        shoppingCartList:[
          {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
@@ -185,7 +188,8 @@ export default {
   .main ul{
     list-style: none;
     float: right;
-    width: 480px;
+    width: 320px;
+    /* width: 480px; */
   }
   .main ul:after{
     clear: both;

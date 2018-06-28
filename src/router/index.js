@@ -68,8 +68,8 @@ export default new Router({
           path: '',
           component: Home
         },
-        { //海淘
-          path: 'haitao',
+        { //品牌全部商品页面
+          path: 'haitao/:IndustryNameOne/:IndustryNameTwo',
           component: Haitao
         },
         { //商品导购

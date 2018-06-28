@@ -288,6 +288,7 @@ export default {
   },
   created(){
     this.AttributeGroup=this.$route.params.id;
+    console.log(this.AttributeGroup)
     this.pageInit();
     this.UserAccount=sessionStorage.getItem('UserAccount');
   },

@@ -3,11 +3,11 @@
 <div class="content">
         <div class="title">
             <span class="line"></span>
-            <span class="maintitle">{{commonname}}</span>
+            <span class="maintitle">{{common.brand}}</span>
             
             <a class="morebrand" href="/haitao">查看全部&gt;</a>
             <div class="navlist">
-                <span><a href="">手链 /</a></span>
+                <span v-for='item in common.list' :key='item.key' @click="toBrandGoods(item)"><a>{{item}}/</a></span>
             </div>
         </div>
         <div class="brands">
@@ -41,7 +41,7 @@
 import imgurl from '../../assets/common/logo.png'
 export default {
     name:'commonList',
-    props:['commonname'],
+    props:['common'],
     data(){
         return{
             list:[],
@@ -59,7 +59,7 @@ export default {
             this.$router.push({path:`nav/goodsdetail/${this.AttributeGroup}`})
         },
         requestGoods(sum,num){
-            let obj = '[["Status","Sort","IndustryNameOne","StockSum","Sum","Num"],["1","0","'+this.commonname+'","0","'+sum+'","'+num+'"]]';
+            let obj = '[["Status","Sort","IndustryNameOne","StockSum","Sum","Num"],["1","0","'+this.common.brand+'","0","'+sum+'","'+num+'"]]';
             // console.log(obj)
              this.axios.post("/Mall/MallCommodityInfo", {
                 SOURCE: "22",
@@ -131,6 +131,10 @@ export default {
                     }
                     );
         },
+        toBrandGoods(val){
+            this.$router.push({path:`nav/haitao/${this.common.brand}/${val}`})
+            // console.log( this.$router.push({path:`nav/haitao/${this.common.brand}/${val}`}))
+        }
     }
 }
 </script>
@@ -186,6 +190,12 @@ export default {
 }
 .navlist{
     float: right;
+}
+.navlist a{
+    color: #999;
+}
+.navlist a:hover{
+    color: #999;
 }
 .common-left:after , .common-right:after{
     content: "";

@@ -9,7 +9,7 @@
             <label for="#password">密码：</label>
             <input type="password" id='password' placeholder="请输入密码" v-model="password">
         </div>
-        <div class="errInfo" :class="{isshow:isshow}">用户名称或密码错误</div>
+        <div class="errInfo" :class="{isshows:isshow}">{{warnInfo}}</div>
         <button @click="login($event)">登录</button>
         <p>
             <span @click="resetPassword" style='cursor:pointer'>忘记密码？</span>
@@ -34,6 +34,7 @@
          username:'',
          password:'',
          isshow:false,
+         warnInfo:''
      }
 
    },
@@ -56,18 +57,21 @@
                     LoginUser:'2',
                     UserAccount:this.username,
                     UserPasswd:this.password,
-                    UserMobile:'18689207260'
+                    UserMobile:'18689207261'
                     })
                     .then(
                     response => {
                         console.log(response)
-                        if(response.data.DATA[0].Code){
+                        if(response.data.DATA[0].Code=='1'){
                             // let UserAccount=response.data.DATA[0].UserAccount;
                             localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
                             localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
                             localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
                             localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
                             this.$router.push('/');
+                        }else{
+                            this.warnInfo=response.data.DATA[0].result;
+                            this.isshow=true;
                         }
                     },
                     response => {
@@ -135,9 +139,7 @@
             margin-left: 20px;
             outline: none;
         }
-        .isshow{
-            opacity: 1; 
-        }
+        
     }
     button{
         width: 400px;
@@ -194,4 +196,7 @@
         }
     }
 }
+.isshows{
+        opacity: 1 !important; 
+        }
 </style>
