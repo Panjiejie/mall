@@ -43,13 +43,13 @@ export default {
             deleteIndex:'',
             dialogVisible:false,
             footpointList:[
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false}
+                    // {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                    // {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                    // {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                    // {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                    // {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                    // {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                    // {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false}
                    
             ]
         }
@@ -62,7 +62,49 @@ export default {
             
         }
     },
+    created(){
+        this.init();
+    },
     methods:{
+        init(){
+             this.useraccount=localStorage.getItem('UserAccount');
+             this.axios.post("/Browse/FavoriteCommodity", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "FavoriteCommodity",
+                    LoginUser:'2',
+                    UserAccount:this.useraccount,
+                    Status:'1',
+                    CommodityNumber:'1234567'
+                    })
+                    .then(
+                    response => {
+                        let data=response.data;
+                        console.log(data)
+                        // for(let i=0,len=data.AddressId.length;i<len;i++){
+                        //     this.addressList.push({
+                        //         AddresseeName:data.AddresseeName[i],
+                        //         Telephone:data.Telephone[i],
+                        //         Province:data.Province[i],
+                        //         RegionCity:data.RegionCity[i],
+                        //         CountyDistrict:data.CountyDistrict[i],
+                        //         DetailedAddress:data.DetailedAddress[i],
+                        //         Postalcode:data.Postalcode[i],
+                        //         AddressId:data.AddressId[i],
+                        //         AddressType:data.AddressType[i]
+                        //     })
+                        // }
+                        // console.log(this.addressList)
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
         enter(item){
              this.footpointList.forEach(item=>item.isshow=false)
                 // for(let i=0;i<this.footpointList.length;i++){

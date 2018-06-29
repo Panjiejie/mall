@@ -73,8 +73,8 @@
           </ul>
         </div>
         <div class="inputblock">
-          <input type="text">
-          <button><img src="../../assets/common/search.png" alt="" style="width:16px;height:16px;"></button>
+          <input type="text" v-model='AttributeInfo'>
+          <button @click="GetAttributeInfo"><img src="../../assets/common/search.png" alt="" style="width:16px;height:16px;"></button>
         </div>
     </div>
     </div>
@@ -95,6 +95,7 @@ export default {
        isshowUserAccount:false,
        totalCartMoney:0,//购物车总价
        totalCartAmount:0,//购物车商品总数
+       AttributeInfo:'',
        navList:[
         //  {text:'商城',isChoose:true,pathTo:'/nav'},
         //  {text:'海淘',isChoose:false,pathTo:'/nav/haitao'},
@@ -130,6 +131,12 @@ export default {
     isshow(){
       console.log(this.isshow)
     },
+    '$router'(to,from){
+    //   if(this.$route){
+        
+    //     this.$router.push('/');
+    //   }
+    }
   },
   methods: {  
      toHome(){
@@ -142,9 +149,30 @@ export default {
     logOut(){
       //退出登录
       localStorage.clear();
+      
       this.$router.push('/');
       this.isshowLogin=false;
       this.isshowUserAccount=true;
+    },
+    GetAttributeInfo(){//搜索框
+      let obj = '[["UserAccount","AttributeGroup"],["test001","'+this.AttributeInfo+'"]]';
+      this.axios.post("/Mall/GetAttributeInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "GetAttributeInfo",
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                   console.log(response)
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                }
+                );
     }
   },  
   mounted(){  

@@ -54,7 +54,7 @@ export default {
             isTopOrange:false,
             isBottomOrange:false,
             isStore:false,
-            checked:true,
+            checked:false,
             IndustryNameOne:'',
             IndustryNameTwo:'',
             BrandName:'全部',
@@ -70,8 +70,8 @@ export default {
                 // {src:imgurl,title:'中华人民共和国万岁',subtitle:'56个民族是一家',price:'10000',noMargin:false},
             ],
             detailTitle:[
-                {title:'最新商品',isshowOrange:true},
-                {title:'最高人气',isshowOrange:false}
+                {title:'最新商品',isshowOrange:true,val:1},
+                {title:'最高人气',isshowOrange:false,val:2}
             ] 
         }
     },
@@ -190,7 +190,11 @@ export default {
             this.isTopOrange=false;
             item.isshowOrange=true;
             // this.IndustryNameTwo=item.text;
-            this.init(0,0);
+            if(item.val==1){
+                this.init(1,0);
+            }else if(item.val==2){
+                this.init(0,0);
+            }
         },
         chooseSorts(item,list){//选择分类
             list.forEach((val)=>(val.isshowOrange=false));
@@ -198,6 +202,7 @@ export default {
             this.isTopOrange=false;
             item.isshowOrange=true;
             this.IndustryNameTwo=item.text;
+            this.BrandName='全部';
             // this.init(1,0);
             this.brandsReturn();
         },
@@ -217,23 +222,26 @@ export default {
             })
         },
         toLowerPrice(){
-            alert('价格从低到高排列');
-            this.detailTitle.forEach(item=>item.isshowOrange=false)
+            // alert('价格从低到高排列');
+            this.detailTitle.forEach(item=>item.isshowOrange=false);
             this.isTopOrange=true;
             this.isBottomOrange=false;
-            this.init(2,1);
+            this.init(2,0);
         },
         toExpensivePrice(){
-            alert('价格从高到底排列');
-            this.detailTitle.forEach(item=>item.isshowOrange=false)
+            // alert('价格从高到底排列');
+            this.detailTitle.forEach(item=>item.isshowOrange=false);
             this.isBottomOrange=true;
             this.isTopOrange=false;
-            this.init(2,0)
+            this.init(2,1)
         },
         isStoreOrNot(){
             //仅显示有货
             // this.isStore?this.isStore=false:this.isStore=true;
-            console.log(this.checked)
+            // console.log(this.checked)
+            if(!this.checked){
+                this.init(3,0)
+            }
         }
     },
     computed:{

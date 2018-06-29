@@ -5,7 +5,7 @@
                 <ul>
                     <li> <router-link to="/">首页</router-link>&gt;</li>
                     <li><router-link to="toBrands">品牌</router-link>&gt;</li>
-                    <li><router-link to="toBrandDetail">{{BrandName}}</router-link>&gt;</li>
+                    <li><a>{{BrandName}}</a>&gt;</li>
                     <li>{{CommodityName}}</li>
                 </ul>
             </div>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="bcright-body">
                         <ul>
-                            <li v-for="item in rightlist" :key="item.key" @click="toGoodsDetail">
+                            <li v-for="item in rightlist" :key="item.key" @click="toGoodsDetail(item.AttributeGroup)">
                                 <div class="img__content">
                                   <img :src="item.src" style="width:200px;height:200px;" alt="">  
                                 </div>
@@ -194,7 +194,7 @@ export default {
         AttributeGroup:'',
         AttributeName:'',
         AttributeValue:''
-    },
+      },
       chooseParams:[],
       chooleSizeList: [
         {
@@ -235,54 +235,12 @@ export default {
         { title: "适用场景", content: "休闲" }
       ],
       rightlist: [
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        }
+        // {
+        //   name: "pt950铂金钻石结婚对戒",
+        //   subtitle: "预约赠限量巧克力",
+        //   price: "2500",
+        //   src: imgurl
+        // },
       ],
     };
   },
@@ -290,11 +248,21 @@ export default {
     this.AttributeGroup=this.$route.params.id;
     console.log(this.AttributeGroup)
     this.pageInit();
+    this.rightListInit();
     this.UserAccount=sessionStorage.getItem('UserAccount');
   },
   destroyed(){
     if(this.UserAccount){
       this.destroyedEvent(this.Status);
+    }
+  },
+  watch:{
+     '$route' (to, from) {
+      // 对路由变化作出响应...
+      if(this.$route.params.id){// 判断条件1  判断传递值的变化
+        this.AttributeGroup=this.$route.params.id;
+        this.pageInit();
+       }
     }
   },
   methods: {
@@ -355,8 +323,9 @@ export default {
     toBrandDetail(){
       this.$router.push('toBrandDetail')
     },
-    toGoodsDetail(){
-      this.$router.push('goodsdetail')
+    toGoodsDetail(item){
+      this.$router.push({path:`../goodsdetail/${item}`});
+      this.pageInit();
     },
     pageInit(){
          let obj = '[["UserAccount","AttributeGroup"],["test001","'+this.AttributeGroup+'"]]';
@@ -372,6 +341,7 @@ export default {
                 .then(
                 response => {
                     // console.log(response);
+                    this.imglists.length=0;
                     let data=response.data.DATA[0];
                     this.BrandName=data.CommodityAttribute[0].AttributeGroup[0];//品牌名
                     this.CommodityName=data.CommodityAttribute[0].AttributeValue[0];//商品名
@@ -424,6 +394,43 @@ export default {
                         src:picContents[0]+picContents[1]
                       })
                     }
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
+    },
+    rightListInit(){
+      let obj = '[["Status","Sort","StockSum","Sum","Num"],["0","0","0","1","5"]]';
+            // console.log(obj)
+             this.axios.post("/Mall/MallCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "MallCommodityInfo",
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                    console.log(response)
+                    let data=response.data.DATA[0];
+                    // console.log(data.FilePath);
+                    // this.list.length=0;
+                    for(let i=0,len=data.FilePath.length;i<len;i++){
+                        let FilePath=data.FilePath[i].split(',');
+                        FilePath=FilePath[0]+FilePath[1];
+                        this.rightlist.push({
+                        name:data.CommodityName[i],
+                        src:FilePath,
+                        subtitle:data.BrandName[i],
+                        price:data.SupplyMoney[i],
+                        AttributeGroup:data.AttributeGroup[i]
+                    })
+                    }
+                    
                     
                 },
                 response => {

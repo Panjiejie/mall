@@ -5,30 +5,30 @@
             <a class="orange" @click="dialogVisible=true"> + 新增地址</a>
         </div>
         <div class="contentbox">
-                <div class="section" v-for="item in 2" :key="item.key">
+                <div class="section" v-for="item in addressList" :key="item.key">
                     <ul>
                         <li class="half">
                             <span class="stitle">收货人:</span>
-                            <span class="innertext">我爱我家</span>
+                            <span class="innertext">{{item.AddresseeName}}</span>
                         </li>
                         <li class="half">
                             <span class="stitle">联系方式:</span>
-                            <span class="innertext">{{num | numfilter}}</span>
+                            <span class="innertext">{{item.Telephone | numfilter}}</span>
                         </li>
                         <li>
                             <span class="stitle">所在地区:</span>
-                            <span class="innertext">广东省深圳市南山区</span>
+                            <span class="innertext">{{item.Province}}{{item.RegionCity}}{{item.CountyDistrict}}</span>
                         </li>
                         <li class="last">
                             <span class="stitle">详细地址:</span>
-                            <span class="innertext">深南大道6029号车公庙深南大道6029号车公庙深南大道6029号车公庙深南大道6029号车公庙深南大道6029号车公庙深南大道6029号车公庙</span>
+                            <span class="innertext">{{item.DetailedAddress}}</span>
                         </li>
                     </ul>
                     <div class="btncontent">
                         <input type="button" value="默认地址">
                         <div class="btngroup">
                             <a @click="editAddressDialog=true">编辑</a>
-                            <a @click="deleteAddress=true">删除</a>
+                            <a @click="openDeleteAddressDialog(item)">删除</a>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             :visible.sync="deleteAddress"
             width="30%"
             :center=true>
-            <span>这是一段信息</span>
+            <span>确定删除本条地址吗？</span>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="deleteAddress = false">取 消</el-button>
                 <el-button type="primary" @click="deleteAddress = false">确 定</el-button>
@@ -127,6 +127,20 @@ export default {
             dialogVisible:false,//显示隐藏添加地址对话框
             deleteAddress:false,//显示隐藏删除地址对话框
             editAddressDialog:false,//显示隐藏编辑地址对话框
+            addressList:[
+                // {
+                //                 AddresseeName:1,
+                //                 Telephone:1,
+                //                 Province:1,
+                //                 RegionCity:1,
+                //                 CountyDistrict:1,
+                //                 DetailedAddress:1,
+                //                 Postalcode:1,
+                //                 AddressId:1,
+                //                 AddressType:1
+                // }
+            ],
+            AddressId:'',
             selected:{
                 province:'广东省',
                 city:'深圳市',
@@ -173,7 +187,7 @@ export default {
              this.axios.post("/Address/SelectAddressInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
-                    TERMINAL: "0",
+                    TERMINAL: "1",
                     INDEX: "20170713170325",
                     METHOD: "SelectAddressInfo",
                     LoginUser:'2',
@@ -181,15 +195,23 @@ export default {
                     })
                     .then(
                     response => {
-                        console.log(response)
-                        // if(response.data.DATA[0].Code){
-                        //     // let UserAccount=response.data.DATA[0].UserAccount;
-                        //     localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
-                        //     localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
-                        //     localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
-                        //     localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
-                        //     this.$router.push('/');
-                        // }
+                        let data=response.data;
+                        console.log(data)
+                        for(let i=0,len=data.AddressId.length;i<len;i++){
+                            this.addressList.push({
+                                AddresseeName:data.AddresseeName[i],
+                                Telephone:data.Telephone[i],
+                                Province:data.Province[i],
+                                RegionCity:data.RegionCity[i],
+                                CountyDistrict:data.CountyDistrict[i],
+                                DetailedAddress:data.DetailedAddress[i],
+                                Postalcode:data.Postalcode[i],
+                                AddressId:data.AddressId[i],
+                                AddressType:data.AddressType[i]
+                            })
+                        }
+                        console.log(this.addressList)
+                        
                     },
                     response => {
                         console.log("请求失败");
@@ -197,6 +219,12 @@ export default {
                     }
                     );
         },
+        openDeleteAddressDialog(item){
+            //删除地址
+            this.AddressId=item.AddressId;
+            this.deleteAddress=true;
+        },
+
     }
 }
 </script>

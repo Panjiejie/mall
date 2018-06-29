@@ -27,7 +27,7 @@
                     <!-- 按钮组 -->
                     <div class="btn-group">
                         <button style="margin-right:10px;" @click="dialogVisible = true">切换地址</button>
-                        <button style="margin-left:10px;">新建地址</button>
+                        <button style="margin-left:10px;" @click="newAddress=true">新建地址</button>
                     </div>
                 </div>
                 <div class="infos-bottom">
@@ -141,6 +141,38 @@
                 <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </span>
         </el-dialog>
+        <!-- 新建地址dialog -->
+        <el-dialog
+            title="新增地址"
+            :visible.sync="newAddress"
+            width="730px"
+            :center=true>
+            <div class="addcontent">
+                <div class="addline clearfix">
+                    <span >所在地区：</span>
+                    <v-distpicker :province="selected.province" :city="selected.city" :area="selected.area" ></v-distpicker>
+                </div>
+                <div class="addline">
+                    <span >详细地址:</span>
+                    <textarea placeholder="街道，门牌号等" v-model='addNewAddress.detailAddress'></textarea>
+                </div>
+                <div class="addline clearfix">
+                    <div class="half">
+                        <span >收货人:</span><input type="text" v-model="addNewAddress.consignee">
+                    </div>
+                    <div class="half">
+                        <span>手机号码:</span><input type="text" v-model="addNewAddress.phonenum">
+                    </div>
+                </div>
+                <div class="addline">
+                    <el-checkbox  id='isdefault' v-model="addNewAddress.isDefault">设为默认</el-checkbox>
+                </div>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addAdress">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -155,6 +187,7 @@ export default {
         return{
             checked:true,
             dialogVisible:false,//修改密码弹窗
+            newAddress:false,//新建地址对话框
             chooseDeliveryTime:[//选择配送时间
                 {text:'不限送货时间：周一至周日',isOrange:true},
                 {text:'不限送货时间：周一至周日',isOrange:false},
@@ -170,6 +203,17 @@ export default {
                 {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
                 {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
             ],
+             addNewAddress:{//新增地址
+                detailAddress:'',
+                consignee:'',
+                phonenum:'',
+                isDefault:false,
+            },
+            selected:{
+                province:'广东省',
+                city:'深圳市',
+                area:'福田区'
+            },
         }
     },
     methods:{
@@ -186,7 +230,12 @@ export default {
         },
         toSuccess(){
             this.$router.push('submitOrderSuccess')
-        }
+        },
+        addAdress(){
+            console.group(this.selected)
+            console.group(this.addNewAddress)
+            this.dialogVisible=false;
+        },
     },
 }
 </script>
@@ -513,6 +562,73 @@ div.infos-bottom{
     .el-dialog__header{
         text-align: left;
     }
+      #addcontent  .addline{
+        height: 72px;
+        line-height: 72px;
+    }
+    #addcontent  .title{
+            float: left;
+            width: 90px;
+            color: red
+        }
+    #addcontent   textarea{
+            width: 570px;
+            height: 90px;
+            padding: 14px;
+            color: #999;
+            font-size: 14px;
+            resize: none;
+        }
 </style>
-
+<style>
+.distpicker-address-wrapper select{
+    width: 187px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #999;
+}
+.distpicker-address-wrapper{
+    width: 580px;
+    float: left;
+}
+.addline{
+    margin: 16px 0;
+}
+.addline>span,.addline>.half>span{
+    float: left;
+    width: 90px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #333;
+}
+.half{
+    width: 50%;
+    float: left;
+}
+.half>input{
+    width: 230px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 14px;
+    color: #999;
+    border: 1px solid rgb(221,221,221);
+    outline: none;
+}
+.addline textarea{
+    width: 570px;
+    height: 90px;
+    padding: 14px;
+    color: #999;
+    font-size: 14px;
+    resize: none;
+    border: 1px solid rgb(221,221,221)
+}
+.isdefault{
+    margin-left: 90px;
+    height: 40px;
+    line-height: 40px;
+}
+</style>
 

@@ -40,9 +40,9 @@
         </div>
          <!-- 修改头像 -->
         <el-dialog  id="el-dialog" title="修改头像" :visible.sync="updataPhotoDialog" :width="dialogWidth" center>
-            <!-- <el-upload
+            <el-upload
                     class="avatar-uploader"
-                    action="http://120.78.49.234:3002/UserInfo/ChangeUserAvatar"
+                    action="http://192.168.1.50:3002/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -50,7 +50,7 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     <div class="warn-info">支持大小不超过5m的jpg、png图片</div>
                     <div class="btn"></div>
-            </el-upload> -->
+            </el-upload>
         </el-dialog>
     </div>
 </template>
@@ -67,7 +67,8 @@ export default {
             value2: '',
             dialogWidth:'560px',//弹出框宽度
             updataPhotoDialog:false,
-            imageUrl:''//头像
+            imageUrl:'',//头像
+            OldImgUrl:''
         };
         
     },
@@ -82,11 +83,9 @@ export default {
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.photoDefault=this.imageUrl;
-            this.$message({
-            type: 'success',
-            message: '修改成功!'
-          });
-          setTimeout(()=>{this.updataPhotoDialog=false;},2000)
+            this.OldImgUrl=res.data;
+            // console.log(res)
+            this.updataPhoto();
             },
         beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg' || 'image/png';
@@ -99,7 +98,36 @@ export default {
                 this.$message.error('上传头像图片大小不能超过 5MB!');
                 }
                 return isJPG && isLt5M;
-            }
+            },
+        updataPhoto(){
+            //  let obj = '[["Status","Sort","StockSum","Sum","Num","IndustryNameTwo","BrandName"],["'+Status+'","'+Sort+'","0","1","20","'+this.IndustryNameTwo+'","'+this.BrandName+'"]]';
+            //  console.log(obj)
+             this.axios.post("/UserInfo/ChangeUserAvatar", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "ChangeUserAvatar",
+                LoginUser:'0',
+                UserAccount:this.userName,
+                OldImgUrl:this.OldImgUrl
+                })
+                .then(
+                response => {
+                    console.log(response)
+                    // let data=response.data.DATA[0];
+                        this.$message({
+                        type: 'success',
+                        message: '修改成功!'
+                        });
+                         setTimeout(()=>{this.updataPhotoDialog=false;},1000)
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
+        }
     }
 }
 </script>

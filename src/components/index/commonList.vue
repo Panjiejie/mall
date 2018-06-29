@@ -5,7 +5,7 @@
             <span class="line"></span>
             <span class="maintitle">{{common.brand}}</span>
             
-            <a class="morebrand" href="/haitao">查看全部&gt;</a>
+            <!-- <a class="morebrand" @click="toBrands()">查看全部&gt;</a> -->
             <div class="navlist">
                 <span v-for='item in common.list' :key='item.key' @click="toBrandGoods(item)"><a>{{item}}/</a></span>
             </div>
@@ -134,6 +134,9 @@ export default {
         toBrandGoods(val){
             this.$router.push({path:`nav/haitao/${this.common.brand}/${val}`})
             // console.log( this.$router.push({path:`nav/haitao/${this.common.brand}/${val}`}))
+        },
+        toBrands(){
+            this.$router.push('nav/toBrands')
         }
     }
 }

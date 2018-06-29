@@ -5,7 +5,7 @@
             <a @click="deleteAll()"> +全部清除</a>
         </div>
         <div class="contentbox">
-            <Timeline>
+            <Timeline class="clearfix">
                 <TimelineItem v-for="item in footpointList" :key="item.key" color="rgb(196,90,32)">
                     <p class="time">{{item.date}}</p>
                     <div class="content">
@@ -93,7 +93,7 @@ export default {
                     INDEX: "20170713170325",
                     METHOD: "FavoriteCommodity",
                     LoginUser:'2',
-                    Status:'1',
+                    Status:'0',
                     UserAccount:this.useraccount,
                     CommodityNumber:'1234567'
                     })
