@@ -5,7 +5,7 @@
             <a class="orange" @click="dialogVisible=true"> + 新增地址</a>
         </div>
         <div class="contentbox">
-                <div class="section" v-for="item in addressList" :key="item.key">
+                <div class="section" v-for="(item,index) in addressList" :key="item.key">
                     <ul>
                         <li class="half">
                             <span class="stitle">收货人:</span>
@@ -28,7 +28,7 @@
                         <input type="button" value="默认地址">
                         <div class="btngroup">
                             <a @click="editAddressDialog=true">编辑</a>
-                            <a @click="openDeleteAddressDialog(item)">删除</a>
+                            <a @click="showEditAddressDialog(index,item)">删除</a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="addline">
                     <span >详细地址:</span>
-                    <textarea placeholder="街道，门牌号等" v-model='addNewAddress.detailAddress'></textarea>
+                    <textarea placeholder="街道，门牌号等" v-model="addNewAddress.detailAddress"></textarea>
                 </div>
                 <div class="addline clearfix">
                     <div class="half">
@@ -56,9 +56,9 @@
                         <span>手机号码:</span><input type="text" v-model="addNewAddress.phonenum">
                     </div>
                 </div>
-                <div class="addline">
+                <!-- <div class="addline">
                     <el-checkbox  id='isdefault' v-model="addNewAddress.isDefault">设为默认</el-checkbox>
-                </div>
+                </div> -->
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -74,7 +74,7 @@
             <span>确定删除本条地址吗？</span>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="deleteAddress = false">取 消</el-button>
-                <el-button type="primary" @click="deleteAddress = false">确 定</el-button>
+                <el-button type="primary" @click="openDeleteAddressDialog">确 定</el-button>
             </span>
         </el-dialog>
           <!-- 编辑地址dialog -->
@@ -122,7 +122,8 @@ export default {
         return{
             useraccount:"12345632",
             num:"18689207260",
-            rest:3,//剩余可添加地址
+            // rest:3,//剩余可添加地址
+            index:'',
             checked:false,//新增地址是否设为默认
             dialogVisible:false,//显示隐藏添加地址对话框
             deleteAddress:false,//显示隐藏删除地址对话框
@@ -176,14 +177,61 @@ export default {
             
         }
     },
+    computed:{
+        rest(){
+            return 10-this.addressList.length*1
+        }
+    },
     methods:{
         addAdress(){
-            console.group(this.selected)
-            console.group(this.addNewAddress)
+            console.log(this.selected)
+            console.log(this.addNewAddress)
+             let obj = '[["UserAccount","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.useraccount+'","'+this.addNewAddress.consignee+'","'+this.addNewAddress.phonenum+'","'+this.editselected.province+'","'+this.editselected.city+'","'+this.editselected.area+'","'+this.addNewAddress.detailAddress+'","0"]]';
+            console.log(obj)
             this.dialogVisible=false;
+            this.axios.post("/Address/AddAddressInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "AddAddressInfo",
+                    LoginUser:'2',
+                    DATA:encodeURI(obj),
+                    })
+                    .then(
+                    response => {
+                        // let data=response.data;
+                        console.log(response)
+                        if(response.data.DATA=='1'){
+                              this.addressList.push({
+                                AddresseeName:this.addNewAddress.consignee,
+                                Telephone:this.addNewAddress.phonenum,
+                                Province:this.editselected.province,
+                                RegionCity:this.editselected.city,
+                                CountyDistrict:this.editselected.area,
+                                DetailedAddress:this.addNewAddress.detailAddress,
+                                Postalcode:'0',
+                                // AddressId:data.AddressId[i],
+                                // AddressType:data.AddressType[i]
+                            })
+                        }
+                        // this.addressList.push();
+
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
+        showEditAddressDialog(index,item){
+            this.AddressId=item.AddressId;
+            this.index=index;
+            this.deleteAddress=true;
         },
         PageInit(){
-            this.useraccount=localStorage.getItem('UserAccount');
+             this.useraccount=localStorage.getItem('UserAccount');
              this.axios.post("/Address/SelectAddressInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
@@ -210,7 +258,7 @@ export default {
                                 AddressType:data.AddressType[i]
                             })
                         }
-                        console.log(this.addressList)
+                        // this.rest=10-this.addressList.length*1
                         
                     },
                     response => {
@@ -219,10 +267,34 @@ export default {
                     }
                     );
         },
-        openDeleteAddressDialog(item){
+        openDeleteAddressDialog(){
             //删除地址
-            this.AddressId=item.AddressId;
-            this.deleteAddress=true;
+            
+            // this.deleteAddress=true;
+            // console.log(index)
+             this.axios.post("/Address/DelAddressInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "DelAddressInfo",
+                    LoginUser:'2',
+                    AddressId:this.AddressId,
+                    })
+                    .then(
+                    response => {
+                        let data=response.data;
+                        console.log(data)
+                        this.deleteAddress=false;
+                        this.addressList.splice(this.index,1);
+
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
         },
 
     }
@@ -310,7 +382,7 @@ export default {
 }
 .contentbox{
     width: 990px;
-    height: 616px;
+    min-height: 616px;
     background: #fff;
     padding: 0 40px 40px;
     font-size: 14px;
@@ -355,7 +427,7 @@ export default {
 .last .innertext{
     float: left;
     width: 616px;
-    line-height: 24px;
+    line-height: 36px;
 }
 .btncontent{
     width: 160px;
