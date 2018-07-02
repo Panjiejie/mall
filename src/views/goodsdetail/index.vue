@@ -80,19 +80,19 @@
                     </div>
                     <!-- 选择参数部分 -->
                     <div class="choose-params">
-                        <div class="choose-color choose-line clearfix" >
+                        <!-- <div class="choose-color choose-line clearfix" >
                             <span class="ptitle">选择颜色</span>
                             <ul class="clearfix">
                                 <li v-for="item in chooseImgList" :key="item.key" @click="chooseColorClick(item)"><img :src="item.imgsrc" :class="{imggray:item.isgray,imgorange:item.isorange}" alt=""></li>
                             </ul>
                             
-                        </div>
-                        <!-- <div class="choose-size" v-for='item in chooleSizeList' :key='item.key'>
-                            <span class="ptitle">ww</span>
-                            <ul class="sizefather">
-                                <li :class="{sizecontent:item.isgray,size_orange:item.isorange}"  @click="chooseSizeClick(item)">{{item.label}}</li>
-                            </ul>
                         </div> -->
+                        <div class="choose-size" >
+                            <span class="ptitle" style="width:56px;height:34px;line-height:34px;">类别</span>
+                            <ul class="sizefather">
+                                <li v-for='item in chooseSizeList' :key='item.key' :class="{sizecontent:item.isgray,size_orange:item.isorange}"  @click="chooseSizeClick(item)">{{item.name}}</li>
+                            </ul>
+                        </div>
                         <div class="mount-choose">
                             <span class="ptitle">选择数量</span>
                             <div class="input-number">
@@ -121,10 +121,16 @@
                                 <span class="intro-content">{{brandname}}</span>
                             </div> -->
                             <ul>
-                                <li v-for="item in list" :key="item.key">
+                                <li><span class="intro-title">品牌</span><span class="intro-content">{{list.BrandName[0]}}</span></li>
+                                <li><span class="intro-title">商品名</span><span class="intro-content">{{list.CommodityName[0]}}</span></li>
+                                <li><span class="intro-title">单价</span><span class="intro-content">{{list.SupplyMoney[0]}}元</span></li>
+                                <li><span class="intro-title">生产厂家</span><span class="intro-content">{{list.Manufacturer[0]}}</span></li>
+                                <li><span class="intro-title">生产地址</span><span class="intro-content">{{list.ProductionAddress[0]}}</span></li>
+                               
+                                <!-- <li v-for="item in list" :key="item.key">
                                     <span class="intro-title">{{item.title}}</span>
                                     <span class="intro-content">{{item.content}}</span>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -184,7 +190,7 @@ export default {
       price:'',
       FilePath:[],
       bigImg: imgurl, //左侧大图src
-      heart: heart, //收藏小心心图标src
+      heart: '', //收藏小心心图标src
       imglists: [],//左侧五个商品图
       adds:[],//图文详情广告图
       UserAccount:'',
@@ -196,23 +202,14 @@ export default {
         AttributeValue:''
       },
       chooseParams:[],
-      chooleSizeList: [
-        {
-          label: 42,
-          isgray: true,
-          isorange: false
-        },
-        {
-          label: 43,
-          isgray: true,
-          isorange: false
-        },
-        {
-          label: 44,
-          isgray: true,
-          isorange: false
-        },
-      ],
+      chooseSizeList: [
+                // {
+                //   name: "茉莉花茶",
+                //   CommodityNumber:'1507556' },
+                //    {
+                //   name: "绿茶",
+                //   CommodityNumber:'1507553' }
+                ],
       chooseImgList:[
           {imgsrc:imgurl,isgray:true,isorange:false},
           {imgsrc:imgurl,isgray:true,isorange:false}
@@ -301,13 +298,15 @@ export default {
         this.heart = redHeart;
         this.Status=1;
       }
+      console.log(this.Status)
     },
     chooseSizeClick(item) {
       //选择尺码
-      _.forEach(this.chooleSizeList, e => {
-        e.isgray = true;
-        e.isorange = false;
-      });
+      
+      this.chooseSizeList.forEach(e=>{
+         e.isgray = true;
+         e.isorange = false;
+      })
       item.isgray = false;
       item.isorange = true;
     },
@@ -361,34 +360,44 @@ export default {
                     //商品码
                     this.CommodityNumber=firstGoodsInfo.CommodityNumber[0];
                     //是否已收藏
-                    // response.data.collection==0?this.heart=heart:this.heart=redHeart;
+                    let collection=response.data.collection;
+                    // console.log(collection)
+                    if(collection=='0'){
+                      this.heart=heart;
+                    }else{
+                      this.heart=redHeart;
+                    }
                     //默认选择商品参数
                     this.defaultCommodityAttribute=data.CommodityAttribute;
                     //选择参数选项配置
-                    // this.chooseParams
                     let params=data.Attribute;
-                    for(let i=0,len=params.length;i<len;i++){
-                        // let keys;
-                        
-                        // for(var key in params[i]){
-                        //    if(key!='CommodityNumber'){
-                        //       params[i][key].forEach(e=>{
-                        //       e={param:e,isgray:true,isorange:false}
-                        //       console.log(e)
-                        //       this.chooseParams.push(JSON.stringify({key:key,value:e}))
-                        //     });
-                        //    }
-                        //   // console.log(params[i][key])
-                        // }
-                        
-                        // this.chooseParams.forEach(e=>{
-                        //   this.$set(e, `isgray`, true);
-                        //   this.$set(e, `isorange`, true);
-                        // })
-                        // console.log(this.chooseParams+'---------*************')
+                    let chooseList={};
+                    // console.log(params)
+                    let sorts=Object.keys(params[0])[0];
+                    // console.log(sorts)
+                    let sortsItems=[];
+                    let keys=[];
+                    let values=[];
+                    for(let i=0;i<params.length;i++){
+                        for(var key in params[i]){
+                            keys.push(key);
+                            values.push(params[i][key])
+                        }
+                      }
+                    // console.log(keys)
+                    // console.log(values)
+
+                    for(let i=0;i<values.length;i++){
+                      this.chooseSizeList.push({
+                        name:values[0][i],
+                        CommodityNumber:values[1][i],
+                        isgray:true,
+                        isorange:false
+                      })
                     }
+                    // console.log('this.chooseSizeList')
+                    console.log(this.chooseSizeList)
                     //图文详情图片
-                    // console.log(firstGoodsInfo.CommodityProfile[0].split(','));
                     let picContents=[];
                     picContents=firstGoodsInfo.CommodityProfile[0].split(',');
                     for(let i=1;i<picContents.length;i++){
@@ -396,6 +405,11 @@ export default {
                         src:picContents[0]+picContents[1]
                       })
                     }
+                    //图文详情文本信息
+                    let CommodityInfo=data.CommodityInfo[0];
+                    this.list=CommodityInfo;
+                    console.log('CommodityInfoArray')
+                    console.log(CommodityInfo)
                     
                 },
                 response => {
@@ -589,7 +603,7 @@ export default {
 .bcbody-content li {
   width: 100%;
   min-height: 200px;
-  border: 1px solid yellow;
+  border: 1px solid rgb(221,221,221);
   border-top: none;
   list-style: none;
 }
