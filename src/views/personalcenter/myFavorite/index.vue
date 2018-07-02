@@ -77,26 +77,30 @@ export default {
                     LoginUser:'2',
                     UserAccount:this.useraccount,
                     Status:'1',
-                    CommodityNumber:'1234567'
+                    CommodityNumber:'1008204'
                     })
                     .then(
                     response => {
-                        let data=response.data;
-                        console.log(data)
-                        // for(let i=0,len=data.AddressId.length;i<len;i++){
-                        //     this.addressList.push({
-                        //         AddresseeName:data.AddresseeName[i],
-                        //         Telephone:data.Telephone[i],
-                        //         Province:data.Province[i],
-                        //         RegionCity:data.RegionCity[i],
-                        //         CountyDistrict:data.CountyDistrict[i],
-                        //         DetailedAddress:data.DetailedAddress[i],
-                        //         Postalcode:data.Postalcode[i],
-                        //         AddressId:data.AddressId[i],
-                        //         AddressType:data.AddressType[i]
-                        //     })
-                        // }
-                        // console.log(this.addressList)
+                        console.log(response)
+                        let data=response.data.DATA[0];
+                        let VisitTime=data.VisitTime;
+                        let CommodityNumber=data.CommodityNumber;
+                        let CommodityInfo=data.CommodityInfo;
+                        this.footpointList.length=0;
+                        for(let i=0,len=CommodityInfo.length;i<len;i++){
+                            VisitTime[i]=VisitTime[i].split('+');
+                            let FilePath=CommodityInfo[i].FilePath;
+                            // console.log(FilePath)
+                                FilePath=FilePath[0].split(',')[0]+FilePath[0].split(',')[1]
+                            this.footpointList.push({
+                                        src:FilePath,
+                                        title:CommodityInfo[i].CommodityName[0],
+                                        price:CommodityInfo[i].SupplyMoney[0],
+                                        isshow:false
+                                    
+                            })
+                        }
+                        console.log(this.footpointList)
                         
                     },
                     response => {
@@ -177,7 +181,7 @@ p{
     font-size: 14px;
 }
 .item img{
-    width: 200px;
+    width: 198px;
     height: 174px;
 }
 

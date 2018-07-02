@@ -25,10 +25,10 @@
                         </li>
                     </ul>
                     <div class="btncontent">
-                        <input type="button" value="默认地址">
+                        <input type="button" @click="setDefaultAddress(item,index)" :value="item.AddressType=='1'?'设为默认':'默认地址'">
                         <div class="btngroup">
-                            <a @click="editAddressDialog=true">编辑</a>
-                            <a @click="showEditAddressDialog(index,item)">删除</a>
+                            <a @click="openEditAddressDialog(item,index)">编辑</a>
+                            <a @click="showDeleteAddressDialog(index,item)">删除</a>
                         </div>
                     </div>
                 </div>
@@ -100,13 +100,13 @@
                         <span>手机号码:</span><input type="text" v-model="editAddress.phonenum">
                     </div>
                 </div>
-                <div class="addline">
+                <!-- <div class="addline">
                     <el-checkbox  class='isdefault' v-model="editAddress.isDefault">设为默认</el-checkbox>
-                </div>
+                </div> -->
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editAddressDialog = false">取 消</el-button>
-                <el-button type="primary" @click="editAddressDialog=false">确 定</el-button>
+                <el-button type="primary" @click="EditAddressDialog()">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -128,6 +128,7 @@ export default {
             dialogVisible:false,//显示隐藏添加地址对话框
             deleteAddress:false,//显示隐藏删除地址对话框
             editAddressDialog:false,//显示隐藏编辑地址对话框
+            AddressId:'',
             addressList:[
                 // {
                 //                 AddresseeName:1,
@@ -215,6 +216,12 @@ export default {
                                 // AddressType:data.AddressType[i]
                             })
                         }
+                                    
+                            this.addNewAddress.detailAddress='';
+                            this.addNewAddress.consignee='';
+                            this.addNewAddress.phonenum='';
+                            this.addNewAddress.isDefault=false;
+                        
                         // this.addressList.push();
 
                         
@@ -225,10 +232,12 @@ export default {
                     }
                     );
         },
-        showEditAddressDialog(index,item){
+        showDeleteAddressDialog(index,item){
             this.AddressId=item.AddressId;
             this.index=index;
             this.deleteAddress=true;
+            console.log(this.AddressId)
+            console.log(this.index)
         },
         PageInit(){
              this.useraccount=localStorage.getItem('UserAccount');
@@ -296,6 +305,95 @@ export default {
                     }
                     );
         },
+        EditAddressDialog(index,AddressId){
+            //编辑地址 确定按钮
+                 let obj = '[["AddressId","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.AddressId+'","'+this.editAddress.consignee+'","'+this.editAddress.phonenum+'","'+this.editselected.province+'","'+this.editselected.city+'","'+this.editselected.area+'","'+this.editAddress.detailAddress+'","0"]]';
+                    this.axios.post("/Address/UpdateAddressInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "UpdateAddressInfo",
+                    LoginUser:'2',
+                    DATA:encodeURI(obj),
+                    })
+                    .then(
+                    response => {
+                        this.editAddressDialog=false;
+                        if(response.data.RETURNCODE=='200'){
+
+                        }
+                        // console.log(this.index)
+                            this.addressList.splice(this.index,1,{
+                                AddresseeName:this.editAddress.consignee,
+                                Telephone:this.editAddress.phonenum,
+                                Province:this.editselected.province,
+                                RegionCity:this.editselected.city,
+                                CountyDistrict:this.editselected.area,
+                                DetailedAddress:this.editAddress.detailAddress,
+                                Postalcode:'0',
+                                AddressId:this.AddressId,
+                                // AddressType:data.AddressType[i]
+                            })
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
+        openEditAddressDialog(item,index){
+            //显示编辑地址对话框
+            this.editAddressDialog=true;
+            this.index=index;
+            this.AddressId=item.AddressId;
+             console.log(this.index)
+            console.log(this.AddressId)
+            console.log(this.addressList[index])
+            //赋默认值
+             //编辑地址省市区
+                this.editselected.province=this.addressList[index].Province;
+                this.editselected.city=this.addressList[index].RegionCity;
+                this.editselected.area=this.addressList[index].CountyDistrict;
+            //编辑地址
+                this.editAddress.detailAddress=this.addressList[index].DetailedAddress;
+                this.editAddress.consignee=this.addressList[index].AddresseeName;
+                this.editAddress.phonenum=this.addressList[index].Telephone;
+            
+        },
+        setDefaultAddress(item,index){
+            // console.log('1')
+            // console.log('AddressType'+AddressType)
+            //设置默认地址
+            if(item.AddressType){
+                console.log('isNodefault')
+                this.addressList.forEach(e=>e.AddressType=1)
+                item.AddressType=0;
+                this.AddressId=item.AddressId;
+                // console.log(this.addressList)
+                let obj=`[["UserAccount","AddressId"],["${this.useraccount}","${this.AddressId}"]]`
+                console.log(obj)
+                 this.axios.post("/Address/UpdateDefaultAddress", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "UpdateDefaultAddress",
+                    LoginUser:'2',
+                    DATA:encodeURI(obj),
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+            }
+        }
 
     }
 }

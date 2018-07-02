@@ -328,7 +328,7 @@ export default {
       this.pageInit();
     },
     pageInit(){
-         let obj = '[["UserAccount","AttributeGroup"],["test001","'+this.AttributeGroup+'"]]';
+         let obj = '[["UserAccount","AttributeGroup"],["'+this.UserAccount+'","'+this.AttributeGroup+'"]]';
             // console.log(obj)
              this.axios.post("/Mall/GetMallCommodityInfo", {
                 SOURCE: "22",
@@ -360,6 +360,8 @@ export default {
                     this.price=firstGoodsInfo.SupplyMoney[0];
                     //商品码
                     this.CommodityNumber=firstGoodsInfo.CommodityNumber[0];
+                    //是否已收藏
+                    // response.data.collection==0?this.heart=heart:this.heart=redHeart;
                     //默认选择商品参数
                     this.defaultCommodityAttribute=data.CommodityAttribute;
                     //选择参数选项配置

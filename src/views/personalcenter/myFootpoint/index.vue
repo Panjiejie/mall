@@ -10,7 +10,7 @@
                     <p class="time">{{item.date}}</p>
                     <div class="content">
                         <div class="clearfix item-content">
-                            <div   @mouseenter="enter(val)" class="item" v-for="(val , index) in item.goodslist" :key="val.key">
+                            <div   @mouseenter="enter(val)" class="item" :class="{itemEnter:val.isshow}" v-for="(val , index) in item.goodslist" :key="val.key">
                                 <img :src="val.src" alt="">
                                 <h5 style='line-height:30px;font-size:14px;text-align:left;'>{{val.title}}</h5> 
                                 <h5 style='text-align:left;font-size:14px;color:#ff2040;'>￥{{val.price}}</h5>
@@ -50,25 +50,25 @@ export default {
                 list:''
             },
             footpointList:[
-                {date:"2018.06.05",goodslist:[
-                    {src:imgurl,title:"NIKE 拖鞋",price:'28',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'292',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                // {date:"2018.06.05",goodslist:[
+                //     {src:imgurl,title:"NIKE 拖鞋",price:'28',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'292',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
                    
-                ]},
-                {date:"2018.06.03",goodslist:[
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                    {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
-                ]}
+                // ]},
+                // {date:"2018.06.03",goodslist:[
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                //     {src:imgurl,title:"NIKE 耐克女子 两道杠 拖鞋",price:'298',isshow:false},
+                // ]}
             ]
         }
     },
@@ -95,11 +95,34 @@ export default {
                     LoginUser:'2',
                     Status:'0',
                     UserAccount:this.useraccount,
-                    CommodityNumber:'1234567'
+                    CommodityNumber:'1008204'
                     })
                     .then(
                     response => {
-                        console.log(response)
+                        // console.log(response)
+                        let data=response.data.DATA[0];
+                        let VisitTime=data.VisitTime;
+                        let CommodityNumber=data.CommodityNumber;
+                        let CommodityInfo=data.CommodityInfo;
+                        
+                        this.footpointList.length=0;
+                        for(let i=0,len=CommodityInfo.length;i<len;i++){
+                            VisitTime[i]=VisitTime[i].split('+');
+                            let FilePath=CommodityInfo[i].FilePath;
+                            FilePath=FilePath[0].split(',')[0]+FilePath[0].split(',')[1];
+                            console.log(FilePath)
+                            this.footpointList.push({
+                                date:VisitTime[i][0],
+                                goodslist:[
+                                    {
+                                        src:FilePath,
+                                        title:CommodityInfo[i].CommodityName[0],
+                                        price:CommodityInfo[i].SupplyMoney[0],
+                                        isshow:false
+                                    }
+                                ]
+                            })
+                        }
                     },
                     response => {
                         console.log("请求失败");
@@ -218,8 +241,8 @@ p{
     position: relative;
     border: 1px solid transparent;
 }
-.item:hover{
-    border: 1px solid rgb(221,221,221);
+.itemEnter{
+    border: 1px solid rgb(221,221,221) !important;
 }
 .close{
     position: absolute;

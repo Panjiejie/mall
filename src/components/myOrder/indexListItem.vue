@@ -15,7 +15,7 @@
                             </div>
                             <div class="operation">
                                 <div class="wait-goods">
-                                    <span class="red">{{orderStatus}}</span><br>
+                                    <span class="red">已发货</span><br>
                                     <span @click="toLogistics" class="blue" :class="{show:isshowLogistics}">查看物流</span>
                                 </div>
                                 <div class="goods-price">
@@ -34,10 +34,11 @@
 import imgUrl from '../../assets/common/logo.png'
 export default {
   name: "indexListItem",
-  props: ['isshowLogistics','orderStatus'],
+//   props: ['paramsList'],
   data() {
     return {
-        imgUrl:imgUrl
+        imgUrl:imgUrl,
+        isshowLogistics:true
     };
   },
   methods: {
@@ -132,5 +133,5 @@ export default {
 .goods-price .money{
     margin-top: 54px;
 }
-.show{display: none;}
+.show{opacity: 0;}
 </style>

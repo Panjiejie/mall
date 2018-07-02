@@ -2,7 +2,7 @@
     <div class="content">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="全部订单" name="first">
-                <waitingSend></waitingSend>
+                <indexListItem></indexListItem>
                <div class="page">
                     <template>
                          <Page :total="100" show-elevator></Page>
@@ -49,13 +49,15 @@ import waitingSend from "../myOrder/waitingSend/index";
 import waitingReceived from "../myOrder/waitingReceived/index";
 import completedOrder from "../myOrder/completedOrder/index";
 import afterSale from "../myOrder/afterSale/index";
+import indexListItem from '../../../components/myOrder/indexListItem.vue'
 export default {
   name: "myOrder",
   components: {
     waitingSend,
     waitingReceived,
     completedOrder,
-    afterSale
+    afterSale,
+    indexListItem
   },
   data() {
     return {
