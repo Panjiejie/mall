@@ -305,7 +305,8 @@ export default {
                     );
     },
     deleteCartGoodsItem(item){
-      
+              // console.log(item)
+              let arr=[`${item.title}`];
              this.axios.post("/Cart/DelCommodityInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",

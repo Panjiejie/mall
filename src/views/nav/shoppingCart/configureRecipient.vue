@@ -124,14 +124,14 @@
                 <ul>
                     <li v-for="item in addressList" :key='item.key' :class="{iscolorOrange:item.isDefault}">
                         <div class="address-item">
-                            <span>收货人：</span>{{item.name}}
+                            <span>收货人：</span>{{item.AddresseeName}}
                             <a :class="{isshow:item.isDefault}">默认地址</a>
                         </div>
                         <div class="address-item">
-                            <span>联系方式：</span>{{item.tell}}
+                            <span>联系方式：</span>{{item.Telephone}}
                         </div>
                         <div class="address-item">
-                            <span>收货地址：</span>{{item.address}}
+                            <span>收货地址：</span>{{item.Province}}{{item.RegionCity}}{{item.CountyDistrict}}{{item.DetailedAddress}}
                         </div>
                     </li>
                 </ul>
@@ -185,6 +185,7 @@ export default {
     },
     data(){
         return{
+            UserAccount:'',
             checked:true,
             dialogVisible:false,//修改密码弹窗
             newAddress:false,//新建地址对话框
@@ -199,9 +200,9 @@ export default {
                 {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
             ],
             addressList:[
-                {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:true},
-                {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
-                {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
+                // {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:true},
+                // {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
+                // {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:false},
             ],
              addNewAddress:{//新增地址
                 detailAddress:'',
@@ -216,7 +217,50 @@ export default {
             },
         }
     },
+    created(){
+        this.init();
+    },
     methods:{
+        init(){
+            this.requestAddress();
+        },
+        requestAddress(){
+             this.UserAccount=localStorage.getItem('UserAccount');
+             this.axios.post("/Address/SelectAddressInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "SelectAddressInfo",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    })
+                    .then(
+                    response => {
+                        let data=response.data;
+                        // console.log(data)
+                        for(let i=0,len=data.AddressId.length;i<len;i++){
+                            this.addressList.push({
+                                AddresseeName:data.AddresseeName[i],
+                                Telephone:data.Telephone[i],
+                                Province:data.Province[i],
+                                RegionCity:data.RegionCity[i],
+                                CountyDistrict:data.CountyDistrict[i],
+                                DetailedAddress:data.DetailedAddress[i],
+                                Postalcode:data.Postalcode[i],
+                                AddressId:data.AddressId[i],
+                                AddressType:data.AddressType[i]
+                            })
+                        }
+                        // this.rest=10-this.addressList.length*1
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
          handleClose(done) {
             this.$confirm('确认关闭？')
             .then(_ => {

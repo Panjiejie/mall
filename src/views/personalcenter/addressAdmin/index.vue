@@ -42,7 +42,7 @@
             <div class="addcontent">
                 <div class="addline clearfix">
                     <span >所在地区：</span>
-                    <v-distpicker :province="selected.province" :city="selected.city" :area="selected.area" ></v-distpicker>
+                    <v-distpicker :province="selected.province" :city="selected.city" :area="selected.area"  @province="onChangeProvince" @city="onChangeCity" @area='onChangeArea'></v-distpicker>
                 </div>
                 <div class="addline">
                     <span >详细地址:</span>
@@ -86,7 +86,7 @@
             <div class="addcontent">
                 <div class="addline clearfix">
                     <span >所在地区：</span>
-                    <v-distpicker :province="editselected.province" :city="editselected.city" :area="editselected.area" ></v-distpicker>
+                    <v-distpicker :province="selected.province" :city="selected.city" :area="selected.area" @province="onChangeProvince" @city="onChangeCity" @area='onChangeArea'></v-distpicker>
                 </div>
                 <div class="addline">
                     <span >详细地址:</span>
@@ -144,9 +144,9 @@ export default {
             ],
             AddressId:'',
             selected:{
-                province:'广东省',
-                city:'深圳市',
-                area:'福田区'
+                province:'',
+                city:'',
+                area:''
             },
             addNewAddress:{//新增地址
                 detailAddress:'',
@@ -154,11 +154,11 @@ export default {
                 phonenum:'',
                 isDefault:false,
             },
-            editselected:{//编辑地址省市区
-                province:'广东省',
-                city:'深圳市',
-                area:'福田区'
-            },
+            // editselected:{//编辑地址省市区
+            //     province:'广东省',
+            //     city:'深圳市',
+            //     area:'福田区'
+            // },
             editAddress:{//编辑地址
                 detailAddress:'',
                 consignee:'',
@@ -184,10 +184,19 @@ export default {
         }
     },
     methods:{
+        onChangeProvince(data){
+            this.selected.province=data.value;
+        },
+        onChangeCity(data){
+            this.selected.city=data.value;
+        },
+        onChangeArea(data){
+            this.selected.area=data.value;
+        },
         addAdress(){
             console.log(this.selected)
             console.log(this.addNewAddress)
-             let obj = '[["UserAccount","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.useraccount+'","'+this.addNewAddress.consignee+'","'+this.addNewAddress.phonenum+'","'+this.editselected.province+'","'+this.editselected.city+'","'+this.editselected.area+'","'+this.addNewAddress.detailAddress+'","0"]]';
+             let obj = '[["UserAccount","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.useraccount+'","'+this.addNewAddress.consignee+'","'+this.addNewAddress.phonenum+'","'+this.selected.province+'","'+this.selected.city+'","'+this.selected.area+'","'+this.addNewAddress.detailAddress+'","0"]]';
             console.log(obj)
             this.dialogVisible=false;
             this.axios.post("/Address/AddAddressInfo", {
@@ -207,9 +216,9 @@ export default {
                               this.addressList.push({
                                 AddresseeName:this.addNewAddress.consignee,
                                 Telephone:this.addNewAddress.phonenum,
-                                Province:this.editselected.province,
-                                RegionCity:this.editselected.city,
-                                CountyDistrict:this.editselected.area,
+                                Province:this.selected.province,
+                                RegionCity:this.selected.city,
+                                CountyDistrict:this.selected.area,
                                 DetailedAddress:this.addNewAddress.detailAddress,
                                 Postalcode:'0',
                                 // AddressId:data.AddressId[i],
@@ -307,7 +316,7 @@ export default {
         },
         EditAddressDialog(index,AddressId){
             //编辑地址 确定按钮
-                 let obj = '[["AddressId","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.AddressId+'","'+this.editAddress.consignee+'","'+this.editAddress.phonenum+'","'+this.editselected.province+'","'+this.editselected.city+'","'+this.editselected.area+'","'+this.editAddress.detailAddress+'","0"]]';
+                 let obj = '[["AddressId","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.AddressId+'","'+this.editAddress.consignee+'","'+this.editAddress.phonenum+'","'+this.selected.province+'","'+this.selected.city+'","'+this.selected.area+'","'+this.editAddress.detailAddress+'","0"]]';
                     this.axios.post("/Address/UpdateAddressInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
@@ -327,9 +336,9 @@ export default {
                             this.addressList.splice(this.index,1,{
                                 AddresseeName:this.editAddress.consignee,
                                 Telephone:this.editAddress.phonenum,
-                                Province:this.editselected.province,
-                                RegionCity:this.editselected.city,
-                                CountyDistrict:this.editselected.area,
+                                Province:this.selected.province,
+                                RegionCity:this.selected.city,
+                                CountyDistrict:this.selected.area,
                                 DetailedAddress:this.editAddress.detailAddress,
                                 Postalcode:'0',
                                 AddressId:this.AddressId,
@@ -353,9 +362,9 @@ export default {
             console.log(this.addressList[index])
             //赋默认值
              //编辑地址省市区
-                this.editselected.province=this.addressList[index].Province;
-                this.editselected.city=this.addressList[index].RegionCity;
-                this.editselected.area=this.addressList[index].CountyDistrict;
+                this.selected.province=this.addressList[index].Province;
+                this.selected.city=this.addressList[index].RegionCity;
+                this.selected.area=this.addressList[index].CountyDistrict;
             //编辑地址
                 this.editAddress.detailAddress=this.addressList[index].DetailedAddress;
                 this.editAddress.consignee=this.addressList[index].AddresseeName;
