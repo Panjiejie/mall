@@ -35,7 +35,7 @@
                     </div>
                     <div class="operation">
                         <span>移入收藏夹</span>
-                        <span>删除</span>
+                        <span @click="deleteCartGoodsItem(item)">删除</span>
                     </div>
                 </div>
             </div>
@@ -47,14 +47,14 @@
                 <div class="footer-center">
                     <span class='f-operation'>删除选中商品</span>
                     <span class='f-operation'>移入收藏夹</span>
-                    <span class="gray">共&nbsp;{{totalGoods}}件商品 已选择&nbsp;{{havechoose}}件 &nbsp;商品合计：￥&nbsp;{{totalPrice}} &nbsp;活动优惠-￥&nbsp;{{discount}}&nbsp; 应付总额：<span class="red"> ￥{{realPay}}</span></span>
+                    <span class="gray">共&nbsp;{{totalGoods}}件商品 已选择&nbsp;{{havechoose}}件 &nbsp;商品合计：￥&nbsp;{{totalPrice}} &nbsp; 应付总额：<span class="red"> ￥{{realPay}}</span></span>
                 </div>
                 <div class="f-btn" @click="toConfigureRecipient">
                     下单结算
                 </div>
             </div>
             <!-- swiper -->
-            <div class="carousel-content">
+            <!-- <div class="carousel-content">
                 <div class="carousel-title">
                     同类商品推荐
                     <span>查看更多></span>
@@ -77,7 +77,7 @@
                         </Carousel>
                     </div> 
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -91,6 +91,7 @@ export default {
   },
   data() {
     return {
+      UserAccount:'',
       checked: false, //全选checkbox
       // havechoose: 0, //已选商品数量
       // totalGoods: 0, //购物车商品总数
@@ -189,59 +190,27 @@ export default {
         arrow: "hover"
       },
       cartList: [
-        {
-          ischecked: false,
-          src: imgUrl,
-          title:
-            "我电话是多少你看下都是粗底层开始的补充潇洒小姐先后顺序wodedsaasxasxa",
-          params: "颜色：灰色 尺码：160",
-          price: "249",
-          subprice: "249",
-          amount: "1",
-          subtotal: "249"
-        },
-        {
-          ischecked: true,
-          src: imgUrl,
-          title:
-            "我电话是多少你看下都是粗底层开始的补充潇洒小姐先后顺序wodedsaasxasxa",
-          params: "颜色：灰色 尺码：160",
-          price: "249",
-          subprice: "249",
-          amount: "10",
-          subtotal: "249"
-        },
-        {
-          ischecked: false,
-          src: imgUrl,
-          title:
-            "我电话是多少你看下都是粗底层开始的补充潇洒小姐先后顺序wodedsaasxasxa",
-          params: "颜色：灰色 尺码：160",
-          price: "249",
-          subprice: "249",
-          amount: "1",
-          subtotal: "249"
-        },
-        {
-          ischecked: false,
-          src: imgUrl,
-          title:
-            "我电话是多少你看下都是粗底层开始的补充潇洒小姐先后顺序wodedsaasxasxa",
-          params: "颜色：灰色 尺码：160",
-          price: "249",
-          subprice: "249",
-          amount: "1",
-          subtotal: "249"
-        }
+        // {
+        //   ischecked: false,
+        //   src: imgUrl,
+        //   title:
+        //     "我电话是多少你看下都是粗底层开始的补充潇洒小姐先后顺序wodedsaasxasxa",
+        //   params: "颜色：灰色 尺码：160",
+        //   price: "249",
+        //   subprice: "249",
+        //   amount: "1",
+        //   subtotal: "249"
+        // },
       ]
     };
+  },
+  created(){
+    this.initTable();
   },
   mounted() {
   },
   watch:{
     checked(newval,oldval){
-      //  console.log('oldval--------->'+oldval)
-      //  console.log('newval--------->'+newval)
        if(newval){
          this.cartList.forEach(e=>e.ischecked=true)
        }else{
@@ -294,6 +263,85 @@ export default {
     },
     amountChange(item){
       item.subtotal=item.amount*item.price
+    },
+    initTable(){
+      this.cartList.forEach(e=>e.subtotal=e.price*e.amount*1);
+      //请求表格数据
+      this.UserAccount=localStorage.getItem('UserAccount');
+             this.axios.post("/Cart/SelectCommodityInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "SelectCommodityInfo",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount
+                    })
+                    .then(
+                    response => {
+                        // console.log(response)
+                        let data=response.data;
+                        this.cartList.length=0;
+                        for(let i=0,len=data.DealSum.length;i<len;i++){
+                            let FilePath=data.FilePath[i];
+                            // console.log(FilePath)
+                                FilePath=FilePath.split(',')[0]+FilePath.split(',')[1];
+                                // console.log(FilePath)
+                            this.cartList.push({
+                                        src:FilePath,
+                                        title:data.CommodityName[i],
+                                        price:data.SupplyMoney[i],
+                                        amount:data.DealSum[i],
+                                        ischecked: false,
+                                        subtotal:data.DealSum[i]*data.SupplyMoney[i],
+                                        params:data.BrandName[i]
+                                    })
+                        } 
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+    },
+    deleteCartGoodsItem(item){
+      
+             this.axios.post("/Cart/DelCommodityInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "DelCommodityInfo",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    CommodityName:arr
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        // let data=response.data;
+                        // this.cartList.length=0;
+                        // for(let i=0,len=data.DealSum.length;i<len;i++){
+                        //     let FilePath=data.FilePath[i];
+                        //     // console.log(FilePath)
+                        //         FilePath=FilePath.split(',')[0]+FilePath.split(',')[1];
+                        //         // console.log(FilePath)
+                        //     this.cartList.push({
+                        //                 src:FilePath,
+                        //                 title:data.CommodityName[i],
+                        //                 price:data.SupplyMoney[i],
+                        //                 amount:data.DealSum[i],
+                        //                 ischecked: false,
+                        //                 subtotal:data.DealSum[i]*data.SupplyMoney[i],
+                        //                 params:data.BrandName[i]
+                        //             })
+                        // } 
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
     }
   }
 };
@@ -365,7 +413,7 @@ export default {
   margin: 20px 14px 0 0;
   width: 100px;
   height: 100px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 .goodsinfo h5 {
   margin: 20px 0 14px 0;

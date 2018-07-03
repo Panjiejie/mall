@@ -4,7 +4,7 @@
             <div id="header">
                 <ul>
                     <li> <router-link to="/">首页</router-link>&gt;</li>
-                    <li><router-link to="toBrands">品牌</router-link>&gt;</li>
+                    <li><a>品牌</a>&gt;</li>
                     <li><a>{{BrandName}}</a>&gt;</li>
                     <li>{{CommodityName}}</li>
                 </ul>
@@ -29,9 +29,9 @@
                         <span>
                             <img @click="changeHeart()" :src="heart" alt="" style="width:20px;height:20px;"> 收藏商品
                         </span>
-                        <span style="margin-left:38px;">
+                        <!-- <span style="margin-left:38px;">
                             <img @click="toBrandDetail" src="../../assets/common/detail-home.png" alt="" style="width:20px;height:20px;"> 品牌主页
-                        </span>
+                        </span> -->
                     </div>
                 </div>
 
@@ -101,7 +101,7 @@
                         </div>
                         <!-- 按钮组 -->
                         <div class="btngroups">
-                            <button class="addcart"><img src="../../assets/common/cart.png" alt=""> 加入购物车</button>
+                            <button class="addcart" @click="addToCart"><img src="../../assets/common/cart.png" alt=""> 加入购物车</button>
                             <button class="buying">立即购买</button>
                         </div>
                     </div>
@@ -184,6 +184,8 @@ export default {
   data() {
     return {
       AttributeGroup:'',//传参商品属性
+      requestCommodityName:'',//添加购物车商品名
+      requestCommodityNumber:'',//更换商品 添加购物车 商品码
       BrandName: "",//品牌名
       CommodityName:'',//商品名
       inputNumber: 1, //商品数量计数器
@@ -243,10 +245,14 @@ export default {
   },
   created(){
     this.AttributeGroup=this.$route.params.id;
+    this.UserAccount=localStorage.getItem('UserAccount');
     console.log(this.AttributeGroup)
     this.pageInit();
     this.rightListInit();
-    this.UserAccount=sessionStorage.getItem('UserAccount');
+    
+  },
+  mounted(){
+    
   },
   destroyed(){
     if(this.UserAccount){
@@ -276,12 +282,12 @@ export default {
                 METHOD: "BrowseCommodity",
                 UserAccount:this.UserAccount,
                 Status:Status,
-                CommodityNumber:this.CommodityNumber,
+                CommodityNumber:this.requestCommodityNumber,
                 // DATA:encodeURI(obj)
                 })
                 .then(
                 response => {
-                   
+                  //  console.log(this.requestCommodityNumber)
                     
                 },
                 response => {
@@ -302,13 +308,17 @@ export default {
     },
     chooseSizeClick(item) {
       //选择尺码
-      
       this.chooseSizeList.forEach(e=>{
          e.isgray = true;
          e.isorange = false;
       })
       item.isgray = false;
       item.isorange = true;
+      //
+      console.log(item)
+      this.requestCommodityName=item.name;
+      this.requestCommodityNumber=item.CommodityNumber;
+      this.requestGoods();
     },
     chooseColorClick(item){
         //选择颜色
@@ -319,9 +329,9 @@ export default {
       item.isgray = false;
       item.isorange = true;
     },
-    toBrandDetail(){
-      this.$router.push('toBrandDetail')
-    },
+    // toBrandDetail(){
+    //   this.$router.push('toBrandDetail')
+    // },
     toGoodsDetail(item){
       this.$router.push({path:`../goodsdetail/${item}`});
       this.pageInit();
@@ -359,6 +369,8 @@ export default {
                     this.price=firstGoodsInfo.SupplyMoney[0];
                     //商品码
                     this.CommodityNumber=firstGoodsInfo.CommodityNumber[0];
+                    this.requestCommodityNumber=firstGoodsInfo.CommodityNumber[0];
+                    console.log('shangpinma'+this.requestCommodityNumber)
                     //是否已收藏
                     let collection=response.data.collection;
                     // console.log(collection)
@@ -386,8 +398,8 @@ export default {
                       }
                     // console.log(keys)
                     // console.log(values)
-
-                    for(let i=0;i<values.length;i++){
+                    this.chooseSizeList.length=0;
+                    for(let i=0;i<values[0].length;i++){
                       this.chooseSizeList.push({
                         name:values[0][i],
                         CommodityNumber:values[1][i],
@@ -396,10 +408,11 @@ export default {
                       })
                     }
                     // console.log('this.chooseSizeList')
-                    console.log(this.chooseSizeList)
+                    // console.log(this.chooseSizeList)
                     //图文详情图片
                     let picContents=[];
                     picContents=firstGoodsInfo.CommodityProfile[0].split(',');
+                    this.adds.length=0;
                     for(let i=1;i<picContents.length;i++){
                       this.adds.push({
                         src:picContents[0]+picContents[1]
@@ -408,8 +421,8 @@ export default {
                     //图文详情文本信息
                     let CommodityInfo=data.CommodityInfo[0];
                     this.list=CommodityInfo;
-                    console.log('CommodityInfoArray')
-                    console.log(CommodityInfo)
+                    // console.log('CommodityInfoArray')
+                    // console.log(CommodityInfo)
                     
                 },
                 response => {
@@ -431,7 +444,7 @@ export default {
                 })
                 .then(
                 response => {
-                    console.log(response)
+                    // console.log(response)
                     let data=response.data.DATA[0];
                     // console.log(data.FilePath);
                     // this.list.length=0;
@@ -454,7 +467,115 @@ export default {
                     console.log(response);
                 }
                 );
-    }
+    },
+    requestGoods(){
+            // let obj = '[["UserAccount","AttributeGroup"],["'+this.UserAccount+'","'+this.AttributeGroup+'"]]';
+            // console.log(obj)
+             this.axios.post("/Mall/GetMallCommodityNumberInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "GetMallCommodityNumberInfo",
+                CommodityNumber:this.requestCommodityNumber,
+                UserAccount:this.UserAccount
+              })
+                .then(
+                response => {
+                    // console.log(response);
+                    this.imglists.length=0;
+                    let data=response.data.DATA[0];
+                    this.BrandName=data.CommodityAttribute[0].AttributeGroup[0];//品牌名
+                    this.CommodityName=data.CommodityAttribute[0].AttributeValue[0];//商品名
+                    let FilePath=data.CommodityInfo[0].FilePath[0];
+                    FilePath=FilePath.split(',');
+                    let firstGoodsInfo=data.CommodityInfo[0];
+                    // console.log(FilePath)
+                    this.bigImg=FilePath[0]+FilePath[1];
+
+                    for(let i=1;i<FilePath.length;i++){
+                        this.imglists.push({//左侧商品图
+                          src:FilePath[0]+FilePath[i]
+                        })
+                    }
+                    //价格
+                    this.price=firstGoodsInfo.SupplyMoney[0];
+                    //商品码
+                    this.CommodityNumber=firstGoodsInfo.CommodityNumber[0];
+                    //是否已收藏
+                    let collection=response.data.collection;
+                    // console.log(collection)
+                    if(collection=='0'){
+                      this.heart=heart;
+                    }else{
+                      this.heart=redHeart;
+                    }
+                    //默认选择商品参数
+                    this.defaultCommodityAttribute=data.CommodityAttribute;
+                    //选择参数选项配置
+                    
+                    //图文详情图片
+                    let picContents=[];
+                    picContents=firstGoodsInfo.CommodityProfile[0].split(',');
+                    for(let i=1;i<picContents.length;i++){
+                      this.adds.push({
+                        src:picContents[0]+picContents[1]
+                      })
+                    }
+                    //图文详情文本信息
+                    let CommodityInfo=data.CommodityInfo[0];
+                    this.list=CommodityInfo;
+                    // console.log('CommodityInfoArray')
+                    // console.log(CommodityInfo)
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
+    },
+    addToCart(){
+      let obj = '[["UserAccount","CommodityCode","SupplyMoney","Sum"],["'+this.UserAccount+'","'+this.requestCommodityNumber+'","'+this.price+'","'+this.inputNumber+'"]]';
+      if(this.UserAccount!=''){
+        if(this.requestCommodityNumber!=''){
+             this.axios.post("/Cart/AddCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "AddShopping",
+                LoginUser:'2',
+                // UserAccount:this.UserAccount,
+                // CommodityName:this.requestCommodityName,
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                  // console.log(obj)
+                  if(response.data.DATA[0]=='1'){
+                    this.$message({
+                      message:'加入购物车成功.',
+                      type:'success'
+                    })
+                  }
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                }
+                );
+        }
+       
+      
+      }else{
+        this.$message({
+          message:'请先登录！',
+          type:'success'
+        })
+      }
+    },
+    
   }
 };
 </script>
@@ -789,20 +910,22 @@ export default {
 }
 .sizecontent {
   display: inline-block;
-  width: 80px;
+  min-width: 80px;
   height: 34px;
   border: 1px solid #ddd;
   text-align: center;
   line-height: 34px;
   margin: 0 16px 16px 0;
+  padding: 0 6px;
 }
 .size_orange {
   display: inline-block;
-  width: 80px;
+  min-width: 80px;
   height: 34px;
   text-align: center;
   line-height: 34px;
   margin: 0 16px 16px 0;
+  padding: 0 6px;
   border: 1px solid rgba(244, 91, 8);
 }
 .sizefather {
