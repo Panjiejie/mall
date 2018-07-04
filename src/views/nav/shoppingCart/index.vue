@@ -34,7 +34,7 @@
                         ￥{{item.subtotal}}
                     </div>
                     <div class="operation">
-                        <span>移入收藏夹</span>
+                        <span @click="removeToMyfavorite(item)">移入收藏夹</span>
                         <span @click="deleteCartGoodsItem(item)">删除</span>
                     </div>
                 </div>
@@ -101,82 +101,30 @@ export default {
       chooseList: [], //已选择商品
       swiperList: [
         [
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "12345"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "12345"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "12345"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "12345"
-          }
-        ],
-        [
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "1235"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "1245"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "1345"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "2345"
-          }
-        ],
-        [
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "125"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "145"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "145"
-          },
-          {
-            src: imgUrl,
-            name: "多热烈的白羊",
-            subtitle: "小毛驴",
-            price: "345"
-          }
+          // {
+          //   src: imgUrl,
+          //   name: "多热烈的白羊",
+          //   subtitle: "小毛驴",
+          //   price: "12345"
+          // },
+          // {
+          //   src: imgUrl,
+          //   name: "多热烈的白羊",
+          //   subtitle: "小毛驴",
+          //   price: "12345"
+          // },
+          // {
+          //   src: imgUrl,
+          //   name: "多热烈的白羊",
+          //   subtitle: "小毛驴",
+          //   price: "12345"
+          // },
+          // {
+          //   src: imgUrl,
+          //   name: "多热烈的白羊",
+          //   subtitle: "小毛驴",
+          //   price: "12345"
+          // }
         ]
       ],
       value3: 0,
@@ -305,9 +253,9 @@ export default {
                     );
     },
     deleteCartGoodsItem(item){
-              // console.log(item)
-              let arr=[`${item.title}`];
-             this.axios.post("/Cart/DelCommodityInfo", {
+              // 删除单个商品
+              let str='"CommodityName":["'+item.title+'"]';
+              this.axios.post("/Cart/DelCommodityInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
                     TERMINAL: "1",
@@ -315,28 +263,35 @@ export default {
                     METHOD: "DelCommodityInfo",
                     LoginUser:'2',
                     UserAccount:this.UserAccount,
-                    CommodityName:arr
+                    CommodityName:str
                     })
                     .then(
                     response => {
                         console.log(response)
-                        // let data=response.data;
-                        // this.cartList.length=0;
-                        // for(let i=0,len=data.DealSum.length;i<len;i++){
-                        //     let FilePath=data.FilePath[i];
-                        //     // console.log(FilePath)
-                        //         FilePath=FilePath.split(',')[0]+FilePath.split(',')[1];
-                        //         // console.log(FilePath)
-                        //     this.cartList.push({
-                        //                 src:FilePath,
-                        //                 title:data.CommodityName[i],
-                        //                 price:data.SupplyMoney[i],
-                        //                 amount:data.DealSum[i],
-                        //                 ischecked: false,
-                        //                 subtotal:data.DealSum[i]*data.SupplyMoney[i],
-                        //                 params:data.BrandName[i]
-                        //             })
-                        // } 
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+    },
+    removeToMyfavorite(item){
+              // let str='"CommodityName":["'+item.title+'"]';
+              this.axios.post("/Cart/SetFavoriteCommodity", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "SetFavoriteCommodity",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    CommodityNumber:item.CommodityNumber
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        
                     },
                     response => {
                         console.log("请求失败");
@@ -437,6 +392,7 @@ export default {
 }
 .operation span {
   color: rgb(34, 108, 145);
+  cursor: pointer;
 }
 .price span:last-child {
   color: #999;

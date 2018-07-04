@@ -32,6 +32,7 @@
                 </div>         
             </div>             
         </div>
+         <Page :total="100" show-elevator></Page>
     </div>
 </template>
 <script>

@@ -13,10 +13,10 @@
                             <span class="title">订单编号：</span>622326482494
                         </div>
                         <div class="info">
-                            <span class="title">订单编号：</span>622326482494
+                            <span class="title">下单时间：</span>622326482494
                         </div>
                     </div>
-                    <button @click="toAfterSale">申请售后</button>
+                    <!-- <button @click="toAfterSale">申请售后</button> -->
                 </div>
             </div>
         </div>

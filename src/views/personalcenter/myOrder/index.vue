@@ -20,9 +20,9 @@
             <el-tab-pane label="待收货" name="third">
                 <waitingReceived></waitingReceived>
                 <div class="page">
-                    <template>
+                    <!-- <template>
                          <Page :total="100" show-elevator></Page>
-                    </template>
+                    </template> -->
                 </div>
             </el-tab-pane>
             <el-tab-pane label="已完成" name="fourth">
@@ -67,7 +67,7 @@ export default {
     };
   },
   created(){
-    this.init();
+    // this.init();
   },
   methods: {
     init(){
