@@ -2,7 +2,7 @@
     <div id="consigneeInfo-content">
         <p>收货信息</p>
         <div id="consigneeInfo">
-            <p><span>收货人：</span>大中国</p>
+            <p><span>收&nbsp;货&nbsp;人：</span>大中国</p>
             <p><span>联系方式：</span>18689207260</p>
             <p><span>收货地址：</span>我们都有一个家名字叫中国，兄弟姐妹都很多</p>
         </div>

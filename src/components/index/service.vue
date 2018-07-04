@@ -94,7 +94,7 @@ export default {
 }
 .restgoods{
     text-align: left;
-    padding-left:12px;
+    /* padding-left:12px; */
     color: #fff;
 }
 .restgoods .maintitle{

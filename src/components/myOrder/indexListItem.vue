@@ -1,40 +1,43 @@
 <template>
-    <div class="list-item">
-         <div class="header">
-            <span>下单时间：2018-01-08 15:02:00</span>
-                &nbsp;&nbsp;
-            <span>订单编号：62205723918</span>
-         </div>
-           <div class="body-content">
+    <div class="list-item clearfix" >
+        <div v-for='i in paramsList' :key="i.key">
+            <div class="header">
+                <span>下单时间：{{i.ConfirmTime}}&nbsp;&nbsp;{{i.time2}}</span>
+                    &nbsp;&nbsp;
+                <span>订单编号：{{i.DealNumber}}</span>
+            </div>
+           <div class="body-content" v-for='item in i.obj' :key='item.key'>
                         <div class="img-content">
-                            <img :src="imgUrl" alt="">
+                            <img :src="item.FilePath" alt="">
                         </div>
                             <div class="textinfo">
-                                <h4>韩国制造。。。</h4>
-                                <h5>颜色分类：洒下是潇洒奥斯的就是</h5>
+                                <h4>{{item.CommodityName}}</h4>
+                                <h5>{{item.BrandName}}</h5>
                             </div>
                             <div class="operation">
                                 <div class="wait-goods">
-                                    <span class="red">已发货</span><br>
+                                    <span class="red">{{item.DealStatus | statusFilter}}</span><br>
                                     <span @click="toLogistics" class="blue" :class="{show:isshowLogistics}">查看物流</span>
                                 </div>
                                 <div class="goods-price">
-                                    <div class="money">$39.00</div>
+                                    <div class="money">${{item.DealMoney}}</div>
                                     <div class="payway">货到付款</div>
                                 </div>
                                 <div class="goods-price">
-                                    <div class="money blue" @click="toDetail">查看详情</div>
+                                    <div class="money blue" @click="toDetail(i)">查看详情</div>
                                     <!-- <div class="payway blue" @click="toafterSale">申请售后</div> -->
                                 </div>
                             </div>
-                        </div>             
+              </div>
+        </div>
+                     
     </div>
 </template>
 <script>
 import imgUrl from '../../assets/common/logo.png'
 export default {
   name: "indexListItem",
-//   props: ['paramsList'],
+  props: ['paramsList'],
   data() {
     return {
         imgUrl:imgUrl,
@@ -42,14 +45,26 @@ export default {
     };
   },
   methods: {
-      toDetail(){
-            this.$router.push('waitingSendDetail')
+      toDetail(item){
+          console.log(item)
+            
+            this.$router.push({path:`waitingSendDetail`})
         },
       toafterSale(){
           this.$router.push('applyForAfterSales')
       },
       toLogistics(){
           alert('这是物流信息')
+      }
+  },
+  filters:{
+      statusFilter:function(val){
+         if(val=='0'){ return val='购物车'}
+         if(val=='1'){ return val='未支付'}
+         if(val=='2'){ return val='未发货'}
+         if(val=='3'){ return val='已发货'}
+         if(val=='4'){ return val='已收货'}
+         if(val=='5'){ return val='已确认'}
       }
   }
 };

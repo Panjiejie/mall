@@ -35,7 +35,7 @@
         </div>
         <div id="receiveInfos">
             <consigneeInfo></consigneeInfo>
-            <invoiceinfos></invoiceinfos>
+            <!-- <invoiceinfos></invoiceinfos> -->
             <payment></payment>
             <orderList></orderList>
         </div>

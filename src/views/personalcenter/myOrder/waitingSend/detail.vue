@@ -10,10 +10,10 @@
                     </div>
                     <div class="infoscontent">
                         <div class="info">
-                            <span class="title">订单编号：</span>622326482494
+                            <span class="title">订单编号：</span>{{waitingSendDetailItem.DealNumber}}
                         </div>
                         <div class="info">
-                            <span class="title">下单时间：</span>622326482494
+                            <span class="title">下单时间：</span>{{waitingSendDetailItem.ConfirmTime}}
                         </div>
                     </div>
                     <!-- <button @click="toAfterSale">申请售后</button> -->
@@ -33,16 +33,87 @@ export default {
     name:'waitingSend',
     components:{
         // innerTitle,
-        innerBottom
+        innerBottom,
+        orderList:[],
     },
     data(){
         return{
             none:false,//是否不显示售后按钮
             statusMsg:'等待发货',
-            imgUrl:imgUrl
+            imgUrl:imgUrl,
+            waitingSendDetailItem:'',
+            UserAccount:''
         }
     },
+    created(){
+        this.init();
+    },
     methods:{
+        init(){
+            this.waitingSendDetailItem=JSON.parse(localStorage.getItem('waitingSendDetailItem')).DealNumber;
+            // console.log(this.waitingSendDetailItem)
+            this.requestOrderInfo();
+        },
+        requestOrderInfo(){
+             this.UserAccount=localStorage.getItem('UserAccount');
+              this.axios.post("/Order/OrderInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "OrderInfo",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    DealNumber:this.waitingSendDetailItem,
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        //  if(response.data.RETURNCODE=='200'){
+                        //   let data=response.data.DATA;
+                        //   this.orderList.length=0;
+                        //   // console.log(data)
+                        //   let DealNumber_ConfirmTime=response.data.DealNumber_ConfirmTime;
+                        //   for(let i=0,len=data.length;i<len;i++){
+                        //         let params=data[i][0];
+                        //         // console.log(data[i][0])
+                        //         let arr=[];
+                        //         for(let j=0;j<data[i][0].BrandName.length;j++){//商品数据格式化
+                        //           arr.push({
+                        //             BrandName:params.BrandName[j],
+                        //             DealMoney:params.DealMoney[j],
+                        //             CommodityName:params.CommodityName[j],
+                        //             FilePath:params.FilePath[j].split(',')[0]+params.FilePath[j].split(',')[1],
+                        //             Postalcode:params.Postalcode[j],
+                        //             CommodityCode:params.CommodityCode[j],
+                        //             SupplyMoney:params.SupplyMoney[j],
+                        //             UserAccount:params.UserAccount[j],
+                        //             PayInstitution:params.PayInstitution[j],
+                        //             AddresseeName:params.AddresseeName[j],
+                        //             Telephone:params.Telephone[j],
+                        //             DetailedAddress:params.DetailedAddress[j],
+                        //             CommodityNumber:params.CommodityNumber[j],
+                        //             DealStatus:params.DealStatus[j],
+                        //           })
+                        //         }
+
+                        //          this.orderList.push({
+                        //           DealNumber:DealNumber_ConfirmTime[i][0],
+                        //           ConfirmTime:DealNumber_ConfirmTime[i][1].split('+')[0],
+                        //           time2:DealNumber_ConfirmTime[i][1].split('+')[1],
+                        //           obj:arr
+                        //         })
+                        //      }
+                        //      let orderList=JSON.stringify(this.orderList)
+                        //      localStorage.setItem('orderList',orderList)
+                        // }
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
         toAfterSale(){
             this.$router.push('applyForAfterSales')
         }

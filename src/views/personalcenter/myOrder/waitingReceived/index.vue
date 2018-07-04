@@ -1,28 +1,28 @@
 <template>
     <div class="dai" >
         <!-- <indexListItem :isshowLogistics="isshowLogistics" :orderStatus="orderStatus"></indexListItem> -->
-        <!-- <indexListItem :isshowLogistics="isshowLogistics" :orderStatus="orderStatus"></indexListItem> -->
-        <div class="list-item">
+        <!-- <indexListItem :paramsList='orderList'></indexListItem> -->
+        <div class="list-item" v-for='i in orderList' :key='i.key'>
          <div class="header">
-            <span>下单时间：2018-01-08 15:02:00</span>
+            <span>下单时间：{{i.ConfirmTime}}&nbsp;&nbsp;{{i.time2}}</span>
                 &nbsp;&nbsp;
-            <span>订单编号：62205723918</span>
+            <span>订单编号：{{i.DealNumber}}</span>
          </div>
-           <div class="body-content">
+           <div class="body-content" v-for='item in i.obj' :key='item.key'>
                <div class="img-content">
-                    <img :src="imgUrl" alt="">
+                    <img :src="item.FilePath" alt="">
                 </div>
                 <div class="textinfo">
-                    <h4>韩国制造。。。</h4>
-                    <h5>颜色分类：洒下是潇洒奥斯的就是</h5>
+                    <h4>{{item.CommodityName}}</h4>
+                    <h5>{{item.BrandName}}</h5>
                 </div>
                 <div class="operation">
                     <div class="wait-goods">
-                        <span class="red">{{orderStatus}}</span><br>
+                        <span class="red">待收货</span><br>
                         <span @click="toLogistics" class="blue" :class="{show:isshowLogistics}">查看物流</span>
                     </div>
                     <div class="goods-price">
-                        <div class="money">$39.00</div>
+                        <div class="money">${{item.DealMoney}}</div>
                         <div class="payway">货到付款</div>
                     </div>
                     <div class="goods-price">
@@ -30,28 +30,30 @@
                         <div class="payway blue" @click="toafterSale">申请售后</div>
                     </div>
                 </div>         
-            </div>             
+            </div>     
         </div>
-         <Page :total="100" show-elevator></Page>
+         <!-- <Page :total="100" show-elevator></Page> -->
     </div>
 </template>
 <script>
-// import indexListItem from '../../../../components/myOrder/indexListItem'
+import indexListItem from '../../../../components/myOrder/indexListItem'
 import imgUrl from '../../../../assets/common/logo.png'
 export default {
     name:'waitingReceived',
     components:{
-        // indexListItem
+        indexListItem
     },
     data(){
         return{
             isshowLogistics:false,
             orderStatus:'待收货',
-            imgUrl:imgUrl
+            imgUrl:imgUrl,
+            UserAccount:'',
+            orderList:[]
         }
     },
     created(){
-        // this.init();
+        this.init();
     },
     methods:{
         toDetail(){
@@ -73,11 +75,50 @@ export default {
                     METHOD: "MallOrderInfoTable",
                     LoginUser:'2',
                     Status:'3',
+                    Num:'10',
+                    Sum:'1',
                     UserAccount:this.UserAccount,
                     })
                     .then(
                     response => {
-                        console.log(response)
+                        if(response.data.RETURNCODE=='200'){
+                          let data=response.data.DATA;
+                          this.orderList.length=0;
+                          // console.log(data)
+                          let DealNumber_ConfirmTime=response.data.DealNumber_ConfirmTime;
+                          for(let i=0,len=data.length;i<len;i++){
+                                let params=data[i][0];
+                                // console.log(data[i][0])
+                                let arr=[];
+                                for(let j=0;j<data[i][0].BrandName.length;j++){//商品数据格式化
+                                  arr.push({
+                                    BrandName:params.BrandName[j],
+                                    DealMoney:params.DealMoney[j],
+                                    CommodityName:params.CommodityName[j],
+                                    FilePath:params.FilePath[j].split(',')[0]+params.FilePath[j].split(',')[1],
+                                    Postalcode:params.Postalcode[j],
+                                    CommodityCode:params.CommodityCode[j],
+                                    SupplyMoney:params.SupplyMoney[j],
+                                    UserAccount:params.UserAccount[j],
+                                    PayInstitution:params.PayInstitution[j],
+                                    AddresseeName:params.AddresseeName[j],
+                                    Telephone:params.Telephone[j],
+                                    DetailedAddress:params.DetailedAddress[j],
+                                    CommodityNumber:params.CommodityNumber[j],
+                                    DealStatus:params.DealStatus[j],
+                                  })
+                                }
+
+                                 this.orderList.push({
+                                  DealNumber:DealNumber_ConfirmTime[i][0],
+                                  ConfirmTime:DealNumber_ConfirmTime[i][1].split('+')[0],
+                                  time2:DealNumber_ConfirmTime[i][1].split('+')[1],
+                                  obj:arr
+                                })
+                             }
+                             let orderList=JSON.stringify(this.orderList)
+                             localStorage.setItem('orderList',orderList)
+                        }
                     },
                     response => {
                         console.log("请求失败");

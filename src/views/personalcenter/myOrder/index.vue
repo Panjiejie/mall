@@ -1,21 +1,19 @@
 <template>
     <div class="content">
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tabs v-model="activeName" type="card">
             <el-tab-pane label="全部订单" name="first">
-                <indexListItem></indexListItem>
+                <indexListItem :paramsList='orderList'></indexListItem>
                <div class="page">
-                    <template>
-                         <Page :total="100" show-elevator></Page>
-                    </template>
+                         <!-- <Page :total="100" show-elevator></Page> -->
                 </div>
             </el-tab-pane>
             <el-tab-pane label="待发货" name="second">
                 <waitingSend></waitingSend>
-                <div class="page">
+                <!-- <div class="page">
                     <template>
                          <Page :total="100" show-elevator></Page>
                     </template>
-                </div>
+                </div> -->
             </el-tab-pane>
             <el-tab-pane label="待收货" name="third">
                 <waitingReceived></waitingReceived>
@@ -67,18 +65,27 @@ export default {
     };
   },
   created(){
-    // this.init();
+    this.init();
   },
   methods: {
     init(){
       this.requestAllOrder();
     },
-    handleClick(tab, event) {
-      console.log(tab, event);
-    },
+    // handleClick(tab, event) {
+    //   console.log(tab, event);
+    // },
     requestAllOrder(){
       this.UserAccount=localStorage.getItem('UserAccount');
-              this.axios.post("/Order/MallOrderInfoTable", {
+      // let obj=[
+      //   [{a:1,b:2},{c:[3,3],d:[4,4]}],
+      //   [{e:1,f:2},{c:[3,3],d:[4,4]}]
+      // ]
+      // for(let i=0;i<obj.length;i++){
+        
+      //   {a:obj[i][0].a , b:obj[i][0].b , arr:[{c:obj[i][1].c,d:obj[i][1].d}]}
+      // }
+      // console.log(this.orderList)
+      this.axios.post("/Order/MallOrderInfoTable", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
                     TERMINAL: "0",
@@ -86,34 +93,55 @@ export default {
                     METHOD: "MallOrderInfoTable",
                     LoginUser:'2',
                     Status:'7',
+                    Num:'10',
+                    Sum:'1',
                     UserAccount:this.UserAccount,
                     })
                     .then(
                     response => {
-                        // if(response.data.RETURNCODE=='200'){
-                        //   let data=response.data.DATA[0];
-                        //   this.orderList.length=0;
-                        //   for(let i=0,len=data.DealNumber.length;i<len;i++){
-                        //      this.orderList.push({
-                        //       DealNumber:data.DealNumber[i],
-                        //       CommodityCode:data.CommodityCode[i],
-                        //       DealMoney:data.DealMoney[i],
-                        //       UserAccount:data.UserAccount[i],
-                        //       AddresseeName:data.AddresseeName[i],
-                        //       Telephone:data.Telephone[i],
-                        //       DetailedAddress:data.DetailedAddress[i],
-                        //       ConfirmTime:ConfirmTime[i]
-                        //     })
-                        //   }
-                        //   console.log(data)
-                        // }
+                        if(response.data.RETURNCODE=='200'){
+                          let data=response.data.DATA;
+                          this.orderList.length=0;
+                          // console.log(data)
+                          let DealNumber_ConfirmTime=response.data.DealNumber_ConfirmTime;
+                          for(let i=0,len=data.length;i<len;i++){
+                                let params=data[i][0];
+                                // console.log(data[i][0])
+                                let arr=[];
+                                for(let j=0;j<data[i][0].BrandName.length;j++){//商品数据格式化
+                                  arr.push({
+                                    BrandName:params.BrandName[j],
+                                    DealMoney:params.DealMoney[j],
+                                    CommodityName:params.CommodityName[j],
+                                    FilePath:params.FilePath[j].split(',')[0]+params.FilePath[j].split(',')[1],
+                                    Postalcode:params.Postalcode[j],
+                                    CommodityCode:params.CommodityCode[j],
+                                    SupplyMoney:params.SupplyMoney[j],
+                                    UserAccount:params.UserAccount[j],
+                                    PayInstitution:params.PayInstitution[j],
+                                    AddresseeName:params.AddresseeName[j],
+                                    Telephone:params.Telephone[j],
+                                    DetailedAddress:params.DetailedAddress[j],
+                                    CommodityNumber:params.CommodityNumber[j],
+                                    DealStatus:params.DealStatus[j],
+                                  })
+                                }
 
+                                 this.orderList.push({
+                                  DealNumber:DealNumber_ConfirmTime[i][0],
+                                  ConfirmTime:DealNumber_ConfirmTime[i][1].split('+')[0],
+                                  time2:DealNumber_ConfirmTime[i][1].split('+')[1],
+                                  obj:arr
+                                })
+                             }
+                             let orderList=JSON.stringify(this.orderList)
+                             localStorage.setItem('orderList',orderList)
+                        }
                     },
                     response => {
                         console.log("请求失败");
                         console.log(response);
-                    }
-                    );
+         });
     }
   }
 };

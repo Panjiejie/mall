@@ -1,35 +1,34 @@
 <template>
     <div class="dai" >
-        <div class="list-item" v-for='item in 4' :key='item.key'>
+        <div class="list-item" v-for='i in orderList' :key='i.key'>
          <div class="header">
-            <span>下单时间：2018-01-08 15:02:00</span>
+            <span>下单时间：{{i.ConfirmTime}}&nbsp;&nbsp;{{i.time2}}</span>
                 &nbsp;&nbsp;
-            <span>订单编号：62205723918</span>
+            <span>订单编号：{{i.DealNumber}}</span>
          </div>
-           <div class="body-content">
+           <div class="body-content" v-for='item in i.obj' :key='item.key'>
                <div class="img-content">
-                    <img :src="imgUrl" alt="">
+                    <img :src="item.FilePath" alt="">
                 </div>
                 <div class="textinfo">
-                    <h4>韩国制造。。。</h4>
-                    <h5>颜色分类：洒下是潇洒奥斯的就是</h5>
+                    <h4>{{item.CommodityName}}</h4>
+                    <h5>{{item.BrandName}}</h5>
                 </div>
                 <div class="operation">
                     <div class="wait-goods">
-                        <span class="red">售后中</span><br>
-                        <!-- <span @click="toLogistics" class="blue">查看物流</span> -->
+                        <span class="red">待收货</span><br>
+                        <span @click="toLogistics" class="blue" :class="{show:isshowLogistics}">查看物流</span>
                     </div>
                     <div class="goods-price">
-                        <div class="money">$39.00</div>
+                        <div class="money">${{item.DealMoney}}</div>
                         <div class="payway">货到付款</div>
                     </div>
                     <div class="goods-price">
-                        <div class="money blue" @click="tolookAfterSaleDetail">查看详情</div>
-                        <div class="payway blue" @click="toafterSale">售后详情</div>
-                        <div class="payway blue" @click="dialogFormVisible=true">请退货</div>
+                        <div class="money blue" @click="toDetail">查看详情</div>
+                        <div class="payway blue" @click="toafterSale">申请售后</div>
                     </div>
                 </div>         
-            </div>             
+            </div>     
         </div>
         <!-- 退货对话框 -->
         <el-dialog title="退货地址"  :width="'560px'" :visible.sync="dialogFormVisible" :center="true">
@@ -69,6 +68,8 @@ export default {
         return{
             imgUrl:imgUrl,
             dialogFormVisible:false,
+            orderList:[],
+            UserAccount:'',
             form: {//请退货对话框信息
                 name: 'zs',
                 num: '123456789098',
@@ -80,6 +81,9 @@ export default {
         }
     },
     methods:{
+        // init(){
+
+        // },
         tolookAfterSaleDetail(){
             this.$router.push('lookAfterSaleDetail')
         },
