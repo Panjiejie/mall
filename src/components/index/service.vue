@@ -7,18 +7,21 @@
             </div>
             <div class="servicegoods">
                 <div class="firstgoods goods">
-                    <h3>小米5x 变焦双摄</h3>
-                    <h5 class="subtitle">5.5 大屏轻薄全金属，立减200元</h5>
+                    <!-- <h3>小米5x 变焦双摄</h3>
+                    <h5 class="subtitle">5.5 大屏轻薄全金属，立减200元</h5> -->
+                    <img src="../../assets/brandimg/recommend/1.jpg" alt="">
                 </div>
                 <div class="restgoods goods" style="margin:0 20px;">
-                    <h3 class="maintitle">高质家电</h3>
+                    <img src="../../assets/brandimg/recommend/2.jpg" alt="">
+                    <!-- <h3 class="maintitle">高质家电</h3>
                     <h2 class="subtitle">质感享受</h2>
-                    <button>立即进入</button>
+                    <button>立即进入</button> -->
                 </div>
                 <div class="restgoods goods">
-                    <h3 class="maintitle">高质家电</h3>
+                    <img src="../../assets/brandimg/recommend/3.jpg" alt="">
+                    <!-- <h3 class="maintitle">高质家电</h3>
                     <h2 class="subtitle">质感享受</h2>
-                    <button>立即进入</button>
+                    <button>立即进入</button> -->
                 </div>
             </div>
         </div>
@@ -26,6 +29,10 @@
     </div>
 </template>
 <script>
+//推荐专区
+import recommendOne from '../../assets/brandimg/recommend/1.jpg'
+import recommendTwo from '../../assets/brandimg/recommend/2.jpg'
+import recommendThree from '../../assets/brandimg/recommend/3.jpg'
 export default {
     name:"service",
     components:{},

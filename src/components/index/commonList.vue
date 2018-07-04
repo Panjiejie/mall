@@ -12,8 +12,8 @@
         </div>
         <div class="brands">
             <div class="common-left">
-                <div class="top">top</div>
-                <div>bottom</div>
+                <div class="top"><img :src="common.imgGroup.top" alt=""></div>
+                <div><img :src="common.imgGroup.bottom" alt=""></div>
             </div>
             <div class="common-right">
                 <ul>
@@ -30,7 +30,9 @@
                 </ul>
             </div>
             <div class="common-bottom">
-                <div class="adcontent"></div>
+                <div class="adcontent">
+                    <img :src="common.imgGroup.banner" alt="">
+                </div>
             </div>
         </div>
     </div>

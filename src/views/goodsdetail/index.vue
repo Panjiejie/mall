@@ -297,14 +297,21 @@ export default {
     },
     changeHeart() {
       //收藏事件
-      if (this.heart == redHeart) {
+      console.log(this.UserAccount)
+    if(this.UserAccount){
+        if (this.heart == redHeart) {
         this.heart = heart;
         this.Status=0;
       } else if (this.heart == heart) {
         this.heart = redHeart;
         this.Status=1;
       }
-      console.log(this.Status)
+    }else{
+      this.$message({
+        message:'请先登录!',
+        type:'warn'
+      })
+    }
     },
     chooseSizeClick(item) {
       //选择尺码

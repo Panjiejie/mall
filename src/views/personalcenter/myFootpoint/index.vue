@@ -7,7 +7,7 @@
         <div class="contentbox">
             <Timeline class="clearfix">
                 <TimelineItem v-for="item in footpointList" :key="item.key" color="rgb(196,90,32)">
-                    <p class="time">{{item.date}}</p>
+                    <p class="time">{{item.date}} <span style="margin-left:10px;display:inline-block;">{{item.time}}</span> </p>
                     <div class="content">
                         <div class="clearfix item-content">
                             <div   @mouseenter="enter(val)" class="item" :class="{itemEnter:val.isshow}" v-for="(val , index) in item.goodslist" :key="val.key">
@@ -113,6 +113,7 @@ export default {
                             console.log(FilePath)
                             this.footpointList.push({
                                 date:VisitTime[i][0],
+                                time:VisitTime[i][1],
                                 goodslist:[
                                     {
                                         src:FilePath,

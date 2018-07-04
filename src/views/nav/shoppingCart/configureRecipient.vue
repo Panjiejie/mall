@@ -4,24 +4,24 @@
         <div class="receive-body">
             <!-- 收货信息地址 -->
             <div class="receive-infos">
-                <div class="infos-title">收货信息</div>
+                <div class="infos-title" style='text-align:left;width:100%;'>收货信息</div>
                 <div class="infos-content">
                     <p>
-                        <img src="../../../assets/common/kefu.png" alt="">
+                        <img src="../../../assets/brand/location.png" alt="">
                         <span>默认地址</span> 
                     </p>
                     <ul>
                         <li>
-                            <span class="infos-title">收货人：</span>
-                            <span class="infos-text">kaihua</span>
+                            <span class="infos-title">收&nbsp;&nbsp;货&nbsp;人：</span>
+                            <span class="infos-text">{{defaultAddress.name}}</span>
                         </li>
                         <li>
-                            <span class="infos-title">收货人：</span>
-                            <span class="infos-text">kaihua</span>
+                            <span class="infos-title">联系方式：</span>
+                            <span class="infos-text">{{defaultAddress.phoneNum}}</span>
                         </li>
                         <li>
-                            <span class="infos-title">收货人：</span>
-                            <span class="infos-text">kaihua</span>
+                            <span class="infos-title">收货地址：</span>
+                            <span class="infos-text">{{defaultAddress.address}}</span>
                         </li>
                     </ul>
                     <!-- 按钮组 -->
@@ -30,17 +30,17 @@
                         <button style="margin-left:10px;" @click="newAddress=true">新建地址</button>
                     </div>
                 </div>
-                <div class="infos-bottom">
+                <!-- <div class="infos-bottom">
                     <span>默认地址</span>
-                </div>
+                </div> -->
             </div>
             <!-- 配送时间 -->
-            <div class="delivery-time">
+            <!-- <div class="delivery-time">
                 <p>配送时间</p>
                 <div class="choose-time">
                     <span  @click="changeDeliveryTime(item)" v-for="item in chooseDeliveryTime" :key="item.key" :class="{isOrange:item.isOrange}">{{item.text}}</span>
                 </div>
-            </div>
+            </div> -->
             <!-- 支付方式 -->
             <div class="payment">
                 <p>支付方式</p>
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- 发票信息 -->
-            <div class="invoice-information">
+            <!-- <div class="invoice-information">
                 <p>发票信息</p>
                 <div class="invoice-content">
                      <el-checkbox v-model="checked">我要开发票</el-checkbox>
@@ -59,7 +59,7 @@
                      <span>发票金额：电子普通发票</span>
                      <b>发票信息</b>
                 </div>
-            </div>
+            </div> -->
             <!-- 购物清单表格 -->
             <div class="goodslist-table">
                 <p>商品信息</p>
@@ -105,8 +105,8 @@
             <!-- 提交订单按钮组 -->
             <div class="commit-group clearfix">
                 <div class="group-left">
-                    <p> <span>张三</span> 18689207345</p>
-                    <p>广东省深圳市罗湖区罗湖区罗湖区</p>
+                    <p> <span>{{UserAccount}}</span>&nbsp;&nbsp;{{defaultAddress.phoneNum}}</p>
+                    <p>{{defaultAddress.address}}</p>
                 </div>
                 <div class="group-right">
                     <button @click="toSuccess">提交订单</button>
@@ -122,7 +122,7 @@
             center>
             <div class="change-address">
                 <ul>
-                    <li v-for="item in addressList" :key='item.key' :class="{iscolorOrange:item.isDefault}">
+                    <li @click="changeDefaultAddress(item)" v-for="item in addressList" :key='item.key' :class="{iscolorOrange:item.isDefault}">
                         <div class="address-item">
                             <span>收货人：</span>{{item.AddresseeName}}
                             <a :class="{isshow:item.isDefault}">默认地址</a>
@@ -150,7 +150,7 @@
             <div class="addcontent">
                 <div class="addline clearfix">
                     <span >所在地区：</span>
-                    <v-distpicker :province="selected.province" :city="selected.city" :area="selected.area" ></v-distpicker>
+                    <v-distpicker :province="selected.province" :city="selected.city" :area="selected.area" @province="onChangeProvince" @city="onChangeCity" @area='onChangeArea'></v-distpicker>
                 </div>
                 <div class="addline">
                     <span >详细地址:</span>
@@ -164,12 +164,12 @@
                         <span>手机号码:</span><input type="text" v-model="addNewAddress.phonenum">
                     </div>
                 </div>
-                <div class="addline">
+                <!-- <div class="addline">
                     <el-checkbox  id='isdefault' v-model="addNewAddress.isDefault">设为默认</el-checkbox>
-                </div>
+                </div> -->
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button @click="newAddress = false">取 消</el-button>
                 <el-button type="primary" @click="addAdress">确 定</el-button>
             </span>
         </el-dialog>
@@ -187,6 +187,11 @@ export default {
         return{
             UserAccount:'',
             checked:true,
+            defaultAddress:{
+                name:'',
+                phoneNum:'',
+                address:''
+            },
             dialogVisible:false,//修改密码弹窗
             newAddress:false,//新建地址对话框
             chooseDeliveryTime:[//选择配送时间
@@ -239,6 +244,7 @@ export default {
                     response => {
                         let data=response.data;
                         // console.log(data)
+                        this.addressList.length=0;
                         for(let i=0,len=data.AddressId.length;i<len;i++){
                             this.addressList.push({
                                 AddresseeName:data.AddresseeName[i],
@@ -249,11 +255,58 @@ export default {
                                 DetailedAddress:data.DetailedAddress[i],
                                 Postalcode:data.Postalcode[i],
                                 AddressId:data.AddressId[i],
-                                AddressType:data.AddressType[i]
+                                AddressType:data.AddressType[i],
+                                isDefault:data.AddressType[i]=='0'?true:false
                             })
                         }
+                        console.log(this.addressList)
+                        this.addressList.forEach(e=>{
+                            if(e.AddressType=='0'){
+                                // this.defaultAddress.name=e.AddresseeName;
+                                // this.defaultAddress.phoneNum=e.telephone;
+                                let address=e.Province+e.RegionCity+e.CountyDistrict+e.DetailedAddress;
+                                console.log('000')
+                                this.$set(this.defaultAddress, `name`, e.AddresseeName)
+                                this.$set(this.defaultAddress, `phoneNum`, e.Telephone)
+                                this.$set(this.defaultAddress, `address`, address)
+                            }
+                        })
                         // this.rest=10-this.addressList.length*1
                         
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
+        onChangeProvince(data){
+            this.selected.province=data.value;
+        },
+        onChangeCity(data){
+            this.selected.city=data.value;
+        },
+        onChangeArea(data){
+            this.selected.area=data.value;
+        },
+        changeDefaultAddress(item){
+            this.addressList.forEach(e=>e.isDefault=false)
+            item.isDefault=true;
+            let obj=`[["UserAccount","AddressId"],["${this.UserAccount}","${item.AddressId}"]]`
+                console.log(obj)
+                 this.axios.post("/Address/UpdateDefaultAddress", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "UpdateDefaultAddress",
+                    LoginUser:'2',
+                    DATA:encodeURI(obj),
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        this.requestAddress();
                     },
                     response => {
                         console.log("请求失败");
@@ -278,7 +331,51 @@ export default {
         addAdress(){
             console.group(this.selected)
             console.group(this.addNewAddress)
-            this.dialogVisible=false;
+            this.newAddress=false;
+             let obj = '[["UserAccount","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.UserAccount+'","'+this.addNewAddress.consignee+'","'+this.addNewAddress.phonenum+'","'+this.selected.province+'","'+this.selected.city+'","'+this.selected.area+'","'+this.addNewAddress.detailAddress+'","0"]]';
+            console.log(obj)
+            this.axios.post("/Address/AddAddressInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "AddAddressInfo",
+                    LoginUser:'2',
+                    DATA:encodeURI(obj),
+                    })
+                    .then(
+                    response => {
+                        // let data=response.data;
+                        console.log(response)
+                        if(response.data.DATA=='1'){
+                            //   this.addressList.push({
+                            //     AddresseeName:this.addNewAddress.consignee,
+                            //     Telephone:this.addNewAddress.phonenum,
+                            //     Province:this.selected.province,
+                            //     RegionCity:this.selected.city,
+                            //     CountyDistrict:this.selected.area,
+                            //     DetailedAddress:this.addNewAddress.detailAddress,
+                            //     Postalcode:'0',
+                            //     // AddressId:data.AddressId[i],
+                            //     // AddressType:data.AddressType[i]
+                            // })
+                            this.requestAddress();
+                        }
+                                    
+                            this.addNewAddress.detailAddress='';
+                            this.addNewAddress.consignee='';
+                            this.addNewAddress.phonenum='';
+                            this.addNewAddress.isDefault=false;
+                        
+                        // this.addressList.push();
+
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
         },
     },
 }
@@ -304,7 +401,8 @@ export default {
     /* background: yellowgreen; */
 }
 .infos-title{
-    width: 100%;
+    display: inline-block;
+    width: 70px;
     height: 33px;
     vertical-align: top;
     text-align: left;
@@ -318,8 +416,8 @@ export default {
     border: 1px solid rgb(221,221,221);
 }
 .infos-content p{
-    height: 50px;
-    /* line-height: 50px; */
+    height: 38px;
+    line-height: 56px;
     color: rgb(244,91,8);
     text-align: left;
 }
@@ -329,10 +427,12 @@ export default {
     
 }
 .infos-content img{
-    width: 20px;
-    height: 25px;
-    margin-top: 14px;
-}
+    /* width: 20px; */
+    /* height: 25px; */
+    /* margin-top: 14px; */
+    position: relative;
+    top: -4px;
+} 
 .infos-content ul{
     height: 76px;
 }
@@ -458,7 +558,7 @@ div.infos-bottom{
         height: 40px;
         line-height: 40px;
         font-size: 14px;
-        background: #f2f2f2;
+        background: url(../../../assets/common/shadow.png);
         border: 1px solid rgb(221,221,221);
     }
     #table-header span{
@@ -544,6 +644,7 @@ div.infos-bottom{
     .commit-group{
         width: 1120px;
         height: 90px;
+        border-top: 1px solid rgb(221,221,221);
     }
     .group-left{
         width: 415px;

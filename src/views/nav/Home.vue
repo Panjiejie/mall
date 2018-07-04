@@ -10,7 +10,7 @@
        <common-list :common="commonname3" id='c_3'></common-list>
        <common-list :common="commonname4" id='c_4'></common-list>
        <common-list :common="commonname5" id='c_5'></common-list>
-       <common-list :common="commonname6" id='c_6'></common-list>
+       <!-- <common-list :common="commonname6" id='c_6'></common-list> -->
         <!-- 右下角工具条 -->
         <div id='toolbar' :class="{isshow:isshow}" >
           <a  href="#index-header" class="toolbar-item">
@@ -44,6 +44,28 @@ import seckill from 'components/index/seckill'
 import newgoods from 'components/index/newgoods'
 import commonList from 'components/index/commonList'
 import banner from 'components/index/banner'
+
+// 奶粉
+import milkBanner from '../../assets/brandimg/milkpowder/banner.jpg'
+import milkTop from '../../assets/brandimg/milkpowder/top.jpg'
+import milkBottom from '../../assets/brandimg/milkpowder/bottom.jpg'
+// 酒类
+import wineBanner from '../../assets/brandimg/wine/banner.jpg'
+import wineTop from '../../assets/brandimg/wine/top.jpg'
+import wineBottom from '../../assets/brandimg/wine/bottom.jpg'
+// 食品
+import foodBanner from '../../assets/brandimg/foods/banner.jpg'
+import foodTop from '../../assets/brandimg/foods/top.jpg'
+import foodBottom from '../../assets/brandimg/foods/bottom.jpg'
+// 美妆
+import beautyBanner from '../../assets/brandimg/beauty/banner.jpg'
+import beautyTop from '../../assets/brandimg/beauty/top.jpg'
+import beautyBottom from '../../assets/brandimg/beauty/bottom.jpg'
+//珠宝
+import jewelryBanner from '../../assets/brandimg/jewelry/banner.jpg'
+import jewelryTop from '../../assets/brandimg/jewelry/top.jpg'
+import jewelryBottom from '../../assets/brandimg/jewelry/bottom.jpg'
+
 export default {
     name:"index",
     components:{
@@ -58,12 +80,12 @@ export default {
     mounted(){},
     data(){
         return{
-            commonname1:{brand:'奶粉',list:['1段','2段','3段','4段']},
-            commonname2:{brand:'酒类',list:['白酒','红酒','黄酒','保健酒','啤酒']},
-            commonname3:{brand:'食品',list:['休闲零食','坚果炒货','肉干熟食','蜜饯果干','茶叶','饼干糕点','进口食品','有机食品','保健食品','粮油速食']},
-            commonname4:{brand:'美妆',list:['面部护肤','身体护理','美容护肤','口腔护理','彩妆香水','男士护理','洗发护发']},
-            commonname5:{brand:'珠宝',list:['手链','戒指','吊坠','情侣对','项链','套链','手镯','脚镯']},
-            commonname6:{brand:'其它',list:['其它']},
+            commonname1:{brand:'奶粉',list:['1段','2段','3段','4段'],imgGroup:{banner:milkBanner,top:milkTop,bottom:milkBottom}},
+            commonname2:{brand:'酒类',imgGroup:{banner:wineBanner,top:wineTop,bottom:wineBottom},list:['白酒','红酒','黄酒','保健酒','啤酒']},
+            commonname3:{brand:'食品',imgGroup:{banner:foodBanner,top:foodTop,bottom:foodBottom},list:['休闲零食','坚果炒货','肉干熟食','蜜饯果干','茶叶','饼干糕点','进口食品','有机食品','保健食品','粮油速食']},
+            commonname4:{brand:'美妆',imgGroup:{banner:beautyBanner,top:beautyTop,bottom:beautyBottom},list:['面部护肤','身体护理','美容护肤','口腔护理','彩妆香水','男士护理','洗发护发']},
+            commonname5:{brand:'珠宝',imgGroup:{banner:jewelryBanner,top:jewelryTop,bottom:jewelryBottom},list:['手链','戒指','吊坠','情侣对','项链','套链','手镯','脚镯']},
+            // commonname6:{brand:'其它',imgGroup:{banner:milkBanner,top:milkTop,bottom:milkBottom},list:['其它']},
             commonList:[
                 {}
             ],
@@ -74,7 +96,7 @@ export default {
             {text:'食品',jump:'#c_3'},
             {text:'美妆',jump:'#c_4'},
             {text:'珠宝',jump:'#c_5'},
-            {text:'其它',jump:'#c_6'},
+            // {text:'其它',jump:'#c_6'},
         ]
         }
     },
