@@ -59,7 +59,7 @@ export default {
         toLogistics(){
           alert('这是物流信息')
       },
-       init(){
+     init(){
             this.UserAccount=localStorage.getItem('UserAccount');
               this.axios.post("/Order/MallOrderInfoTable", {
                     SOURCE: "22",

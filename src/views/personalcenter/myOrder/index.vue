@@ -61,12 +61,59 @@ export default {
   },
   data() {
     return {
-      activeName: "first"
+      activeName: "first",
+      UserAccount:'',
+      orderList:[]
     };
   },
+  created(){
+    this.init();
+  },
   methods: {
+    init(){
+      this.requestAllOrder();
+    },
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    requestAllOrder(){
+      this.UserAccount=localStorage.getItem('UserAccount');
+              this.axios.post("/Order/MallOrderInfoTable", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "MallOrderInfoTable",
+                    LoginUser:'2',
+                    Status:'7',
+                    UserAccount:this.UserAccount,
+                    })
+                    .then(
+                    response => {
+                        // if(response.data.RETURNCODE=='200'){
+                        //   let data=response.data.DATA[0];
+                        //   this.orderList.length=0;
+                        //   for(let i=0,len=data.DealNumber.length;i<len;i++){
+                        //      this.orderList.push({
+                        //       DealNumber:data.DealNumber[i],
+                        //       CommodityCode:data.CommodityCode[i],
+                        //       DealMoney:data.DealMoney[i],
+                        //       UserAccount:data.UserAccount[i],
+                        //       AddresseeName:data.AddresseeName[i],
+                        //       Telephone:data.Telephone[i],
+                        //       DetailedAddress:data.DetailedAddress[i],
+                        //       ConfirmTime:ConfirmTime[i]
+                        //     })
+                        //   }
+                        //   console.log(data)
+                        // }
+
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
     }
   }
 };

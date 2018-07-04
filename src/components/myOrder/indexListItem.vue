@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="goods-price">
                                     <div class="money blue" @click="toDetail">查看详情</div>
-                                    <div class="payway blue" @click="toafterSale">申请售后</div>
+                                    <!-- <div class="payway blue" @click="toafterSale">申请售后</div> -->
                                 </div>
                             </div>
                         </div>             
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
         imgUrl:imgUrl,
-        isshowLogistics:true
+        isshowLogistics:false
     };
   },
   methods: {
