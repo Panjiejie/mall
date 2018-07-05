@@ -75,16 +75,16 @@
                     <!-- 表格主体 -->
                     <div class="table-line clearfix" v-for="item in tableList" :key="item.key">
                         <div class="goodsinfo clearfix">
-                            <img :src="item.imgUrl" alt="">
+                            <img :src="item.src" alt="">
                             <div class="goodsinfo-right">
                                 <span class="infotitle" >{{item.title}}</span><br>
-                                <span>颜色：{{item.color}} 尺寸：{{item.size}}</span>
+                                <span>{{item.params}}</span>
                             </div>
                         </div>
                         <div class="price">￥ {{item.price}}</div>
                         <div class="amount">{{item.amount}}</div>
                         <div class="subtotal">￥ {{item.subtotal}}</div>
-                        <div class="realpay">￥ {{item.net}}</div>
+                        <div class="realpay">￥ {{item.subtotal}}</div>
                     </div>
                 </div>
             </div>
@@ -94,11 +94,11 @@
                 <!-- <orderList></orderList> -->
                 <div class="orderList">
                     <ul class="clearfix">
-                        <li><span>商品总数</span><span>4</span></li>
-                        <li><span>商品总价</span><span class="red">￥1245</span></li>
-                        <li><span>活动优惠</span><span class="red">0</span></li>
-                        <li><span>运费</span><span class="red">0</span></li>
-                        <li><span>应付总额</span><span class="red">￥1245</span></li>
+                        <li><span>商品总数</span><span>{{goodsAmount}}</span></li>
+                        <!-- <li><span>商品总价</span><span class="red">￥1245</span></li> -->
+                        <!-- <li><span>活动优惠</span><span class="red">0</span></li> -->
+                        <!-- <li><span>运费</span><span class="red">0</span></li> -->
+                        <li><span>应付总额</span><span class="red">￥{{money}}</span></li>
                     </ul>
                  </div>
             </div>
@@ -187,10 +187,17 @@ export default {
         return{
             UserAccount:'',
             checked:true,
+            postInfos:[],
+            goodsAmount:'',
+            money:'',
             defaultAddress:{
                 name:'',
                 phoneNum:'',
-                address:''
+                address:'',
+                Province:'',
+                RegionCity:'',
+                CountyDistrict:'',
+                DetailedAddress:''
             },
             dialogVisible:false,//修改密码弹窗
             newAddress:false,//新建地址对话框
@@ -200,9 +207,7 @@ export default {
                 {text:'不限送货时间：周一至周日',isOrange:false}
             ],
             tableList:[
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
+                // {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
             ],
             addressList:[
                 // {name:'张三',tell:'18732492348',address:'多喝一点酒，多吹一点风，能不能解放',isDefault:true},
@@ -227,10 +232,30 @@ export default {
     },
     methods:{
         init(){
+            this.UserAccount=localStorage.getItem('UserAccount');
+            this.postInfos=JSON.parse(localStorage.getItem('cartList'));
             this.requestAddress();
+            this.tableInit();
+        },
+        tableInit(){
+            // {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
+            for(let i=0;i<this.postInfos.length;i++){
+                this.tableList.push({
+                    src:this.postInfos[i].src,
+                    title:this.postInfos[i].title,
+                    params:this.postInfos[i].params,
+                    price:this.postInfos[i].price,
+                    subtotal:this.postInfos[i].subtotal,
+                    amount:this.postInfos[i].amount,
+                    CommodityNumber:this.postInfos[i].CommodityNumber
+                })
+                // this.money=this.money+this.postInfos[i].subtotal*1;
+            }
+            this.goodsAmount=this.tableList.length;
+            this.tableList.forEach(e=>{this.money+=e.subtotal;})
+            
         },
         requestAddress(){
-             this.UserAccount=localStorage.getItem('UserAccount');
              this.axios.post("/Address/SelectAddressInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
@@ -259,16 +284,20 @@ export default {
                                 isDefault:data.AddressType[i]=='0'?true:false
                             })
                         }
-                        console.log(this.addressList)
+                        // console.log(this.addressList)
                         this.addressList.forEach(e=>{
                             if(e.AddressType=='0'){
                                 // this.defaultAddress.name=e.AddresseeName;
                                 // this.defaultAddress.phoneNum=e.telephone;
                                 let address=e.Province+e.RegionCity+e.CountyDistrict+e.DetailedAddress;
-                                console.log('000')
+                                // console.log('000')
                                 this.$set(this.defaultAddress, `name`, e.AddresseeName)
                                 this.$set(this.defaultAddress, `phoneNum`, e.Telephone)
                                 this.$set(this.defaultAddress, `address`, address)
+                                this.$set(this.defaultAddress, `Province`, e.Province)
+                                this.$set(this.defaultAddress, `RegionCity`, e.RegionCity)
+                                this.$set(this.defaultAddress, `CountyDistrict`, e.CountyDistrict)
+                                this.$set(this.defaultAddress, `DetailedAddress`, e.DetailedAddress)
                             }
                         })
                         // this.rest=10-this.addressList.length*1
@@ -326,7 +355,45 @@ export default {
             val.isOrange=true;
         },
         toSuccess(){
-            this.$router.push('submitOrderSuccess')
+            //提交订单
+            
+            //    let obj=`[["UserAccount","AddressId"],["${this.UserAccount}","${item.AddressId}"]]`
+            let arr=[];
+            this.postInfos.forEach(e=>{
+                arr.push(`${e.title}`)
+            })
+            
+            let str='"CommodityName":"'+arr+'"';
+            console.log(str)
+               this.axios.post("/Cart/Settlement", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "Settlement",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    CommodityName:str,
+                    AddresseeName:this.defaultAddress.name,
+                    Telephone:this.defaultAddress.phoneNum,
+                    Province:this.defaultAddress.Province,
+                    RegionCity:this.defaultAddress.RegionCity,
+                    CountyDistrict:this.defaultAddress.CountyDistrict,
+                    DetailedAddress:this.defaultAddress.DetailedAddress,
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        if(response.data.RETURNCODE=='200'){
+                            this.$router.push('submitOrderSuccess')
+                        }
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+            
         },
         addAdress(){
             console.group(this.selected)

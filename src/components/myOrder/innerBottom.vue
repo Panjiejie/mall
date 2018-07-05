@@ -1,6 +1,6 @@
 <template>
     <div id="content">
-        <div class="step">
+        <!-- <div class="step">
             <el-steps :active="1" finish-status="success" align-center>
                 <el-step title="提交订单" description="22222222444534"></el-step>
                 <el-step title="等待出库"></el-step>
@@ -17,9 +17,9 @@
               <span class="amount">数量</span>
               <span class="subtotal">小计</span>
               <span class="realpay">实付</span>
-          </div>
+          </div>-->
           <!-- 表格主体 -->
-          <div class="table-line clearfix" v-for="item in tableList" :key="item.key">
+          <!-- <div class="table-line clearfix" v-for="item in tableList" :key="item.key">
               <div class="goodsinfo clearfix">
                   <img :src="item.imgUrl" alt="">
                   <div class="goodsinfo-right">
@@ -32,7 +32,7 @@
               <div class="subtotal">￥ {{item.subtotal}}</div>
               <div class="realpay">￥ {{item.net}}</div>
           </div>
-        </div>
+        </div> -->
         <div id="receiveInfos">
             <consigneeInfo></consigneeInfo>
             <!-- <invoiceinfos></invoiceinfos> -->
@@ -49,6 +49,7 @@ import payment from './payment'
 import orderList from './orderList'
 export default {
     name:'innerBottom',
+    props:['tableList'],
     components:{
         consigneeInfo,
         invoiceinfos,
@@ -58,26 +59,23 @@ export default {
     data(){
         return{
             src:imgUrl,
-            tableList:[
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
-            ]
+           
         }
     }
 }
 </script>
 <style scoped>
-    .display-none{
-        display: none;
-    }
-    #content{
+ #content{
         width: 990px;
         min-height:600px;
         background: #fff;
         padding: 0 30px;
         border: 1px solid rgb(221,221,221);
     }
+    .display-none{
+        display: none;
+    }
+   
     .step{
         width: 930px;
         height: 108px;

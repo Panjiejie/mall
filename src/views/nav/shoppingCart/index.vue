@@ -14,7 +14,7 @@
             </div>
             <!-- table-body -->
             <div class="c-body">
-                <div class="c-body-line" v-for='item in cartList' :key='item.key'>
+                <div class="c-body-line" v-for='(item,index) in cartList' :key='item.key'>
                     <div class="checkbox">
                         <el-checkbox v-model="item.ischecked"></el-checkbox>
                     </div>
@@ -34,8 +34,8 @@
                         ￥{{item.subtotal}}
                     </div>
                     <div class="operation">
-                        <span @click="removeToMyfavorite(item)">移入收藏夹</span>
-                        <span @click="deleteCartGoodsItem(item)">删除</span>
+                        <span @click="removeToMyfavorite(item,index)">移入收藏夹</span>
+                        <span @click="deleteCartGoodsItem(item,index)">删除</span>
                     </div>
                 </div>
             </div>
@@ -45,8 +45,8 @@
                     <el-checkbox v-model="checked">已选({{havechoose}})</el-checkbox>
                 </div>
                 <div class="footer-center">
-                    <span class='f-operation'>删除选中商品</span>
-                    <span class='f-operation'>移入收藏夹</span>
+                    <span class='f-operation' @click="deleteCheckedGoods">删除选中商品</span>
+                    <!-- <span class='f-operation'>移入收藏夹</span> -->
                     <span class="gray">共&nbsp;{{totalGoods}}件商品 已选择&nbsp;{{havechoose}}件 &nbsp;商品合计：￥&nbsp;{{totalPrice}} &nbsp; 应付总额：<span class="red"> ￥{{realPay}}</span></span>
                 </div>
                 <div class="f-btn" @click="toConfigureRecipient">
@@ -92,6 +92,7 @@ export default {
   data() {
     return {
       UserAccount:'',
+      postInfos:[],
       checked: false, //全选checkbox
       // havechoose: 0, //已选商品数量
       // totalGoods: 0, //购物车商品总数
@@ -107,24 +108,6 @@ export default {
           //   subtitle: "小毛驴",
           //   price: "12345"
           // },
-          // {
-          //   src: imgUrl,
-          //   name: "多热烈的白羊",
-          //   subtitle: "小毛驴",
-          //   price: "12345"
-          // },
-          // {
-          //   src: imgUrl,
-          //   name: "多热烈的白羊",
-          //   subtitle: "小毛驴",
-          //   price: "12345"
-          // },
-          // {
-          //   src: imgUrl,
-          //   name: "多热烈的白羊",
-          //   subtitle: "小毛驴",
-          //   price: "12345"
-          // }
         ]
       ],
       value3: 0,
@@ -201,13 +184,36 @@ export default {
     },
     realPay:{
       get(){
-        return this.totalPrice - this.discount > 0 ? this.totalPrice - this.discount : 0
+        // return this.totalPrice - this.discount > 0 ? this.totalPrice - this.discount : 0
+        return this.totalPrice
       }
     }
   },
   methods: {
     toConfigureRecipient(){
-      this.$router.push('../nav/configureRecipient')
+      if(this.checked){//全选
+        this.postInfos=this.cartList;
+        console.log(this.postInfos)
+        localStorage.setItem('cartList',JSON.stringify(this.postInfos));
+        this.$router.push('../nav/configureRecipient')
+      }else{//非全选
+        this.cartList.forEach(e=>{//筛选出选择的商品
+          if(e.ischecked){
+            this.postInfos.push(e);
+          }
+          })
+        localStorage.setItem('cartList',JSON.stringify(this.postInfos))
+        console.log(this.postInfos)
+        if(this.postInfos.length>0){//所选结算商品不为0 跳转结算界面
+          this.$router.push('../nav/configureRecipient')
+        }else{
+          this.postInfos.length=0;
+          this.$message({
+            message:'请先选择要结算的商品！',
+            type:'warn'
+          })
+        }
+      } 
     },
     amountChange(item){
       item.subtotal=item.amount*item.price
@@ -242,7 +248,8 @@ export default {
                                         amount:data.DealSum[i],
                                         ischecked: false,
                                         subtotal:data.DealSum[i]*data.SupplyMoney[i],
-                                        params:data.BrandName[i]
+                                        params:data.BrandName[i],
+                                        CommodityNumber:data.CommodityNumber[i]
                                     })
                         } 
                     },
@@ -252,7 +259,7 @@ export default {
                     }
                     );
     },
-    deleteCartGoodsItem(item){
+    deleteCartGoodsItem(item,index){
               // 删除单个商品
               let str='"CommodityName":["'+item.title+'"]';
               this.axios.post("/Cart/DelCommodityInfo", {
@@ -268,6 +275,7 @@ export default {
                     .then(
                     response => {
                         console.log(response)
+                        this.cartList.splice(index,1)
                         
                     },
                     response => {
@@ -276,7 +284,38 @@ export default {
                     }
                     );
     },
-    removeToMyfavorite(item){
+    deleteCheckedGoods(){//删除选中商品
+      let arr=[];
+      this.cartList.forEach(e=>{
+        if(e.ischecked){
+          arr.push(`${e.title}`)
+        }
+        })
+        console.log(arr)
+        let str='"CommodityName":"'+arr+'"';
+              this.axios.post("/Cart/DelCommodityInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "DelCommodityInfo",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    CommodityName:str
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        // this.cartList.splice(index,1)
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+    },
+    removeToMyfavorite(item,index){
               // let str='"CommodityName":["'+item.title+'"]';
               this.axios.post("/Cart/SetFavoriteCommodity", {
                     SOURCE: "22",
@@ -291,6 +330,7 @@ export default {
                     .then(
                     response => {
                         console.log(response)
+                        this.cartList.splice(index,1)
                         
                     },
                     response => {
@@ -442,6 +482,7 @@ export default {
   color: black;
   display: inline-block;
   margin-right: 70px;
+  cursor: pointer;
 }
 .red {
   color: #ff2040;

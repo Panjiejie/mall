@@ -107,13 +107,17 @@ export default {
         //  {text:'数据服务',isChoose:false,pathTo:''}
        ],
        shoppingCartList:[
-         {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
-         {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
-         {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
+        //  {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
+        //  {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
+        //  {Filepath:imgurl,title:'[定]Yvess 原汁机 柠檬橙子榨汁机1',num:'1',price:'255'},
        ]
     } 
   }, 
+  created(){
+    this.requestCartInfo();
+  },
   computed:{
+
     totalsMoney(){//购物车总价
       this.shoppingCartList.forEach(item=>{
         this.totalCartMoney+=item.price*item.num;
@@ -173,7 +177,46 @@ export default {
                     console.log("请求失败");
                 }
                 );
-    }
+    },
+    requestCartInfo(){
+      this.UserAccount=localStorage.getItem('UserAccount');
+             this.axios.post("/Cart/SelectCommodityInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "SelectCommodityInfo",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount
+                    })
+                    .then(
+                    response => {
+                        // console.log(response)
+                        let data=response.data;
+                        this.shoppingCartList.length=0;
+                        for(let i=0,len=data.DealSum.length;i<len;i++){
+                            let FilePath=data.FilePath[i];
+                            // console.log(FilePath)
+                                FilePath=FilePath.split(',')[0]+FilePath.split(',')[1];
+                                // console.log(FilePath)
+                            this.shoppingCartList.push({
+                                        Filepath:FilePath,
+                                        title:data.CommodityName[i],
+                                        price:data.SupplyMoney[i],
+                                        num:data.DealSum[i],
+                                        ischecked: false,
+                                        subtotal:data.DealSum[i]*data.SupplyMoney[i],
+                                        params:data.BrandName[i],
+                                        CommodityNumber:data.CommodityNumber[i]
+                                    })
+                        } 
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+    },
   },  
   mounted(){  
     

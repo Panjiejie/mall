@@ -26,8 +26,8 @@
                         <div class="payway">货到付款</div>
                     </div>
                     <div class="goods-price">
-                        <div class="money blue" @click="toDetail">查看详情</div>
-                        <div class="payway blue" @click="toafterSale">申请售后</div>
+                        <div class="money blue" @click="toDetail(i)">查看详情</div>
+                        <!-- <div class="payway blue" @click="toafterSale">申请售后</div> -->
                     </div>
                 </div>         
             </div>     
@@ -56,7 +56,8 @@ export default {
         this.init();
     },
     methods:{
-        toDetail(){
+        toDetail(item){
+            localStorage.setItem('waitingReceived',JSON.stringify(item))
             this.$router.push('waitingReceiveDetail')
         },
       toafterSale(){

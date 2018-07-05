@@ -102,7 +102,7 @@
                         <!-- 按钮组 -->
                         <div class="btngroups">
                             <button class="addcart" @click="addToCart"><img src="../../assets/common/cart.png" alt=""> 加入购物车</button>
-                            <button class="buying">立即购买</button>
+                            <!-- <button class="buying">立即购买</button> -->
                         </div>
                     </div>
                 </div>

@@ -31,14 +31,14 @@
                     </template>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="售后" name="fifth">
+            <!-- <el-tab-pane label="售后" name="fifth">
                 <afterSale></afterSale>
                 <div class="page">
                     <template>
                          <Page :total="100" show-elevator></Page>
                     </template>
                 </div>
-            </el-tab-pane>
+            </el-tab-pane> -->
         </el-tabs>
     </div>
 </template>

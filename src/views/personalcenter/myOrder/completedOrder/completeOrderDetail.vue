@@ -9,31 +9,31 @@
                 </div>
                 <div class="infoscontent">
                     <div class="info">
-                        <span class="title">订单编号：</span>622326482494
+                        <span class="title">订单编号：</span>{{this.postInfos.DealNumber}}
                     </div>
                     <div class="info">
-                        <span class="title">订单编号：</span>622326482494
+                        <span class="title">下单时间：</span>{{this.postInfos.ConfirmTime}}&nbsp; {{this.postInfos.time2}}
                     </div>
                 </div>
-                <button class="toAfterSale"  @click="toAfterSale" >申请售后</button>
+                <!-- <button class="toAfterSale"  @click="toAfterSale" >申请售后</button> -->
             </div>
         </div>
         <div id="receive-body">
             <!-- 步骤条 -->
             <div class="steps">
                 <el-steps :active="5" align-center>
-                    <el-step title="提交订单" description="这是一段很长很长很长的描述性文字"></el-step>
-                    <el-step title="商品出库" description="这是一段很长很长很长的描述性文字"></el-step>
-                    <el-step title="商品签收" description="这是一段很长很长很长的描述性文字"></el-step>
-                    <el-step title="等待付款" description="这是一段很长很长很长的描述性文字"></el-step>
-                    <el-step title="交易完成" description="这是一段很长很长很长的描述性文字"></el-step>
+                    <el-step title="提交订单" :description="beginTime"></el-step>
+                    <el-step title="商品出库" :description="this.orderStatueTime.DeliveryTime"></el-step>
+                    <el-step title="商品签收" :description="this.orderStatueTime.ReceiptTime"></el-step>
+                    <el-step title="等待付款" :description="this.orderStatueTime.ConfirmTime"></el-step>
+                    <el-step title="交易完成" :description="this.orderStatueTime.TradeTime"></el-step>
                 </el-steps>
             </div>
           <!-- 退款进度 -->
-            <div class="refund">
+            <!-- <div class="refund">
                 <span class="refund-time">2014-02-03 12:09:03</span>&nbsp;&nbsp;您的服务单财务已退款，请您注意查收
                 <button class="follow">进度跟踪</button>
-            </div>
+            </div> -->
         <!-- 商品信息 -->
         <h3 class="table_title">商品信息</h3>
         <div id="table">
@@ -64,9 +64,9 @@
         <div id="consigneeInfo-content">
             <p>收货信息</p>
             <div id="consigneeInfo">
-                <p><span>收货人：</span>大中国</p>
-                <p><span>联系方式：</span>18689207260</p>
-                <p><span>收货地址：</span>我们都有一个家名字叫中国，兄弟姐妹都很多</p>
+                <p><span>收货人：</span>{{elseInfo.AddresseeName}}</p>
+                <p><span>联系方式：</span>{{elseInfo.Telephone}}</p>
+                <p><span>收货地址：</span>{{elseInfo.DetailedAddress}}</p>
             </div>
         </div>
         <!-- 支付方式及送货时间 -->
@@ -78,7 +78,7 @@
         </div>
     </div>
         <!-- 发票信息 -->
-     <div id="invoice-content">
+     <!-- <div id="invoice-content">
         <p>发票信息</p>
         <div id="invoiceInfo">
             <p><span>发票类型：</span>大中国</p>
@@ -86,12 +86,12 @@
             <p><span>发票抬头：</span>我们都有一个家名字叫中国，兄弟姐妹都很多</p>
             <div class="btngroups">
                 <button class="edit-button" @click="dialogVisible=true">修改信息</button>
-                <button class="edit-button" >下载发票</button>
+                <button class="edit-button" >下载发票</button>-->
                 <!-- <button class="edit-button" @click="dialogVisible=true">修改信息</button> -->
-            </div>
-        </div>
+            <!-- </div> -->
+        <!-- </div> -->
         <!-- 发票 -->
-        <el-dialog
+        <!--<el-dialog
         title="发票信息"
         :visible.sync="dialogVisible"
         width="760px"
@@ -102,9 +102,9 @@
             <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
         </span>
         </el-dialog>
-    </div>
+    </div> -->
         <!-- 订单信息 -->
-    <div class="order_info">
+    <!-- <div class="order_info">
         <h3>订单信息</h3>
         <div class='line_content'>
             <div class="line">
@@ -114,16 +114,16 @@
                 <span>下单时间：</span>6732848394
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- orderlist -->
      <div class="orderList">
             <ul class="clearfix">
-                <li><span>商品总数</span><span>4</span></li>
-                <li><span>商品总价</span><span class="red">￥1245</span></li>
+                <li><span>商品总数</span><span>{{orderList.amount}}</span></li>
+                <!-- <li><span>商品总价</span><span class="red">￥1245</span></li>
                 <li><span>活动优惠</span><span class="red">0</span></li>
                 <li><span>优惠券抵扣</span><span class="red">0</span></li>
-                <li><span>运费</span><span class="red">0</span></li>
-                <li><span>应付总额</span><span class="red">￥1245</span></li>
+                <li><span>运费</span><span class="red">0</span></li> -->
+                <li><span>应付总额</span><span class="red">￥{{orderList.MoneySum}}</span></li>
             </ul>
         </div>
     </div>
@@ -140,14 +140,96 @@ export default {
     data(){
         return{
             dialogVisible:false,
+            postInfos:'',
+            UserAccount:'',
+             orderStatueTime:{
+                beginTime:'',
+                DeliveryTime:'',
+                ReceiptTime:'',
+                ConfirmTime:'',
+                TradeTime:''
+            },
+            elseInfo:{
+                AddresseeName:'',
+                Telephone:'',
+                DetailedAddress:'',
+                OddNumbers:'',
+                CarrierId:'',
+            },
+            orderList:{
+                MoneySum:'',
+                amount:''
+            },
             tableList:[
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
-                {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
+                // {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
             ]
         }
     },
+    created(){
+        this.init();
+    },
     methods:{
+        init(){
+            this.postInfos=JSON.parse(localStorage.getItem('completedOrder'));
+            this.beginTime=`${this.postInfos.ConfirmTime} ${this.postInfos.time2}`;
+            this.requestInfos();
+        },
+        requestInfos(){
+            this.UserAccount=localStorage.getItem('UserAccount');
+              this.axios.post("/Order/OrderInfo", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "OrderInfo",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    DealNumber:this.postInfos.DealNumber,
+                    })
+                    .then(
+                    response => {
+                        let data=response.data.DATA[0];
+                        let elseInfo=response.data.DATA[1];
+                        
+                        //  {imgUrl:imgUrl,title:'女式超柔软拉毛运动汗衫',color:'黑色',size:'M',price:'249',amount:'1',subtotal:'249',net:'249'},
+                        for(let i=0;i<data.SupplyMoney.length;i++){
+                            let FilePath=data.FilePath[i].split(',');
+                            FilePath=FilePath[0]+FilePath[1]
+                            this.tableList.push({
+                                imgUrl:FilePath,
+                                title:data.CommodityName[i],
+                                subtitle:data.BrandName[i],
+                                price:data.SupplyMoney[i],
+                                amount:data.CommodityNumber[i],
+                                subtotal:data.DealMoney[i],
+                                net:data.DealMoney[i]
+                            })
+                        }
+                        
+                        this.elseInfo.AddresseeName=elseInfo.AddresseeName[0];
+                        this.elseInfo.Telephone=elseInfo.Telephone[0];
+                        this.elseInfo.DetailedAddress=elseInfo.DetailedAddress[0];
+                        this.elseInfo.OddNumbers=elseInfo.OddNumbers[0];
+                        this.elseInfo.CarrierId=elseInfo.CarrierId[0];
+                        // orderList
+                        this.orderList.MoneySum=elseInfo.MoneySum[0];
+                        this.orderList.amount=data.SupplyMoney.length;
+                        this.orderStatus=elseInfo.DealStatus[0]
+                        this.orderStatueTime.DeliveryTime=`${elseInfo.DeliveryTime[0].split('+')[0]} ${elseInfo.DeliveryTime[0].split('+')[1]}`
+                        this.orderStatueTime.ReceiptTime=`${elseInfo.ReceiptTime[0].split('+')[0]} ${elseInfo.ReceiptTime[0].split('+')[1]}`
+                        this.orderStatueTime.ConfirmTime=`${elseInfo.ConfirmTime[0].split('+')[0]} ${elseInfo.ConfirmTime[0].split('+')[1]}`
+                        this.orderStatueTime.TradeTime=`${elseInfo.TradeTime[0].split('+')[0]} ${elseInfo.TradeTime[0].split('+')[1]}`
+                        
+                        // console.log(this.orderList.MoneySum)
+                        
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+        },
         toAfterSale(){
             this.$router.push('applyForAfterSales')
         }
