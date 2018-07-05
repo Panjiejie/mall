@@ -3,13 +3,13 @@
         <div class="reset-line clearfix">
             <span class="tips">新的密码:</span>
             <div class="reset-line-right">
-                <input type="password" placeholder="设置6至20位登录密码" >
+                <input type="password" v-model='passwordOne' placeholder="设置6至20位登录密码" >
             </div>
         </div>
         <div class="reset-line clearfix">
             <span class="tips">重复密码:</span>
             <div class="reset-line-right">
-                <input type="text" placeholder="请再次输入登录密码">
+                <input type="password" v-model="passwordTwo" placeholder="请再次输入登录密码">
             </div>
         </div>
         <div class="reset-line clear">
@@ -26,12 +26,52 @@ export default {
     name:'resetPasswordThird',
     data(){
         return{
+            passwordOne:'',
+            passwordTwo:'',
+            UserAccount:''
         }
+    },
+    created(){
+        this.UserAccount=localStorage.getItem('resetUserName')
     },
     methods:{
         toLast(){
             // bus.$emit('changeSteps', 4);
-            this.$router.push('resetPasswordLast');
+            if(this.passwordOne!='' && this.passwordTwo!='' && this.passwordTwo==this.passwordOne){
+                // this.$router.push('resetPasswordLast');
+                this.ModifyPasswd();
+            }else{
+                this.$message({
+                    message:'两次输入不一致，请重新输入！',
+                    type:'success'
+                })
+                this.passwordOne='';
+                this.passwordTwo='';
+            }
+            
+        },
+        ModifyPasswd(){
+            this.axios.post("/UserPassword/ModifyPasswd", {
+            SOURCE: "22",
+            CREDENTIALS: "0",
+            TERMINAL: "0",
+            INDEX: "20170713170325",
+            METHOD: "ModifyPasswd",
+            LoginUser:'2',
+            UserAccount:this.UserAccount,
+            NewPasswd:this.passwordOne
+            })
+            .then(
+            response => {
+            //     if(response.data.DATA[0].Code=='1'){
+            //         this.$router.push('resetPasswordThird');
+            //     }
+            },
+            response => {
+                console.log("请求失败");
+                console.log(response);
+            }
+            );
         }
     },
     mounted(){

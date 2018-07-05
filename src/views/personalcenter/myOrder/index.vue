@@ -43,6 +43,7 @@
     </div>
 </template>
 <script>
+import {bus} from '../../../bus.js'
 import waitingSend from "../myOrder/waitingSend/index";
 import waitingReceived from "../myOrder/waitingReceived/index";
 import completedOrder from "../myOrder/completedOrder/index";
@@ -66,6 +67,7 @@ export default {
   },
   created(){
     this.init();
+    // bus.$emit('changeItem',7 );
   },
   methods: {
     init(){

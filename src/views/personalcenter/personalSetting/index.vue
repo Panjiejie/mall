@@ -120,7 +120,7 @@ export default {
                         type: 'success',
                         message: '修改成功!'
                         });
-                         setTimeout(()=>{this.updataPhotoDialog=false;},1000)
+                         setTimeout(()=>{this.updataPhotoDialog=false;},500)
                 },
                 response => {
                     console.log("请求失败");

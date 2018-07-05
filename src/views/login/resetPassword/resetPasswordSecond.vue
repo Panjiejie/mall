@@ -3,20 +3,20 @@
         <div class="reset-line clearfix">
             <span class="tips">用户名称:</span>
             <div class="reset-line-right">
-                <input type="text" value='zhangsan' disabled>
+                <input type="text" v-model='UserAccount' disabled>
             </div>
         </div>
         <div class="reset-line clearfix">
             <span class="tips">手机号码:</span>
             <div class="reset-line-right">
-                <input type="text" value="1366666666" disabled>
+                <input type="text" v-model='phoneNum' disabled>
             </div>
         </div>
         <div class="reset-line clearfix">
             <span class="tips">验证码</span>
             <div class="reset-line-right">
-                <input type="text" value="" placeholder="短信验证码"  >
-                <a class="btn">发送验证码</a>
+                <input type="text" v-model='verificationCode' placeholder="短信验证码"  >
+                <a class="btn" @click="sendVerificationCode">发送验证码</a>
             </div>
         </div>
         <div class="reset-line clear">
@@ -33,12 +33,90 @@ export default {
     name:'resetPasswordSecond',
     data(){
         return{
+            UserAccount:'',
+            phoneNum:'',
+            verificationCode:''
         }
     },
+    created(){
+        this.init();
+    },
     methods:{
+        init(){
+            this.UserAccount=localStorage.getItem('resetUserName');
+            this.requestPhoneNum();
+        },
+        requestPhoneNum(){
+            this.axios.post("/UserPassword/MallUserMobile", {
+            SOURCE: "22",
+            CREDENTIALS: "0",
+            TERMINAL: "0",
+            INDEX: "20170713170325",
+            METHOD: "MallUserMobile",
+            UserAccount:this.UserAccount,
+            })
+            .then(
+            response => {
+                if(response.data.DATA[0]=='1'){
+                    this.phoneNum=response.data.UserMobile;
+                }
+            },
+            response => {
+                console.log("请求失败");
+                console.log(response);
+            }
+            );
+        },
+        sendVerificationCode(){
+            this.axios.post("/UserInfo/ProvingAccout", {
+            SOURCE: "22",
+            CREDENTIALS: "0",
+            TERMINAL: "0",
+            INDEX: "20170713170325",
+            METHOD: "AccountProving",
+            UserAccount:this.UserAccount,
+            UserMobile:this.phoneNum
+            })
+            .then(
+            response => {
+                if(response.data.DATA[0].result=='true'){
+                    this.$message({
+                        message:'验证码已发送，请注意查收！',
+                        type:'success'
+                    })
+                }
+            },
+            response => {
+                console.log("请求失败");
+                console.log(response);
+            }
+            );
+        },
+        validateVerification(){
+             this.axios.post("/Code/VerifyAuthCode", {
+            SOURCE: "22",
+            CREDENTIALS: "0",
+            TERMINAL: "0",
+            INDEX: "20170713170325",
+            METHOD: "VerifyAuthCode",
+            VerificationCode:this.verificationCode,
+            UserMobile:this.phoneNum
+            })
+            .then(
+            response => {
+                if(response.data.DATA[0].Code=='1'){
+                    this.$router.push('resetPasswordThird');
+                }
+            },
+            response => {
+                console.log("请求失败");
+                console.log(response);
+            }
+            );
+        },
         toThird(){
-            // bus.$emit('changeSteps', 3);
-            this.$router.push('resetPasswordThird');
+            this.validateVerification();
+            // this.$router.push('resetPasswordThird');
         }
     },
     mounted(){

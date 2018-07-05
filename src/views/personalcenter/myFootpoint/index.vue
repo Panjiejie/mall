@@ -37,6 +37,7 @@
     </div>
 </template>
 <script>
+import {bus} from '../../../bus.js'
 import imgurl from '../../../assets/common/blockchain.png'
 export default {
     name:'personalSetting',
@@ -82,6 +83,7 @@ export default {
     },
     mounted(){
         this.init();
+        localStorage.setItem('changeItem',5)
     },
     methods:{
         init(){

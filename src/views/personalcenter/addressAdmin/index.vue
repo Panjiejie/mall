@@ -196,7 +196,8 @@ export default {
         addAdress(){
             console.log(this.selected)
             console.log(this.addNewAddress)
-             let obj = '[["UserAccount","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.useraccount+'","'+this.addNewAddress.consignee+'","'+this.addNewAddress.phonenum+'","'+this.selected.province+'","'+this.selected.city+'","'+this.selected.area+'","'+this.addNewAddress.detailAddress+'","0"]]';
+            if(this.rest>0){
+                 let obj = '[["UserAccount","AddresseeName","Telephone","Province","RegionCity","CountyDistrict","DetailedAddress","Postalcode"],["'+this.useraccount+'","'+this.addNewAddress.consignee+'","'+this.addNewAddress.phonenum+'","'+this.selected.province+'","'+this.selected.city+'","'+this.selected.area+'","'+this.addNewAddress.detailAddress+'","0"]]';
             console.log(obj)
             this.dialogVisible=false;
             this.axios.post("/Address/AddAddressInfo", {
@@ -240,6 +241,12 @@ export default {
                         console.log(response);
                     }
                     );
+            }else{
+                this.$message({
+                    message:'地址已到上限！',
+                    type:'warn'
+                })
+            }
         },
         showDeleteAddressDialog(index,item){
             this.AddressId=item.AddressId;

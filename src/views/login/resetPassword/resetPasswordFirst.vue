@@ -3,7 +3,7 @@
         <div class="reset-line clearfix">
             <span class="tips">用户名称:</span>
             <div class="reset-line-right">
-                <input type="text" placeholder="手机号码/用户名称" v-model="phoneNumber">
+                <input type="text" placeholder="请输入用户名称" v-model="phoneNumber">
                 <!-- <span class="warnInfos">请输入正确的用户名或手机号</span> -->
             </div>
         </div>
@@ -18,7 +18,7 @@
             <span class="notips">1</span>
             <div class="reset-line-right">
                 <img :src="img" alt="">
-                <span>看不清？换一张</span>
+                <span @click="imgRequest" style="cursor:pointer;">看不清？换一张</span>
             </div>
         </div>
         <div class="reset-line clear">
@@ -36,22 +36,60 @@ export default {
     name:'resetPasswordFirst',
     data(){
         return{
-            img:img,
+            img:'',
+            qrCode:'',
             phoneNumber:'',
             verificationCode:'',
             isshowUserNumWarn:false,
         }
     },
+    created(){
+        this.imgRequest();
+    },
     methods:{
+        imgRequest(){
+         this.axios.get("/Code/GraphicalCode", {
+          SOURCE: "22",
+          CREDENTIALS: "0",
+          TERMINAL: "0",
+          INDEX: "20170713170325",
+          METHOD: "MallCommodityInfo",
+          // DATA:encodeURI(obj)
+        })
+        .then(
+          response => {
+            if(response.data.code=='1'){
+                this.img=response.data.data.img;
+                this.code=response.data.data.code;
+            }
+          },
+          response => {
+            console.log("请求失败");
+            console.log(response);
+          }
+        );
+        },
         toSecond(){
-            this.$router.push('resetPassword/resetPasswordSecond');
+            if(this.code==this.verificationCode){
+                localStorage.setItem('resetUserName',this.phoneNumber)
+                this.$router.push('resetPassword/resetPasswordSecond');
+            }else{
+                this.imgRequest();
+                this.$message({
+                    message:'验证码错误，请重新输入！',
+                    type:'success'
+                })
+                this.verificationCode='';
+            }
+            
         },
         phonenumValidate(){//账号验证
-             if(this.phoneNumber!='' && this.phoneNumber.length<21){
-                this.isshowUserNumWarn=false;
-                }else {
-                this.isshowUserNumWarn=true;
-             }
+            //  if(this.phoneNumber!='' && this.phoneNumber.length<21){
+            //     this.isshowUserNumWarn=false;
+            //     }else {
+            //     this.isshowUserNumWarn=true;
+            //  }
+
         }
     },
     mounted(){

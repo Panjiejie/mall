@@ -11,9 +11,9 @@
                 trigger="hover">
                 <div class="personal-center">
                   <ul>
-                    <li><router-link to="/nav/personalCenter/personalSetting">个人中心</router-link></li>
-                    <li><router-link to="/nav/personalCenter/myFavorite">商品收藏</router-link></li>
-                    <li><router-link to="/nav/personalCenter/safeAdmin">安全设置</router-link></li>
+                    <li><a @click="toPersonalSetting">个人中心</a></li>
+                    <li><a @click="toMyFavorite" >商品收藏</a></li>
+                    <li><a @click="toSafeAdmin" >安全设置</a></li>
                     <li><a @click="logOut">退出登录</a></li>
                     <li class="triangle"></li>
                   </ul>
@@ -23,7 +23,7 @@
           </li>
           <li :class="{isshowLogin:isshowLogin}" ><span class="ver-line"></span><router-link to="/login/loginPassword">{{loginIn}}</router-link></li>
           <li><span class="ver-line"></span><router-link to="/login/register/registerIndex">免费注册</router-link></li>
-          <li><span class="ver-line"></span><router-link to="/nav/personalCenter/myOrder">我的订单</router-link></li>
+          <li><span class="ver-line"></span><a @click="toMyOrder">我的订单</a></li>
           <!-- <li><span class="ver-line"></span><router-link to="/nav/goodsdetail">帮助中心</router-link></li> -->
           <!-- <li ><span class="ver-line"></span><router-link to="/">手机APP</router-link></li> -->
           <li class="cart-content shopping-cart-btn">
@@ -51,7 +51,7 @@
                     </div>
                   </div>
                       <!-- <el-button slot="reference">click 激活</el-button> -->
-                  <router-link slot="reference" to="/nav/shoppingCart" class="hover ">购物车<span class="cartBage" ><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link>
+                  <router-link slot="reference" to="/nav/shoppingCart" @enter='requestCartInfo' class="hover ">购物车<span class="cartBage" ><a  class="cartNumber">{{totalsAmount}}</a></span></router-link>
                 </el-popover>
           </li>
           <!-- <router-link to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li> -->
@@ -83,6 +83,7 @@
   
 <script>  
 import imgurl from '../../assets/common/kefu.png'
+import {bus} from '../../bus.js'
 export default { 
   name: 'headerNav', 
   data () {  
@@ -117,7 +118,7 @@ export default {
     this.requestCartInfo();
   },
   computed:{
-
+    
     totalsMoney(){//购物车总价
       this.shoppingCartList.forEach(item=>{
         this.totalCartMoney+=item.price*item.num;
@@ -142,7 +143,23 @@ export default {
     //   }
     }
   },
-  methods: {  
+  methods: {
+    toMyOrder(){
+      this.$router.push('/nav/personalCenter/myOrder');
+      localStorage.setItem('changeItem',7)
+    },
+    toPersonalSetting(){
+      this.$router.push('/nav/personalCenter/personalSetting');
+      localStorage.setItem('changeItem',2)
+    }, 
+    toMyFavorite(){
+      this.$router.push('/nav/personalCenter/myFavorite');
+      localStorage.setItem('changeItem',9)
+    }, 
+    toSafeAdmin(){
+       this.$router.push('/nav/personalCenter/safeAdmin');
+       localStorage.setItem('changeItem',3)
+    },
      toHome(){
        this.$router.push('/')
      },
@@ -551,5 +568,17 @@ export default {
     position: absolute;
     top: 12px;
     right: 12px;;
+  }
+  .personal-center ul li a{
+    color: #c4c4c4;
+  }
+  .personal-center ul li a:hover{
+    color: #c4c4c4;
+  }
+  .main>ul>li a{
+    color: #c4c4c4;
+  }
+  .main>ul>li a:hover{
+    color: #c4c4c4;
   }
 </style>    

@@ -1,10 +1,16 @@
 <template>
     <div>
         <button @click="textapi">test</button>
+        <img :src="src" alt="">
     </div>
 </template>
 <script>
 export default {
+  data(){
+    return{
+      src:''
+    }
+  },
     methods:{
 
     textapi(){
@@ -12,13 +18,13 @@ export default {
 
          let obj = '[["Status","Sort","StockSum","IndustryNameTwo","Sum","Num"],["1","0","0","'+a+'","1","9"]]';
       this.axios
-        .post("/Mall/MallCommodityInfo", {
+        .get("/Code/GraphicalCode", {
           SOURCE: "22",
           CREDENTIALS: "0",
           TERMINAL: "0",
           INDEX: "20170713170325",
           METHOD: "MallCommodityInfo",
-          DATA:encodeURI(obj)
+          // DATA:encodeURI(obj)
         })
         .then(
           response => {
@@ -26,6 +32,7 @@ export default {
             // for(leti=0;i<ClassifyName.length;i++){
 
             // }
+            this.src=response.data.data.img
           },
           response => {
             console.log("请求失败");

@@ -56,6 +56,7 @@
     </div>
 </template>
 <script>
+import {bus} from '../../../bus.js'
 export default {
     name:'personalSetting',
     data(){
@@ -78,12 +79,14 @@ export default {
     created(){
         this.UserAccount=localStorage.getItem('UserAccount');
         this.num=localStorage.getItem('UserMobile');
+        // bus.$emit('changeItem',3 );
     },
     methods:{
         editPassword() {//修改密码
         console.log(this.newPasswordValidateValue +'newPasswordValidateValue')
         console.log(this.isPasswordEqualValue+'isPasswordEqualValue')
-          if(this.newPasswordValidateValue && this.isPasswordEqualValue){
+        //   if(this.newPasswordValidateValue && this.isPasswordEqualValue){
+              if(1){
                this.axios.post("/UserPassword/MallUpdatePasswd", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
@@ -98,14 +101,15 @@ export default {
                     .then(
                     response => {
                         console.log(response)
-                        // if(response.data.DATA[0].Code){
-                        //     // let UserAccount=response.data.DATA[0].UserAccount;
-                        //     localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
-                        //     localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
-                        //     localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
-                        //     localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
-                        //     this.$router.push('/');
-                        // }
+                        if(response.data.DATA[0]){
+                            // let UserAccount=response.data.DATA[0].UserAccount;
+                            // this.$router.push('/');
+                             this.passwordDialog=false;
+                            this.$message({
+                                type: 'success',
+                                message: '修改成功!'
+                            });
+                         }
                     },
                     response => {
                         console.log("请求失败");
@@ -143,17 +147,17 @@ export default {
       newPasswordValidate(){
         //    let reg=/^[a-zA-Z\d]{6,32}$/;
             // if(!reg.test(this.form.newPassword)){
-                if(false){
-                if(this.form.newPassword!=''){
-                    this.$message({
-                        message:'请输入格式正确的密码',
-                        type:'warn'
-                    })
-                     this.newPasswordValidateValue=false;
-                }else{
-                    this.newPasswordValidateValue=true;
-                }
-            }
+            //     if(false){
+            //     if(this.form.newPassword!=''){
+            //         this.$message({
+            //             message:'请输入格式正确的密码',
+            //             type:'warn'
+            //         })
+            //          this.newPasswordValidateValue=false;
+            //     }else{
+            //         this.newPasswordValidateValue=true;
+            //     }
+            // }
       },
       isPasswordEqual(){
           if(this.form.newPassword!=this.form.newPasswordTwo && this.form.newPassword!='' && this.form.newPasswordTwo!=''){

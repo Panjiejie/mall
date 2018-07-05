@@ -9,7 +9,7 @@
         </div>
         <div class="brands">
             <div class="seckill-left">
-                <h2>限时秒杀</h2>
+                <!-- <h2>限时秒杀</h2>
                 <h4>FLASH DEALS</h4>
                 <div class="flash">
                     <img src="../../assets/common/kefu.png" style="width:48px;height:52px;" alt="">
@@ -19,7 +19,9 @@
                     <span class="hours">01</span>:
                     <span class="minutes">26</span>:
                     <span class="seconds">56</span>
-                </div>
+                </div> -->
+                <img src="../../assets/index/seckill_1.png" style="position: relative;top: 72px;">
+                <div>123</div>
             </div>
             <div class="seckill-right">
                 <ul class="clearfix"> 
@@ -117,10 +119,8 @@ export default {
     width: 230px;
     height: 340px;
     float: left;
-    background: -webkit-linear-gradient(-45deg, #FF793E, #FBC31D); /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(-45deg, #FF793E, #FBC31D); /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(-45deg, #FF793E, #FBC31D); /* Firefox 3.6 - 15 */
-    background: linear-gradient(-45deg, #FF793E, #FBC31D); /* 标准的语法 */
+    background: url(../../assets/brandimg/seckill/2.jpg);
+    
 }
 .seckill-left h4,.seckill-left h3,.seckill-left .countdown{
     color: #fff;

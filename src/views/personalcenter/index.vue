@@ -31,22 +31,36 @@
     </div>
 </template>
 <script>
+import {bus} from '../../bus.js'
 export default {
     name:'personalcenter',
     data(){
         return{
             list:[
-                {text:'我的账户',istitle:true,ischeck:false,toWhere:''},
-                {text:'个人设置',istitle:false,ischeck:false,toWhere:'personalSetting'},
-                {text:'安全管理',istitle:false,ischeck:false,toWhere:'safeAdmin'},
-                {text:'地址管理',istitle:false,ischeck:false,toWhere:'addressAdmin'},
-                {text:'我的足迹',istitle:false,ischeck:false,toWhere:'myFootpoint'},
-                {text:'交易管理',istitle:true,ischeck:false,toWhere:''},
-                {text:'我的订单',istitle:false,ischeck:true,toWhere:'myOrder'},
-                {text:'我的收藏',istitle:true,ischeck:false,toWhere:''},
-                {text:'收藏的商品',istitle:false,ischeck:false,toWhere:'myFavorite'},
+                {text:'我的账户',istitle:true,ischeck:false,toWhere:'',value:1},
+                {text:'个人设置',istitle:false,ischeck:false,toWhere:'personalSetting',value:2},
+                {text:'安全管理',istitle:false,ischeck:false,toWhere:'safeAdmin',value:3},
+                {text:'地址管理',istitle:false,ischeck:false,toWhere:'addressAdmin',value:4},
+                {text:'我的足迹',istitle:false,ischeck:false,toWhere:'myFootpoint',value:5},
+                {text:'交易管理',istitle:true,ischeck:false,toWhere:'',value:6},
+                {text:'我的订单',istitle:false,ischeck:false,toWhere:'myOrder',value:7},
+                {text:'我的收藏',istitle:true,ischeck:false,toWhere:'',value:8},
+                {text:'收藏的商品',istitle:false,ischeck:true,toWhere:'myFavorite',value:9},
             ]
         }
+    },
+    mounted(){
+      let listItem=localStorage.getItem('changeItem')
+            this.list.forEach(e=>{
+                e.ischeck=false;
+                if(e.value==listItem){
+                    console.log(listItem)
+                    console.log(e.value)
+                    e.ischeck=true;
+                }
+            }) 
+           
+        
     },
     methods:{
         toPages(item){
