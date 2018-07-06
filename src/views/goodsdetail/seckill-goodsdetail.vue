@@ -4,9 +4,9 @@
             <div id="header">
                 <ul>
                     <li> <router-link to="/">首页</router-link>&gt;</li>
-                    <li><router-link to="toBrands">品牌</router-link>&gt;</li>
-                    <li><router-link to="toBrandDetail">耐克</router-link>&gt;</li>
-                    <li>耐克NIKE BENASSI SOLARSOFT</li>
+                    <li><a>品牌</a>&gt;</li>
+                    <li><a>{{BrandName}}</a>&gt;</li>
+                    <li>{{CommodityName}}</li>
                 </ul>
             </div>
             <!-- 商品详情左侧-->
@@ -18,7 +18,7 @@
                         </div>
                         <div class="minibox">
                             <ul>
-                                <li @mouseenter="enter(item)" v-for="item in imglist" :key="item.key">
+                                <li @mouseenter="enter(item)" v-for="item in imglists" :key="item.key">
                                     <img :src="item.src" alt="">
                                 </li>
                             </ul>
@@ -29,15 +29,15 @@
                         <span>
                             <img @click="changeHeart()" :src="heart" alt="" style="width:20px;height:20px;"> 收藏商品
                         </span>
-                        <span style="margin-left:38px;">
+                        <!-- <span style="margin-left:38px;">
                             <img @click="toBrandDetail" src="../../assets/common/detail-home.png" alt="" style="width:20px;height:20px;"> 品牌主页
-                        </span>
+                        </span> -->
                     </div>
                 </div>
 
                 <!-- 商品详情右侧 -->
                 <div class="rightside">
-                    <div class="title">我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多我们都有一个家名字叫中国，兄弟姐妹都很多</div>
+                    <div class="title">{{CommodityName}}</div>
                     <div class="subtitle">[官方授权，正品保障] 超值预售火热进行中</div>
                     <!-- 中间图文部分 -->
                     <div class="textinfo">
@@ -60,18 +60,18 @@
                                 </div>
                                 <div class="text-content">
                                     <div class="line">
-                                        <span class="ptitle" style="margin-right:36px;">秒杀价</span>
+                                        <span class="ptitle" style="margin-right:36px;">价格：</span>
                                         <span class="seckill-money">￥
-                                            <span style="font-size:30px;">255.00</span>
+                                            <span style="font-size:30px;">{{price}}</span>
                                         </span>
-                                        <span class="oldermoney">￥298.00</span>
+                                        <!-- <span class="oldermoney">￥298.00</span> -->
                                     </div>
-                                    <div class="otherline">
+                                    <!-- <div class="otherline">
                                         <span class="ptitle">运费</span>
                                         <span class="yunfei">运费10块</span>
-                                    </div>
+                                    </div> -->
                                     <div class="otherline" style="margin-bottom:16px;">
-                                        <span class="ptitle">服务</span>
+                                        <span class="ptitle">服务:</span>
                                         <span class="yunfei">无忧货到付款 正品汇正品认证</span>
                                     </div>
                                 </div>
@@ -80,19 +80,13 @@
                     </div>
                     <!-- 选择参数部分 -->
                     <div class="choose-params">
-                        <div class="choose-color choose-line clearfix">
-                            <span class="ptitle">选择颜色</span>
-                            <ul class="clearfix">
-                                <li v-for="item in chooseImgList" :key="item.key" @click="chooseColorClick(item)"><img :src="item.imgsrc" :class="{imggray:item.isgray,imgorange:item.isorange}" alt=""></li>
-                            </ul>
-                            
-                        </div>
-                        <div class="choose-size">
-                            <span class="ptitle">选择尺码</span>
+                        
+                        <!-- <div class="choose-size" >
+                            <span class="ptitle" style="width:56px;height:34px;line-height:34px;">类别</span>
                             <ul class="sizefather">
-                                <li :class="{sizecontent:item.isgray,size_orange:item.isorange}" v-for="item in chooleSizeList" :key="item.key" @click="chooseSizeClick(item)">{{item.label}}</li>
+                                <li v-for='item in chooseSizeList' :key='item.key' :class="{sizecontent:item.isgray,size_orange:item.isorange}"  @click="chooseSizeClick(item)">{{item.name}}</li>
                             </ul>
-                        </div>
+                        </div> -->
                         <div class="mount-choose">
                             <span class="ptitle">选择数量</span>
                             <div class="input-number">
@@ -101,8 +95,8 @@
                         </div>
                         <!-- 按钮组 -->
                         <div class="btngroups">
-                            <button class="addcart"><img src="../../assets/common/cart.png" alt=""> 加入购物车</button>
-                            <button class="buying">立即购买</button>
+                            <button class="addcart" @click="addToCart"><img src="../../assets/common/cart.png" alt=""> 加入购物车</button>
+                            <!-- <button class="buying">立即购买</button> -->
                         </div>
                     </div>
                 </div>
@@ -116,15 +110,21 @@
                     <div class="bcmain-header">
                         <div class="title">商品详情</div>
                         <div class="introduce">
-                            <div class="brand-name">
+                            <!-- <div class="brand-name">
                                 <span class="intro-title">品牌</span>
                                 <span class="intro-content">{{brandname}}</span>
-                            </div>
-                            <ul>
-                                <li v-for="item in list" :key="item.key">
+                            </div>  -->
+                             <ul>
+                                <li><span class="intro-title">品牌</span><span class="intro-content">{{list.BrandName[0]}}</span></li>
+                                <li><span class="intro-title">商品名</span><span class="intro-content">{{list.CommodityName[0]}}</span></li>
+                                <li><span class="intro-title">单价</span><span class="intro-content">{{list.SupplyMoney[0]}}元</span></li>
+                                <li><span class="intro-title">生产厂家</span><span class="intro-content">{{list.Manufacturer[0]}}</span></li>
+                                <li><span class="intro-title">生产地址</span><span class="intro-content">{{list.ProductionAddress[0]}}</span></li>
+                               
+                                 <!-- <li v-for="item in list" :key="item.key">
                                     <span class="intro-title">{{item.title}}</span>
                                     <span class="intro-content">{{item.content}}</span>
-                                </li>
+                                </li>  -->
                             </ul>
                         </div>
                     </div>
@@ -133,7 +133,9 @@
                     <div class="bcbody">
                         <div class="bcbody-content">
                             <ul>
-                                <li v-for="i in 5" :key="i.key"></li>
+                                <li v-for="i in adds" :key="i.key">
+                                  <img :src="i.src" alt="" style="width:100%;">
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -145,7 +147,7 @@
                     </div>
                     <div class="bcright-body">
                         <ul>
-                            <li v-for="item in rightlist" :key="item.key" @click="toGoodsDetail">
+                            <li v-for="item in rightlist" :key="item.key" @click="toGoodsDetail(item.AttributeGroup)">
                                 <div class="img__content">
                                   <img :src="item.src" style="width:200px;height:200px;" alt="">  
                                 </div>
@@ -175,30 +177,44 @@ export default {
   },
   data() {
     return {
-      brandname: "耐克(NIKE)",
+      AttributeGroup:'',//传参商品属性
+      requestCommodityName:'',//添加购物车商品名
+      requestCommodityNumber:'',//更换商品 添加购物车 商品码
+      BrandName: "",//品牌名
+      CommodityName:'',//商品名
       inputNumber: 1, //商品数量计数器
-      chooleSizeList: [
-        {
-          label: 42,
-          isgray: true,
-          isorange: false
-        },
-        {
-          label: 43,
-          isgray: true,
-          isorange: false
-        },
-        {
-          label: 44,
-          isgray: true,
-          isorange: false
-        }
-      ],
+      price:'',
+      FilePath:[],
+      bigImg: imgurl, //左侧大图src
+      heart: '', //收藏小心心图标src
+      imglists: [],//左侧五个商品图
+      adds:[],//图文详情广告图
+      UserAccount:'',
+      CommodityNumber:'',
+      Status:0,//收藏1 浏览0
+      defaultCommodityAttribute:{//首屏加载 默认选择参数
+        AttributeGroup:'',
+        AttributeName:'',
+        AttributeValue:''
+      },
+      chooseParams:[],
+      chooseSizeList: [
+                // {
+                //   name: "茉莉花茶",
+                //   CommodityNumber:'1507556' },
+                //    {
+                //   name: "绿茶",
+                //   CommodityNumber:'1507553' }
+                ],
       chooseImgList:[
           {imgsrc:imgurl,isgray:true,isorange:false},
           {imgsrc:imgurl,isgray:true,isorange:false}
       ],
       list: [
+        {
+          title:'品牌',
+          content:'nike'
+        },
         {
           title: "店铺",
           content:
@@ -212,87 +228,99 @@ export default {
         { title: "适用场景", content: "休闲" }
       ],
       rightlist: [
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        },
-        {
-          name: "pt950铂金钻石结婚对戒",
-          subtitle: "预约赠限量巧克力",
-          price: "2500",
-          src: imgurl
-        }
+        // {
+        //   name: "pt950铂金钻石结婚对戒",
+        //   subtitle: "预约赠限量巧克力",
+        //   price: "2500",
+        //   src: imgurl
+        // },
       ],
-      bigImg: imgurl, //左侧大图src
-      heart: heart, //收藏小心心图标src
-      imglist: [
-        { src: imgurl },
-        { src: imgurl1 },
-        { src: imgurl },
-        { src: imgurl1 },
-        { src: imgurl }
-      ]
     };
+  },
+  created(){
+    this.AttributeGroup=this.$route.params.id;
+    this.UserAccount=localStorage.getItem('UserAccount');
+    console.log(this.AttributeGroup)
+    // this.pageInit();
+    this.rightListInit();
+    this.requestGoods()
+    
+  },
+  mounted(){
+    
+  },
+  destroyed(){
+    if(this.UserAccount){
+      this.destroyedEvent(this.Status);
+    }
+  },
+  watch:{
+     '$route' (to, from) {
+      // 对路由变化作出响应...
+      if(this.$route.params.id){// 判断条件1  判断传递值的变化
+        this.AttributeGroup=this.$route.params.id;
+        this.requestGoods();
+       }
+    }
   },
   methods: {
     enter(value) {
       //左侧点击换图片事件
       this.bigImg = value.src;
     },
+    destroyedEvent(Status){//收藏  浏览埋点
+             this.axios.post("/Mall/BrowseCommodity", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "BrowseCommodity",
+                UserAccount:this.UserAccount,
+                Status:Status,
+                CommodityNumber:this.AttributeGroup,
+                // DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                  //  console.log(this.requestCommodityNumber)
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                }
+                );
+    },
     changeHeart() {
       //收藏事件
-      if (this.heart == redHeart) {
-        this.heart = heart;
-      } else if (this.heart == heart) {
-        this.heart = redHeart;
+      console.log(this.UserAccount)
+      if(this.UserAccount){
+          if (this.heart == redHeart) {
+          this.heart = heart;
+          this.Status=0;
+        } else if (this.heart == heart) {
+          this.heart = redHeart;
+          this.Status=1;
+        }
+      }else{
+        this.$message({
+          message:'请先登录!',
+          type:'warn'
+        })
       }
     },
     chooseSizeClick(item) {
       //选择尺码
-      _.forEach(this.chooleSizeList, e => {
-        e.isgray = true;
-        e.isorange = false;
-      });
+      this.chooseSizeList.forEach(e=>{
+         e.isgray = true;
+         e.isorange = false;
+      })
       item.isgray = false;
       item.isorange = true;
+      //
+      console.log(item)
+      this.requestCommodityName=item.name;
+      this.requestCommodityNumber=item.CommodityNumber;
+      this.requestGoods();
     },
     chooseColorClick(item){
         //选择颜色
@@ -303,12 +331,253 @@ export default {
       item.isgray = false;
       item.isorange = true;
     },
-    toBrandDetail(){
-      this.$router.push('toBrandDetail')
+    // toBrandDetail(){
+    //   this.$router.push('toBrandDetail')
+    // },
+    toGoodsDetail(item){
+      this.$router.push({path:`../goodsdetail/${item}`});
+      this.pageInit();
     },
-    toGoodsDetail(){
-      this.$router.push('goodsdetail')
-    }
+    pageInit(){
+         let obj = '[["UserAccount","AttributeGroup"],["'+this.UserAccount+'","'+this.AttributeGroup+'"]]';
+            // console.log(obj)
+             this.axios.post("/Mall/GetMallCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "GetMallCommodityInfo",
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                    // console.log(response);
+                    this.imglists.length=0;
+                    let data=response.data.DATA[0];
+                    this.BrandName=data.CommodityAttribute[0].AttributeGroup[0];//品牌名
+                    this.CommodityName=data.CommodityAttribute[0].AttributeValue[0];//商品名
+                    let FilePath=data.CommodityInfo[0].FilePath[0];
+                    FilePath=FilePath.split(',');
+                    let firstGoodsInfo=data.CommodityInfo[0];
+                    // console.log(FilePath)
+                    this.bigImg=FilePath[0]+FilePath[1];
+
+                    for(let i=1;i<FilePath.length;i++){
+                        this.imglists.push({//左侧商品图
+                          src:FilePath[0]+FilePath[i]
+                        })
+                    }
+                    //价格
+                    this.price=firstGoodsInfo.SupplyMoney[0];
+                    //商品码
+                    this.CommodityNumber=firstGoodsInfo.CommodityNumber[0];
+                    this.requestCommodityNumber=firstGoodsInfo.CommodityNumber[0];
+                    console.log('shangpinma'+this.requestCommodityNumber)
+                    //是否已收藏
+                    let collection=response.data.collection;
+                    // console.log(collection)
+                    if(collection=='0'){
+                      this.heart=heart;
+                    }else{
+                      this.heart=redHeart;
+                    }
+                    //默认选择商品参数
+                    this.defaultCommodityAttribute=data.CommodityAttribute;
+                    //选择参数选项配置
+                    let params=data.Attribute;
+                    let chooseList={};
+                    // console.log(params)
+                    let sorts=Object.keys(params[0])[0];
+                    // console.log(sorts)
+                    let sortsItems=[];
+                    let keys=[];
+                    let values=[];
+                    for(let i=0;i<params.length;i++){
+                        for(var key in params[i]){
+                            keys.push(key);
+                            values.push(params[i][key])
+                        }
+                      }
+                    // console.log(keys)
+                    // console.log(values)
+                    this.chooseSizeList.length=0;
+                    for(let i=0;i<values[0].length;i++){
+                      this.chooseSizeList.push({
+                        name:values[0][i],
+                        CommodityNumber:values[1][i],
+                        isgray:true,
+                        isorange:false
+                      })
+                    }
+                    // console.log('this.chooseSizeList')
+                    // console.log(this.chooseSizeList)
+                    //图文详情图片
+                    let picContents=[];
+                    picContents=firstGoodsInfo.CommodityProfile[0].split(',');
+                    this.adds.length=0;
+                    for(let i=1;i<picContents.length;i++){
+                      this.adds.push({
+                        src:picContents[0]+picContents[1]
+                      })
+                    }
+                    //图文详情文本信息
+                    let CommodityInfo=data.CommodityInfo[0];
+                    this.list=CommodityInfo;
+                    // console.log('CommodityInfoArray')
+                    // console.log(CommodityInfo)
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
+    },
+    rightListInit(){
+      let obj = '[["Status","Sort","StockSum","Sum","Num"],["0","0","0","1","5"]]';
+            // console.log(obj)
+             this.axios.post("/Mall/MallCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "MallCommodityInfo",
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                    // console.log(response)
+                    let data=response.data.DATA[0];
+                    // console.log(data.FilePath);
+                    // this.list.length=0;
+                    for(let i=0,len=data.FilePath.length;i<len;i++){
+                        let FilePath=data.FilePath[i].split(',');
+                        FilePath=FilePath[0]+FilePath[1];
+                        this.rightlist.push({
+                        name:data.CommodityName[i],
+                        src:FilePath,
+                        subtitle:data.BrandName[i],
+                        price:data.SupplyMoney[i],
+                        AttributeGroup:data.AttributeGroup[i]
+                    })
+                    }
+                    
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
+    },
+    requestGoods(){
+            // let obj = '[["UserAccount","AttributeGroup"],["'+this.UserAccount+'","'+this.AttributeGroup+'"]]';
+            // console.log(obj)
+             this.axios.post("/Mall/GetMallCommodityNumberInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "GetMallCommodityNumberInfo",
+                CommodityNumber:this.AttributeGroup,
+                UserAccount:this.UserAccount
+              })
+                .then(
+                response => {
+                    // console.log(response);
+                    this.imglists.length=0;
+                    let data=response.data.DATA[0];
+                    this.BrandName=data.CommodityAttribute[0].AttributeGroup[0];//品牌名
+                    this.CommodityName=data.CommodityAttribute[0].AttributeValue[0];//商品名
+                    let FilePath=data.CommodityInfo[0].FilePath[0];
+                    FilePath=FilePath.split(',');
+                    let firstGoodsInfo=data.CommodityInfo[0];
+                    // console.log(FilePath)
+                    this.bigImg=FilePath[0]+FilePath[1];
+
+                    for(let i=1;i<FilePath.length;i++){
+                        this.imglists.push({//左侧商品图
+                          src:FilePath[0]+FilePath[i]
+                        })
+                    }
+                    //价格
+                    this.price=firstGoodsInfo.SupplyMoney[0];
+                    //商品码
+                    this.CommodityNumber=firstGoodsInfo.CommodityNumber[0];
+                    //是否已收藏
+                    let collection=response.data.collection;
+                    // console.log(collection)
+                    if(collection=='0'){
+                      this.heart=heart;
+                    }else{
+                      this.heart=redHeart;
+                    }
+                    //默认选择商品参数
+                    this.defaultCommodityAttribute=data.CommodityAttribute;
+                    //选择参数选项配置
+                    
+                    //图文详情图片
+                    let picContents=[];
+                    picContents=firstGoodsInfo.CommodityProfile[0].split(',');
+                    for(let i=1;i<picContents.length;i++){
+                      this.adds.push({
+                        src:picContents[0]+picContents[1]
+                      })
+                    }
+                    //图文详情文本信息
+                    let CommodityInfo=data.CommodityInfo[0];
+                    this.list=CommodityInfo;
+                    // console.log('CommodityInfoArray')
+                    // console.log(CommodityInfo)
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
+    },
+    addToCart(){
+      let obj = '[["UserAccount","CommodityCode","SupplyMoney","Sum"],["'+this.UserAccount+'","'+this.requestCommodityNumber+'","'+this.price+'","'+this.inputNumber+'"]]';
+      if(this.UserAccount!=''){
+        if(this.requestCommodityNumber!=''){
+             this.axios.post("/Cart/AddCommodityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "AddShopping",
+                LoginUser:'2',
+                // UserAccount:this.UserAccount,
+                // CommodityName:this.requestCommodityName,
+                DATA:encodeURI(obj)
+                })
+                .then(
+                response => {
+                  // console.log(obj)
+                  if(response.data.DATA[0]=='1'){
+                    this.$message({
+                      message:'加入购物车成功.',
+                      type:'success'
+                    })
+                  }
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                }
+                );
+        }
+       
+      
+      }else{
+        this.$message({
+          message:'请先登录！',
+          type:'success'
+        })
+      }
+    },
+    
   }
 };
 </script>
@@ -380,26 +649,9 @@ export default {
   border-top: 3px solid #f45b08;
   text-align: center;
   line-height: 44px;
-  background: #fff;
-
-  /* 条纹背景 */
-  /* -webkit-background-size: 50px 50px;
-    -moz-background-size: 50px 50px;
-    background-size: 50px 50px; /* 控制条纹的大小 */
-  /*background-image: -webkit-gradient(linear, 0 0, 100% 100%,
-                            color-stop(.25, rgba(255, 255, 255, .2)), color-stop(.25, transparent),
-                            color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .2)),
-                            color-stop(.75, rgba(255, 255, 255, .2)), color-stop(.75, transparent),
-                            to(transparent));
-    background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-                        transparent 75%, transparent);
-    background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-                        transparent 75%, transparent);
-    background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
-                        transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
-                        transparent 75%, transparent); */
+  background: url(../../assets/common/shadow.png);
+  font-size: 14px;
+  border-bottom: 1px solid rgb(221,221,221);
 }
 .introduce {
   width: 900;
@@ -439,6 +691,10 @@ export default {
   line-height: 36px;
   float: left;
 }
+.introduce li:first-child{
+  width: 100%;
+  border-bottom: 1px dashed rgb(221,221,221);
+}
 .introduce ul {
   border-bottom: 1px dotted #e1e1e1;
   padding-bottom: 6px;
@@ -470,7 +726,7 @@ export default {
 .bcbody-content li {
   width: 100%;
   min-height: 200px;
-  border: 1px solid yellow;
+  border: 1px solid rgb(221,221,221);
   border-top: none;
   list-style: none;
 }
@@ -614,7 +870,7 @@ export default {
 }
 .textinfo {
   width: 100%;
-  min-height: 220px;
+  min-height: 206px;
   background: #f5f5f5;
 }
 /* 选择参数 */
@@ -656,20 +912,22 @@ export default {
 }
 .sizecontent {
   display: inline-block;
-  width: 80px;
+  min-width: 80px;
   height: 34px;
   border: 1px solid #ddd;
   text-align: center;
   line-height: 34px;
   margin: 0 16px 16px 0;
+  padding: 0 6px;
 }
 .size_orange {
   display: inline-block;
-  width: 80px;
+  min-width: 80px;
   height: 34px;
   text-align: center;
   line-height: 34px;
   margin: 0 16px 16px 0;
+  padding: 0 6px;
   border: 1px solid rgba(244, 91, 8);
 }
 .sizefather {
@@ -713,6 +971,7 @@ export default {
   color: rgb(244, 91, 8);
   position: relative;
   font-size: 14px;
+  outline: none;
 }
 .btngroups button img{
   position: absolute;
@@ -770,11 +1029,11 @@ export default {
   height: 36px;
   padding: 0 14px;
   line-height: 36px;
-  background: linear-gradient(left, rgb(244, 93, 8), rgb(251, 221, 29));
+  background-image: url(../../assets/goodsdetail/line.png);
 }
-/* .seckill-bottom .title {
+.seckill-bottom .title {
   margin-bottom: 16px;
-} */
+}
 .ltitle {
   display: inline-block;
   font-size: 14px;

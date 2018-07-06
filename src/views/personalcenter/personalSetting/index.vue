@@ -13,8 +13,7 @@
                 <!-- </div> -->
                 <div class="line clearfix">
                     <span class="infotitle">用户名：</span>
-                    <span class="infos"><el-input v-model="userName"  id="username" placeholder="请输入用户名" disabled></el-input>
-</span>
+                    <span class="infos"><el-input v-model="userName"  id="username" placeholder="请输入用户名" disabled></el-input></span>
                 </div>
                 <!-- <div class="line clearfix">
                     <span class="infotitle">性&nbsp;&nbsp;&nbsp;别：</span>
@@ -35,7 +34,7 @@
                          </div>
                     </span>
                 </div> -->
-                <button class="save">保存</button>
+                <!-- <button class="save">保存</button> -->
             </div>
         </div>
          <!-- 修改头像 -->
@@ -209,6 +208,8 @@ export default {
 .editphoto{
     font-size: 14px;
     text-align: center;
+    cursor: pointer;
+    color: rgb(241,91,8)
 }
 .line span{
     float: left;

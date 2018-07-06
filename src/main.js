@@ -25,7 +25,7 @@ Vue.use(ElementUI)
 Vue.component('v-distpicker', Distpicker)
 // Vue.use(store)
 /* eslint-disable no-new */
-axios.defaults.baseURL = 'http://192.168.1.166:3002'
+axios.defaults.baseURL = 'http://119.23.35.37:3000'
 // axios.defaults.baseURL = 'http://192.168.1.153:3002'
 
 

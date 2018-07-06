@@ -222,6 +222,7 @@ export default {
                                 CountyDistrict:this.selected.area,
                                 DetailedAddress:this.addNewAddress.detailAddress,
                                 Postalcode:'0',
+                                AddressType:1
                                 // AddressId:data.AddressId[i],
                                 // AddressType:data.AddressType[i]
                             })

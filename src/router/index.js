@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Dataserver from 'views/nav/dataserver'
 import Goodsguide from 'views/nav/goodsguide'
 import Haitao from 'views/nav/haitao'
+import Recommend from 'views/nav/recommend'
 import Newretail from 'views/nav/newretail'
 import Nav from 'views/nav'
 import Home from 'views/nav/Home'
@@ -72,6 +73,10 @@ export default new Router({
           path: 'haitao/:IndustryNameOne/:IndustryNameTwo',
           component: Haitao
         },
+        {//推荐专区
+          path:'recommend/:id',
+          component:Recommend
+        },
         { //商品导购
           path: 'goodsguide',
           component: Goodsguide
@@ -93,7 +98,7 @@ export default new Router({
           component:seckill
         },
         {//秒杀商品详情页面
-          path:'seckillGoodsDetail',
+          path:'seckillGoodsDetail/:id',
           component:seckillGoodsDetail
         },
         {//购物车

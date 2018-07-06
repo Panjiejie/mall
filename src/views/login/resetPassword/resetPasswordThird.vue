@@ -38,11 +38,11 @@ export default {
         toLast(){
             // bus.$emit('changeSteps', 4);
             if(this.passwordOne!='' && this.passwordTwo!='' && this.passwordTwo==this.passwordOne){
-                // this.$router.push('resetPasswordLast');
+                this.$router.push('resetPasswordLast');
                 this.ModifyPasswd();
             }else{
                 this.$message({
-                    message:'两次输入不一致，请重新输入！',
+                    message:'两次输入密码不一致，请重新输入！',
                     type:'success'
                 })
                 this.passwordOne='';
@@ -51,6 +51,8 @@ export default {
             
         },
         ModifyPasswd(){
+            // let obj = '[["UserAccount","NewPasswd"],["'+this.UserAccount+'","'+this.passwordOne+'"]';
+            let obj=`[["UserAccount","NewPasswd"],["${this.UserAccount}","${this.passwordOne}"]]`
             this.axios.post("/UserPassword/ModifyPasswd", {
             SOURCE: "22",
             CREDENTIALS: "0",
@@ -58,14 +60,16 @@ export default {
             INDEX: "20170713170325",
             METHOD: "ModifyPasswd",
             LoginUser:'2',
-            UserAccount:this.UserAccount,
-            NewPasswd:this.passwordOne
+            DATA:encodeURI(obj)
             })
             .then(
             response => {
-            //     if(response.data.DATA[0].Code=='1'){
-            //         this.$router.push('resetPasswordThird');
-            //     }
+                if(response.data.DATA[0].result=='1'){
+                    this.$message({
+                        message:'修改成功！',
+                        type:'success',
+                    })
+                }
             },
             response => {
                 console.log("请求失败");

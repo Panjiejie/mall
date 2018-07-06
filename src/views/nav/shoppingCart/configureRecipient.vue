@@ -385,6 +385,7 @@ export default {
                     response => {
                         console.log(response)
                         if(response.data.RETURNCODE=='200'){
+                            localStorage.setItem('cartTotalPrice',this.money)
                             this.$router.push('submitOrderSuccess')
                         }
                     },

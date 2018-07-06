@@ -25,18 +25,18 @@
             </div>
             <div class="seckill-right">
                 <ul class="clearfix"> 
-                    <li @click="toSeckillDetailPage" v-for='i in 4' :key="i.key">
+                    <li @click="toSeckillDetailPage(i)" v-for='i in list' :key="i.key">
                         <div class="img__content">
-                            <img src="../../assets/common/logo.png" style="width:200px;height:200px;" alt="">   
+                            <img :src="i.FilePath" style="width:200px;height:200px;" alt="">   
                         </div>
-                        <h5>pt950铂金钻石结婚对戒</h5>
+                        <h5>{{i.CommodityName}}</h5>
                         <div>
-                            <span class="price"><span class="mlogo">¥</span>2258</span>
-                            <span class="count-price">¥2500</span>
+                            <span class="price"><span class="mlogo">¥</span>{{i.ActivityMoney}}</span>
+                            <span class="count-price">¥{{i.SalesMoney}}</span>
                         </div>
                         <div class="seckill-btn">
                             <div class="progress">
-                                <el-progress :text-inside="true" :stroke-width="30" :percentage="20" color="rgba(142, 113, 199, 0.7)">222</el-progress>
+                                <el-progress :text-inside="true" :stroke-width="30" :percentage="i.percent" color="rgba(142, 113, 199, 0.7)">222</el-progress>
                             </div>
                             <span class="seckill-rightnow">立即秒杀</span>
                         </div>
@@ -53,16 +53,72 @@ export default {
     data(){
         return{
             list:[
-                {name:"ck制造商",price:"25元起"},
-                {name:"22制造商",price:"49元起"},
-                {name:"33制造商",price:"59元起"}
+                // {name:"ck制造商",price:"25元起"},
+                // {name:"22制造商",price:"49元起"},
+                // {name:"33制造商",price:"59元起"}
             ]
         }
     },
+    created(){
+        this.UserAccount=localStorage.getItem('UserAccount');
+        this.requestGoods();
+    },
     methods:{
-        toSeckillDetailPage(){
-            this.$router.push('nav/seckillGoodsDetail')
-        }
+        toSeckillDetailPage(item){
+            this.$router.push(`nav/seckillGoodsDetail/${item.CommodityNumber}`)
+        },
+         requestGoods(){
+            // let obj = '[["Status","Sort","IndustryNameOne","StockSum","Sum","Num"],["1","0","'+this.common.brand+'","0","'+sum+'","'+num+'"]]';
+            // console.log(obj)
+             this.axios.post("/Activity/MallActivityInfo", {
+                SOURCE: "22",
+                CREDENTIALS: "0",
+                TERMINAL: "0",
+                INDEX: "20170713170325",
+                METHOD: "MallActivityInfo",
+                LoginUser:'0',
+                UserAccount:this.UserAccount,
+                Status:'1',
+                StatusDay:'1'
+                })
+                .then(
+                response => {
+                    let data=response.data.DATA[0];
+                    let CommodityInfo=data.CommodityInfo;
+                    console.log(CommodityInfo)
+                    // this.list.length=0;
+                    for(let i=0,len=4;i<len;i++){
+                        let FilePath=CommodityInfo[i].FilePath[0].split(',');
+                        FilePath=FilePath[0]+FilePath[1];
+                        let percent=(parseInt(CommodityInfo[i].StockSum)-parseInt(data.StockSum[i]))/parseInt(data.SalesSum[i])
+                        this.list.push({
+                        CommodityName:CommodityInfo[i].CommodityName[0],
+                        FilePath:FilePath,
+                        BrandName:CommodityInfo[i].BrandName[0],
+                        price:CommodityInfo[i].SupplyMoney[0],
+                        ActivityMoney:data.ActivityMoney[i],
+                        SalesMoney:data.SalesMoney[i],
+                        SalesSum:data.SalesSum[i],
+                        StockSum:data.StockSum[i],
+                        percent:Math.round(percent*10000/100).toFixed(2),
+                        CommodityNumber:data.CommodityNumber[i],
+                        StartTime:data.StartTime[i],
+                        EndTime:data.EndTime[i],
+
+                        // AttributeGroup:CommodityInfo[i].AttributeGroup
+                    })
+                    }
+                    console.log('this.list')
+                    console.log(this.list)
+                    
+                    
+                },
+                response => {
+                    console.log("请求失败");
+                    console.log(response);
+                }
+                );
+        },
     },
 }
 </script>

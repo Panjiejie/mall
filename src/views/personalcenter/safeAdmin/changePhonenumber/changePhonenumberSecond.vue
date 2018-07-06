@@ -10,13 +10,13 @@
                 </el-steps>
                 <div class="num">
                     <label for="num">手机号码：</label>
-                    <input type="text" id="num" placeholder="输入新的手机号码" v-model='phoneNumber'>
+                    <input type="text" id="num" placeholder="输入新的手机号码" v-model='num'>
                 </div>
                 <div class="verification-code">
                     <label for="code">验证码：</label>
                     <input type="text" id="code" placeholder="短信验证码" v-model='verificationCode'>
                     <a @click="sendVerificationCode" class="send-code">发送验证码</a>
-                    <span :class="{isshow:isshow}">{{second}}S后重发</span>
+                    <span :class="{isshow:isshow}" style="color:#ff2040;font-size:12px;">{{second}}S后重发</span>
                 </div>
                 <button id="next" @click="toSuccess">下一步</button>
             </div>
@@ -39,9 +39,10 @@ export default {
             active:1,
             // space:200,
             alignCenter:true,
-            phoneNumber:'',//手机号码
+            num:'',//手机号码
             verificationCode:'',//验证码
             second:60,
+            UserAccount:'',
             isshow:false,
             form:{
                 name:''
@@ -50,22 +51,84 @@ export default {
     },
     methods:{
         toSuccess(){
-            this.$router.push('changeSuccess')
+            this.changePhoneNum();
+            
+        },
+        changePhoneNum(){//修改手机号码
+              let OldPhoneNumber=localStorage.getItem('UserMobile');
+            //   let obj=`[["NewPhoneNumber","OldPhoneNumber","Verification"],["${this.num}","${OldPhoneNumber}","${this.verificationCode}"]]`
+              this.axios.post("/UserInfo/ChangePhoneNumber", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "ChangePhoneNumber",
+                    LoginUser:'2',
+                    NewPhoneNumber:this.num,
+                    OldPhoneNumber:OldPhoneNumber,
+                    Verification:this.verificationCode
+                    })
+                    .then(
+                    response => {
+                        // console.log(response)
+                         if(response.data.DATA[0].Code=='1'){
+                            // this.$message({
+                            //     message:'验证码已发送，请注意查收！',
+                            //     type:'success'
+                            // })
+                            this.$router.push('changeSuccess')
+                        }
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
+
+
+
+           
         },
         sendVerificationCode(){//发送验证码
-            this.$message({
-                message:'验证码已发送，请注意查收！',
-                type:'success'
-            })
-            this.isshow=true;
-            var inter=setInterval(()=>{
-                this.second--;
-                if(this.second==0){
-                this.isshow=false;
-                this.second=60;
-                window.clearInterval(inter);
+        if(this.isshow==false){
+            this.UserAccount=localStorage.getItem('UserAccount');
+                    this.axios.post("/UserRegister/AccoutProving", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "0",
+                    INDEX: "20170713170325",
+                    METHOD: "AccountProving",
+                    LoginUser:'2',
+                    // UserAccount:this.UserAccount,
+                    UserMobile:this.num
+                    })
+                    .then(
+                    response => {
+                        // console.log(response)
+                         if(response.data.DATA[0].result=='false'){
+                            this.$message({
+                                message:'验证码已发送，请注意查收！',
+                                type:'success'
+                            })
+                        }
+                        this.isshow=true;
+                        var inter=setInterval(()=>{
+                            this.second--;
+                            if(this.second==0){
+                            this.isshow=false;
+                            this.second=60;
+                            window.clearInterval(inter);
+                        }
+                        },1000)
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
             }
-            },1000)
+                    
         },
     }
 }

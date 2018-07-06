@@ -62,6 +62,11 @@
 </template>
 <script>
 import imgurl from "../../assets/common/kefu.png";
+import b1 from '../../assets/index/b1.jpg'
+import b2 from '../../assets/index/b2.jpg'
+import b3 from '../../assets/index/b3.jpg'
+import b4 from '../../assets/index/b4.jpg'
+import b5 from '../../assets/index/b5.jpg'
 export default {
   name: "banner",
   data() {
@@ -81,10 +86,11 @@ export default {
         // { isShow: false, text: "其他" }
       ],
       list: [
-        { src: imgurl },
-        { src: imgurl },
-        { src: imgurl },
-        { src: imgurl }
+        { src: b1 },
+        { src: b2 },
+        { src: b3 },
+        { src: b4 },
+        { src: b5 }
       ],
       detailmsg: [
         // {
@@ -93,59 +99,9 @@ export default {
         //   subtitle: "明星产品 明星产品",
         //   price: "255"
         // },
-        // {
-        //   Filepath: imgurl,
-        //   title: "[定]Yvess 原汁机 柠檬橙子榨汁机2",
-        //   subtitle: "明星产品 明星产品",
-        //   price: "255"
-        // },
-        // {
-        //   Filepath: imgurl,
-        //   title: "[定]Yvess 原汁机 柠檬橙子榨汁机3",
-        //   subtitle: "明星产品 明星产品",
-        //   price: "255"
-        // },
-        // {
-        //   Filepath: imgurl,
-        //   title: "[定]Yvess 原汁机 柠檬橙子榨汁机4",
-        //   subtitle: "明星产品 明星产品",
-        //   price: "255"
-        // },
-        // {
-        //   Filepath: imgurl,
-        //   title: "[定]Yvess 原汁机 柠檬橙子榨汁机5",
-        //   subtitle: "明星产品 明星产品",
-        //   price: "255"
-        // },
-        // {
-        //   Filepath: imgurl,
-        //   title: "[定]Yvess 原汁机 柠檬橙子榨汁机6",
-        //   subtitle: "明星产品 明星产品",
-        //   price: "255"
-        // },
-        // {
-        //   Filepath: imgurl,
-        //   title: "[定]Yvess 原汁机 柠檬橙子榨汁机7",
-        //   subtitle: "明星产品 明星产品",
-        //   price: "255"
-        // },
-        // {
-        //   Filepath: imgurl,
-        //   title: "[定]Yvess 原汁机 柠檬橙子榨汁机8",
-        //   subtitle: "明星产品 明星产品",
-        //   price: "255"
-        // }
       ],
       brand: [
         { Filepath: imgurl, brandName: "卡地亚1" },
-        { Filepath: imgurl, brandName: "卡地亚2" },
-        { Filepath: imgurl, brandName: "卡地亚3" },
-        { Filepath: imgurl, brandName: "卡地亚4" },
-        { Filepath: imgurl, brandName: "卡地亚5" },
-        { Filepath: imgurl, brandName: "卡地亚6" },
-        { Filepath: imgurl, brandName: "卡地亚7" },
-        { Filepath: imgurl, brandName: "卡地亚8" },
-        { Filepath: imgurl, brandName: "卡地亚9" }
       ]
     };
   },

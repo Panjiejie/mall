@@ -11,7 +11,7 @@
                 <div class="number">已绑定的手机：{{num | numfilter}}</div>
                 <div class="verification-code">
                     <label for="code">验证码：</label>
-                    <input type="text" id="code" placeholder="短信验证码">
+                    <input type="text" id="code" placeholder="短信验证码" v-model="verificationCode">
                     <a  @click='sendVerificationCode' class="send-code">发送验证码</a>
                     <span :class="{isshow:isshow}">{{second}}S后重发</span>
                 </div>
@@ -40,6 +40,7 @@ export default {
             second:60,
             isshow:false,
             UserAccount:'',
+            verificationCode:'',
             form:{
                 name:''
             }
@@ -51,6 +52,7 @@ export default {
     },
     methods:{
         toSecondStep(){
+            this.validateVerification();
             this.$router.push('changePhonenumberSecond')
         },
         sendVerificationCode(){//发送验证码
@@ -66,36 +68,43 @@ export default {
                     })
                     .then(
                     response => {
-                        console.log(response)
-                        // if(response.data.DATA[0].Code){
-                        //     // let UserAccount=response.data.DATA[0].UserAccount;
-                        //     localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
-                        //     localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
-                        //     localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
-                        //     localStorage.setItem('LoginUser',response.data.DATA[0].LoginUser);
-                        //     this.$router.push('/');
-                        // }
+                        // console.log(response)
+                         if(response.data.DATA[0].result=='true'){
+                            this.$message({
+                                message:'验证码已发送，请注意查收！',
+                                type:'success'
+                            })
+                        }
                     },
                     response => {
                         console.log("请求失败");
                         console.log(response);
                     }
                     );
-            // this.$message({
-            //     message:'验证码已发送，请注意查收！',
-            //     type:'success'
-            // })
-            // this.isshow=true;
-            // var inter=setInterval(()=>{
-            //     this.second--;
-            //     if(this.second==0){
-            //     this.isshow=false;
-            //     this.second=60;
-            //     window.clearInterval(inter);
-            // }
-            // },1000)
             
             
+        },
+        validateVerification(){
+             this.axios.post("/Code/VerifyAuthCode", {
+            SOURCE: "22",
+            CREDENTIALS: "0",
+            TERMINAL: "0",
+            INDEX: "20170713170325",
+            METHOD: "VerifyAuthCode",
+            VerificationCode:this.verificationCode,
+            UserMobile:this.num
+            })
+            .then(
+            response => {
+                // if(response.data.DATA[0].Code=='1'){
+                //     this.$router.push('resetPasswordThird');
+                // }
+            },
+            response => {
+                console.log("请求失败");
+                console.log(response);
+            }
+            );
         },
     },
     filters:{

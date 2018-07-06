@@ -23,6 +23,9 @@ export default {
             price:180.00,
         }
     },
+    created(){
+        this.price=localStorage.getItem('cartTotalPrice')
+    },
     methods:{
         toIndex(){
             this.$router.push('/')

@@ -215,8 +215,32 @@ export default {
         }
       } 
     },
-    amountChange(item){
-      item.subtotal=item.amount*item.price
+    amountChange(item){//改变商品数量
+      // console.log(item)
+      item.subtotal=item.amount*item.price;
+       this.axios.post("/Cart/UpdateDealSum", {
+                    SOURCE: "22",
+                    CREDENTIALS: "0",
+                    TERMINAL: "1",
+                    INDEX: "20170713170325",
+                    METHOD: "UpdateDealSum",
+                    LoginUser:'2',
+                    UserAccount:this.UserAccount,
+                    CommodityName:item.title,
+                    DealSum:item.amount,
+                    DealMoney:item.subtotal
+                    })
+                    .then(
+                    response => {
+                        console.log(response)
+                        this.cartList.splice(index,1)
+                        
+                    },
+                    response => {
+                        console.log("请求失败");
+                        console.log(response);
+                    }
+                    );
     },
     initTable(){
       this.cartList.forEach(e=>e.subtotal=e.price*e.amount*1);
@@ -306,7 +330,12 @@ export default {
                     .then(
                     response => {
                         console.log(response)
-                        // this.cartList.splice(index,1)
+                        this.cartList.forEach((e,index)=>{
+                          if(e.ischecked){
+                            this.cartList.splice(index,1)
+                          }
+                          
+                        })
                         
                     },
                     response => {
@@ -362,7 +391,7 @@ export default {
   width: 1200px;
   height: 60px;
   line-height: 60px;
-  background: #f2f2f2;
+  background: url(../../../assets/common/shadow.png);
   font-size: 14px;
   border: 1px solid rgb(221, 221, 221);
 }
