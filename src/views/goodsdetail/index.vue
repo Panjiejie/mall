@@ -419,13 +419,14 @@ export default {
                     //图文详情图片
                     let picContents=[];
                     picContents=firstGoodsInfo.CommodityProfile[0].split(',');
-                    this.adds.length=0;
+                    this.adds=[];
                     for(let i=1;i<picContents.length;i++){
                       this.adds.push({
                         src:picContents[0]+picContents[1]
                       })
                     }
                     //图文详情文本信息
+                    this.list.length=0;
                     let CommodityInfo=data.CommodityInfo[0];
                     this.list=CommodityInfo;
                     // console.log('CommodityInfoArray')
@@ -524,12 +525,14 @@ export default {
                     //图文详情图片
                     let picContents=[];
                     picContents=firstGoodsInfo.CommodityProfile[0].split(',');
+                    this.adds=[];
                     for(let i=1;i<picContents.length;i++){
                       this.adds.push({
                         src:picContents[0]+picContents[1]
                       })
                     }
                     //图文详情文本信息
+                    this.list=[];
                     let CommodityInfo=data.CommodityInfo[0];
                     this.list=CommodityInfo;
                     // console.log('CommodityInfoArray')

@@ -15,7 +15,7 @@
             </div>
             <div class="line">
                 <img src="../../../assets/common/phone_yellow.png" alt="">
-                <div class="btncontent lastcontent">
+                <div class="btncontent lastcontent" style="padding-left:68px;">
                     <h4>安全手机 {{num | numfilter}}</h4>
                     <div class="textinfos">
                         安全手机可以用于登录账号，重置密码或其他安全验证
@@ -62,7 +62,7 @@ export default {
     data(){
         return{
             UserAccount:"",
-            str:'text',
+            str:'password',
             num:"18689207260",
             passwordDialog:false,//修改密码对话框控制
             form: {

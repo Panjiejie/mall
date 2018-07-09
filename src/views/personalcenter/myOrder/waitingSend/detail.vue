@@ -141,7 +141,7 @@ export default {
             this.requestOrderInfo();
         },
         requestOrderInfo(){
-             this.UserAccount=localStorage.getItem('UserAccount');
+              this.UserAccount=localStorage.getItem('UserAccount');
               this.axios.post("/Order/OrderInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",

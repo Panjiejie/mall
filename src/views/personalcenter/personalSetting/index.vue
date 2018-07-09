@@ -41,7 +41,7 @@
         <el-dialog  id="el-dialog" title="修改头像" :visible.sync="updataPhotoDialog" :width="dialogWidth" center>
             <el-upload
                     class="avatar-uploader"
-                    action="http://192.168.1.50:3002/upload"
+                    action="http://120.78.49.234:3002/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">

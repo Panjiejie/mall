@@ -21,7 +21,11 @@
                     <span class="seconds">56</span>
                 </div> -->
                 <img src="../../assets/index/seckill_1.png" style="position: relative;top: 72px;">
-                <div>123</div>
+                <div style="position: relative;top: 80px;font-size:20px;font-weight:900;">
+                    <span class="timeItem">{{hour}}</span>:
+                    <span class="timeItem">{{minute}}</span>:
+                    <span class="timeItem">{{second}}</span>
+                </div>
             </div>
             <div class="seckill-right">
                 <ul class="clearfix"> 
@@ -52,6 +56,9 @@ export default {
     // props:[list],
     data(){
         return{
+            hour:'',
+            minute:'',
+            second:'',
             list:[
                 // {name:"ck制造商",price:"25元起"},
                 // {name:"22制造商",price:"49元起"},
@@ -62,12 +69,13 @@ export default {
     created(){
         this.UserAccount=localStorage.getItem('UserAccount');
         this.requestGoods();
+        // this.showTime();
     },
     methods:{
         toSeckillDetailPage(item){
             this.$router.push(`nav/seckillGoodsDetail/${item.CommodityNumber}`)
         },
-         requestGoods(){
+        requestGoods(){
             // let obj = '[["Status","Sort","IndustryNameOne","StockSum","Sum","Num"],["1","0","'+this.common.brand+'","0","'+sum+'","'+num+'"]]';
             // console.log(obj)
              this.axios.post("/Activity/MallActivityInfo", {
@@ -85,6 +93,12 @@ export default {
                 response => {
                     let data=response.data.DATA[0];
                     let CommodityInfo=data.CommodityInfo;
+                    let ServerTime=response.data.ServerTime;
+                        ServerTime=ServerTime.split('+')[1].split(':');
+                        this.hour=ServerTime[0];
+                        this.minute=ServerTime[1];
+                        this.second=ServerTime[2];
+
                     console.log(CommodityInfo)
                     // this.list.length=0;
                     for(let i=0,len=4;i<len;i++){
@@ -119,6 +133,31 @@ export default {
                 }
                 );
         },
+        showTime(){
+            setInterval(function () {
+                let tnums = this.getNextTimeNumber(this.hour, this.minute, this.second);
+                // showNewTime(tnums[0], tnums[1], tnums[2]);
+                this.hour=tnums[0];
+                this.minute=tnums[1];
+                this.second=tnums[2];
+            }, 1000);
+        },
+        getNextTimeNumber(h, m, s){
+              if (++s == 60) {
+                s = 0;
+              }
+              if (s == 0) {
+                if (++m == 60) {
+                  m = 0;
+                }
+              }
+              if (m == 0) {
+                if (++h == 24) {
+                  h = 0;
+                }
+              }
+              return [h, m, s];
+        },
     },
 }
 </script>
@@ -256,6 +295,17 @@ export default {
     content: "";
     display: block;
     clear: both;
+}
+.timeItem{
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    background: black;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 6px;
 }
 </style>
 

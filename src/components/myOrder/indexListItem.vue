@@ -1,6 +1,6 @@
 <template>
-    <div class="list-item clearfix" >
-        <div v-for='i in paramsList' :key="i.key">
+    <div class="list-item clearfix"  >
+        <div v-for='i in paramsList' :key="i.key" >
             <div class="header">
                 <span>下单时间：{{i.ConfirmTime}}&nbsp;&nbsp;{{i.time2}}</span>
                     &nbsp;&nbsp;
@@ -17,7 +17,7 @@
                             <div class="operation">
                                 <div class="wait-goods">
                                     <span class="red">{{item.DealStatus | statusFilter}}</span><br>
-                                    <span @click="toLogistics" class="blue" :class="{show:isshowLogistics}">查看物流</span>
+                                    <span @click="toLogistics(item)" class="blue" :class="{show:isshowLogistics}">查看物流</span>
                                 </div>
                                 <div class="goods-price">
                                     <div class="money">${{item.DealMoney}}</div>
@@ -46,9 +46,18 @@ export default {
   },
   methods: {
       toDetail(item){
-          console.log(item)
+        //   console.log(item)
+            if( item.obj[0].DealStatus=='1' ||  item.obj[0].DealStatus=='2'){
+                localStorage.setItem('waitingSendDetailItem',JSON.stringify(item))
+                this.$router.push({path:`waitingSendDetail`})
+            }else if(item.obj[0].DealStatus=='3' ){
+                localStorage.setItem('waitingReceived',JSON.stringify(item))
+                this.$router.push({path:`waitingReceiveDetail`})
+            }else if(item.obj[0].DealStatus=='5' || item.obj[0].DealStatus=='4'){
+                localStorage.setItem('completedOrder',JSON.stringify(item));
+                this.$router.push('completeOrderDetail')
+            }
             
-            this.$router.push({path:`waitingSendDetail`})
         },
       toafterSale(){
           this.$router.push('applyForAfterSales')
@@ -59,7 +68,7 @@ export default {
   },
   filters:{
       statusFilter:function(val){
-         if(val=='0'){ return val='购物车'}
+        //  if(val=='0'){ return val='购物车'}
          if(val=='1'){ return val='未支付'}
          if(val=='2'){ return val='未发货'}
          if(val=='3'){ return val='已发货'}
@@ -149,4 +158,7 @@ export default {
     margin-top: 54px;
 }
 .show{opacity: 0;}
+.noDisplay{
+    display: none;
+}
 </style>

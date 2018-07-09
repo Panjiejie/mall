@@ -10,7 +10,7 @@
                     <p class="time">{{item.date}} <span style="margin-left:10px;display:inline-block;">{{item.time}}</span> </p>
                     <div class="content">
                         <div class="clearfix item-content">
-                            <div   @mouseenter="enter(val)" class="item" :class="{itemEnter:val.isshow}" v-for="val in item.goodslist" :key="val.key">
+                            <div   @mouseenter="enter(val)" class="item" @click="toGoodsdetail(val)" :class="{itemEnter:val.isshow}" v-for="val in item.goodslist" :key="val.key">
                                 <img :src="val.src" alt="">
                                 <h5 style='line-height:30px;font-size:14px;text-align:left;'>{{val.title}}</h5> 
                                 <h5 style='text-align:left;font-size:14px;color:#ff2040;'>￥{{val.price}}</h5>
@@ -86,6 +86,9 @@ export default {
         localStorage.setItem('changeItem',5)
     },
     methods:{
+        toGoodsdetail(val){
+            // this.$router.push({path:`../../nav/goodsDetail/${val.title}`})
+        },
         init(){
               this.useraccount=localStorage.getItem('UserAccount');
               this.axios.post("/Browse/FavoriteCommodity", {

@@ -16,7 +16,7 @@
             <div class="c-body">
                 <div class="c-body-line" v-for='(item,index) in cartList' :key='item.key'>
                     <div class="checkbox">
-                        <el-checkbox v-model="item.ischecked"></el-checkbox>
+                        <el-checkbox v-model="item.ischecked" @change="changes(item)"></el-checkbox>
                     </div>
                     <div class="goodsinfo">
                         <img :src="item.src" alt="">
@@ -190,6 +190,14 @@ export default {
     }
   },
   methods: {
+    changes(val){
+      // this.cartList.forEach(e=>{
+      //   e.ischecked?'':this.checked=false
+      // })
+      // if(val.ischecked=='false'){
+        this.checked=false;
+      // }
+    },
     toConfigureRecipient(){
       if(this.checked){//全选
         this.postInfos=this.cartList;

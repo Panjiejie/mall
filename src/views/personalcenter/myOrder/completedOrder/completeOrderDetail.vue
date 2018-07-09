@@ -50,7 +50,7 @@
                   <img :src="item.imgUrl" alt="">
                   <div class="goodsinfo-right">
                     <span class="infotitle" >{{item.title}}</span><br>
-                    <span>颜色：{{item.color}} 尺寸：{{item.size}}</span>
+                    <span style="text-align:left;">{{item.subtitle}}</span>
                   </div>
               </div>
               <div class="price">￥ {{item.price}}</div>
@@ -362,6 +362,7 @@ p{
         margin:20px 0 0 14px;
         font-size: 12px;
         color: #999;
+        text-align: left;
     }
     .infotitle{
         font-size: 14px;

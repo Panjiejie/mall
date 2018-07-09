@@ -59,6 +59,9 @@ export default {
                     response => {
                         if(response.data.DATA[0].Result=='1'){
                         bus.$emit('changeSteps',4)
+                        localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
+                        localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
+                        localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
                         this.$router.push('registerLast')
                         }else if((response.data.DATA[0].Result=='0')){
                         this.userNumWran='手机号码已注册!';

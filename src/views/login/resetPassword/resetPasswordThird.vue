@@ -38,6 +38,9 @@ export default {
         toLast(){
             // bus.$emit('changeSteps', 4);
             if(this.passwordOne!='' && this.passwordTwo!='' && this.passwordTwo==this.passwordOne){
+                localStorage.setItem('UserAccount',response.data.DATA[0].UserAccount);
+                localStorage.setItem('UserMobile',response.data.DATA[0].UserMobile);
+                localStorage.setItem('UserAvatar',response.data.DATA[0].UserAvatar);
                 this.$router.push('resetPasswordLast');
                 this.ModifyPasswd();
             }else{

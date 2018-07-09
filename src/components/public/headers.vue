@@ -28,10 +28,11 @@
           <!-- <li ><span class="ver-line"></span><router-link to="/">手机APP</router-link></li> -->
           <li class="cart-content shopping-cart-btn">
               <!-- <span class="ver-line"></span> -->
-              <el-popover
+              <!-- <el-popover
                           placement="bottom"
                           width="200"
-                          trigger="hover">
+                          trigger="hover"
+                          class='shopping-cart-popover'>
                           <div class="shopping-cart">
                             <ul>
                               <li v-for="item in shoppingCartList" :key='item.key'>
@@ -49,12 +50,11 @@
                       <p class="totalprice">共计:<span>￥{{totalsMoney}}</span></p>
                       <button>去购物车</button>
                     </div>
-                  </div>
-                      <!-- <el-button slot="reference">click 激活</el-button> -->
-                  <router-link slot="reference" to="/nav/shoppingCart" @enter='requestCartInfo' class="hover ">购物车<span class="cartBage" ><a  class="cartNumber">{{totalsAmount}}</a></span></router-link>
-                </el-popover>
+                  </div> -->
+                  <!-- <router-link slot="reference" to="/nav/shoppingCart" @enter='requestCartInfo' class="hover ">购物车<span class="cartBage" ><a  class="cartNumber">{{totalsAmount}}</a></span></router-link> -->
+                <!-- </el-popover> -->
+                <router-link slot="reference" to="/nav/shoppingCart" @enter='requestCartInfo' class="hover ">购物车</router-link>
           </li>
-          <!-- <router-link to="/nav/shoppingCart">购物车<span class="cartBage"><a href="" class="cartNumber">{{totalsAmount}}</a></span></router-link></li> -->
         </ul>
       </div>
     </div>
@@ -75,6 +75,10 @@
         <div class="inputblock">
           <input type="text" v-model='AttributeInfo'>
           <button @click="GetAttributeInfo"><img src="../../assets/common/search.png" alt="" style="width:16px;height:16px;"></button>
+          <div class="goods-item-content" :class="{isshowSearchList:isshowSearchList}">
+            <li v-for='i in SearchList' :key='i.key' @click="toGoodsDetail(i)">{{i}}</li>
+            <li :class="{display:isshowTips}">暂无搜索商品，请尝试搜索其它商品...</li>
+          </div>
         </div>
     </div>
     </div>
@@ -92,11 +96,14 @@ export default {
        UserAccount:'',
        loginIn:'请先登录',
        isshow:false,
+       isshowTips:true,
        isshowLogin:false,
        isshowUserAccount:false,
        totalCartMoney:0,//购物车总价
        totalCartAmount:0,//购物车商品总数
        AttributeInfo:'',
+       SearchList:[],
+       isshowSearchList:false,
        navList:[
         //  {text:'商城',isChoose:true,pathTo:'/nav'},
         //  {text:'海淘',isChoose:false,pathTo:'/nav/haitao'},
@@ -160,6 +167,11 @@ export default {
        this.$router.push('/nav/personalCenter/safeAdmin');
        localStorage.setItem('changeItem',3)
     },
+    toGoodsDetail(i){
+      this.isshowSearchList=false;
+      this.isshowTips=false;
+      this.$router.push(`../../nav/goodsdetail/${i}`)
+    },
      toHome(){
        this.$router.push('/')
      },
@@ -176,6 +188,8 @@ export default {
       this.isshowUserAccount=true;
     },
     GetAttributeInfo(){//搜索框
+      this.SearchList.length=0;
+      this.isshowTips=true;
       let obj = '[["UserAccount","AttributeGroup"],["test001","'+this.AttributeInfo+'"]]';
       this.axios.post("/Mall/GetAttributeInfo", {
                 SOURCE: "22",
@@ -187,7 +201,18 @@ export default {
                 })
                 .then(
                 response => {
-                   console.log(response)
+                  //  console.log(response.data.DATA.length)
+                   if(response.data.DATA.length!=0){
+                    let list=response.data.DATA[0].AttachContent;
+                    this.SearchList=list;
+                    this.isshowSearchList=true;
+                   }else{
+                     this.isshowTips=false;
+                     this.isshowSearchList=true;
+                   }
+                   setTimeout(()=>{
+                     this.isshowSearchList=false;
+                   },2000)
                     
                 },
                 response => {
@@ -208,10 +233,11 @@ export default {
                     })
                     .then(
                     response => {
-                        // console.log(response)
+                        console.log(response.data.RETURNCODE)
                         let data=response.data;
                         this.shoppingCartList.length=0;
-                        for(let i=0,len=data.DealSum.length;i<len;i++){
+                        // if(data.RETURNCODE!='204'){
+                          for(let i=0,len=data.FilePath.length;i<len;i++){
                             let FilePath=data.FilePath[i];
                             // console.log(FilePath)
                                 FilePath=FilePath.split(',')[0]+FilePath.split(',')[1];
@@ -226,7 +252,9 @@ export default {
                                         params:data.BrandName[i],
                                         CommodityNumber:data.CommodityNumber[i]
                                     })
-                        } 
+                        }
+                        // }
+                         
                     },
                     response => {
                         console.log("请求失败");
@@ -236,8 +264,7 @@ export default {
     },
   },  
   mounted(){  
-    
-        this.UserAccount=localStorage.getItem('UserAccount');
+    this.UserAccount=localStorage.getItem('UserAccount');
         if(this.UserAccount){//如果已登录 则不显示清登录
         this.isshowLogin=true;
         }else{
@@ -250,6 +277,9 @@ export default {
   
 <!-- Add "scoped" attribute to limit CSS to this component only -->  
 <style scoped>
+.display{
+  display: none;
+}
 .isshowLogin,.isshowUserAccount{
   display: none !important;
 }
@@ -510,6 +540,7 @@ export default {
     color: #fff;
     padding: 12px;
     display: block;
+    position: relative;
   }
   .shopping-cart li{
     list-style: none;
@@ -566,7 +597,7 @@ export default {
     background: transparent;
     outline: none;
     position: absolute;
-    top: 12px;
+    bottom: 0;
     right: 12px;;
   }
   .personal-center ul li a{
@@ -580,5 +611,27 @@ export default {
   }
   .main>ul>li a:hover{
     color: #c4c4c4;
+  }
+  .goods-item-content{
+    width: 250px;
+    min-height:200px;
+    border: 1px solid rgb(221,221,221);
+    position: absolute;
+    top: 69px;
+    /* border-top: none; */
+    z-index: 55;
+    background: #fff;
+    /* border-radius: 5px; */
+    padding-left: 16px;
+    display: none;
+  }
+  .goods-item-content li{
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    list-style: none;
+  }
+  .isshowSearchList{
+    display: block;
   }
 </style>    

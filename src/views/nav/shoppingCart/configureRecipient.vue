@@ -189,7 +189,7 @@ export default {
             checked:true,
             postInfos:[],
             goodsAmount:'',
-            money:'',
+            money:0,
             defaultAddress:{
                 name:'',
                 phoneNum:'',
@@ -252,7 +252,7 @@ export default {
                 // this.money=this.money+this.postInfos[i].subtotal*1;
             }
             this.goodsAmount=this.tableList.length;
-            this.tableList.forEach(e=>{this.money+=e.subtotal;})
+            this.tableList.forEach(e=>{this.money+=parseInt(e.amount)*parseInt(e.price);})
             
         },
         requestAddress(){
