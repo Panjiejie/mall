@@ -88,7 +88,7 @@ export default {
     methods:{
         init(Status,Sort){
              let obj = '[["Status","Sort","StockSum","Sum","Num","IndustryNameTwo","BrandName"],["'+Status+'","'+Sort+'","0","1","20","'+this.IndustryNameTwo+'","'+this.BrandName+'"]]';
-             console.log(obj)
+            //  console.log(obj)
              this.axios.post("/Mall/MallCommodityInfo", {
                 SOURCE: "22",
                 CREDENTIALS: "0",
@@ -99,14 +99,14 @@ export default {
                 })
                 .then(
                 response => {
-                    console.log(response)
+                    // console.log(response)
                     let data=response.data.DATA[0];
                     // console.log(data.FilePath);
                     this.goodsList.length=0;
                     for(let i=0,len=data.FilePath.length;i<len;i++){
                         let FilePath=data.FilePath[i].split(',');
                         FilePath=FilePath[0]+FilePath[1];
-                        console.log(FilePath)
+                        // console.log(FilePath)
                         this.goodsList.push({
                         title:data.CommodityName[i],
                         src:FilePath,
@@ -159,7 +159,7 @@ export default {
         },
         brandsReturn(){//品牌返回
                 let obj = '[["Status","IndustryName"],["3","'+this.IndustryNameTwo+'"]]';
-                console.log(obj)
+                // console.log(obj)
                 this.axios.post("/Mall/MallIndustryNameInfo", {
                     SOURCE: "22",
                     CREDENTIALS: "0",
@@ -332,6 +332,9 @@ export default {
         list-style: none;
         margin-right:12px ;
         cursor: pointer;
+    }
+      .h-content-body li:nth-child(5n){
+       margin-right: 0;
     }
     .nonemarginright{
         margin-right:0 !important;
